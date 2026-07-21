@@ -35,8 +35,6 @@ public final class CreateOrganizationRequestContent {
 
     private final Optional<CreateTokenQuota> tokenQuota;
 
-    private final Optional<OrganizationThirdPartyClientAccessEnum> thirdPartyClientAccess;
-
     private final Map<String, Object> additionalProperties;
 
     private CreateOrganizationRequestContent(
@@ -46,7 +44,6 @@ public final class CreateOrganizationRequestContent {
             Optional<Map<String, OptionalNullable<String>>> metadata,
             Optional<List<ConnectionForOrganization>> enabledConnections,
             Optional<CreateTokenQuota> tokenQuota,
-            Optional<OrganizationThirdPartyClientAccessEnum> thirdPartyClientAccess,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.displayName = displayName;
@@ -54,7 +51,6 @@ public final class CreateOrganizationRequestContent {
         this.metadata = metadata;
         this.enabledConnections = enabledConnections;
         this.tokenQuota = tokenQuota;
-        this.thirdPartyClientAccess = thirdPartyClientAccess;
         this.additionalProperties = additionalProperties;
     }
 
@@ -97,11 +93,6 @@ public final class CreateOrganizationRequestContent {
         return tokenQuota;
     }
 
-    @JsonProperty("third_party_client_access")
-    public Optional<OrganizationThirdPartyClientAccessEnum> getThirdPartyClientAccess() {
-        return thirdPartyClientAccess;
-    }
-
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -119,20 +110,13 @@ public final class CreateOrganizationRequestContent {
                 && branding.equals(other.branding)
                 && metadata.equals(other.metadata)
                 && enabledConnections.equals(other.enabledConnections)
-                && tokenQuota.equals(other.tokenQuota)
-                && thirdPartyClientAccess.equals(other.thirdPartyClientAccess);
+                && tokenQuota.equals(other.tokenQuota);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.name,
-                this.displayName,
-                this.branding,
-                this.metadata,
-                this.enabledConnections,
-                this.tokenQuota,
-                this.thirdPartyClientAccess);
+                this.name, this.displayName, this.branding, this.metadata, this.enabledConnections, this.tokenQuota);
     }
 
     @java.lang.Override
@@ -185,17 +169,11 @@ public final class CreateOrganizationRequestContent {
         _FinalStage tokenQuota(Optional<CreateTokenQuota> tokenQuota);
 
         _FinalStage tokenQuota(CreateTokenQuota tokenQuota);
-
-        _FinalStage thirdPartyClientAccess(Optional<OrganizationThirdPartyClientAccessEnum> thirdPartyClientAccess);
-
-        _FinalStage thirdPartyClientAccess(OrganizationThirdPartyClientAccessEnum thirdPartyClientAccess);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements NameStage, _FinalStage {
         private String name;
-
-        private Optional<OrganizationThirdPartyClientAccessEnum> thirdPartyClientAccess = Optional.empty();
 
         private Optional<CreateTokenQuota> tokenQuota = Optional.empty();
 
@@ -220,7 +198,6 @@ public final class CreateOrganizationRequestContent {
             metadata(other.getMetadata());
             enabledConnections(other.getEnabledConnections());
             tokenQuota(other.getTokenQuota());
-            thirdPartyClientAccess(other.getThirdPartyClientAccess());
             return this;
         }
 
@@ -232,20 +209,6 @@ public final class CreateOrganizationRequestContent {
         @JsonSetter("name")
         public _FinalStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage thirdPartyClientAccess(OrganizationThirdPartyClientAccessEnum thirdPartyClientAccess) {
-            this.thirdPartyClientAccess = Optional.ofNullable(thirdPartyClientAccess);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "third_party_client_access", nulls = Nulls.SKIP)
-        public _FinalStage thirdPartyClientAccess(
-                Optional<OrganizationThirdPartyClientAccessEnum> thirdPartyClientAccess) {
-            this.thirdPartyClientAccess = thirdPartyClientAccess;
             return this;
         }
 
@@ -331,14 +294,7 @@ public final class CreateOrganizationRequestContent {
         @java.lang.Override
         public CreateOrganizationRequestContent build() {
             return new CreateOrganizationRequestContent(
-                    name,
-                    displayName,
-                    branding,
-                    metadata,
-                    enabledConnections,
-                    tokenQuota,
-                    thirdPartyClientAccess,
-                    additionalProperties);
+                    name, displayName, branding, metadata, enabledConnections, tokenQuota, additionalProperties);
         }
 
         @java.lang.Override

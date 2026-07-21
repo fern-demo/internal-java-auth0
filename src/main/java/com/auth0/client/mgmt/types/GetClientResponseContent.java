@@ -96,10 +96,6 @@ public final class GetClientResponseContent {
 
     private final Optional<String> initiateLoginUri;
 
-    private final Optional<NativeSocialLogin> nativeSocialLogin;
-
-    private final Optional<FedCmLogin> fedcmLogin;
-
     private final OptionalNullable<ClientRefreshTokenConfiguration> refreshToken;
 
     private final OptionalNullable<ClientDefaultOrganization> defaultOrganization;
@@ -117,8 +113,6 @@ public final class GetClientResponseContent {
     private final Optional<Boolean> requireProofOfPossession;
 
     private final Optional<ClientSignedRequestObjectWithCredentialId> signedRequestObject;
-
-    private final Optional<ClientTokenVaultPrivilegedAccessWithCredentialId> tokenVaultPrivilegedAccess;
 
     private final OptionalNullable<ClientComplianceLevelEnum> complianceLevel;
 
@@ -189,8 +183,6 @@ public final class GetClientResponseContent {
             Optional<Map<String, Object>> clientMetadata,
             Optional<ClientMobile> mobile,
             Optional<String> initiateLoginUri,
-            Optional<NativeSocialLogin> nativeSocialLogin,
-            Optional<FedCmLogin> fedcmLogin,
             OptionalNullable<ClientRefreshTokenConfiguration> refreshToken,
             OptionalNullable<ClientDefaultOrganization> defaultOrganization,
             Optional<ClientOrganizationUsageEnum> organizationUsage,
@@ -200,7 +192,6 @@ public final class GetClientResponseContent {
             Optional<Boolean> requirePushedAuthorizationRequests,
             Optional<Boolean> requireProofOfPossession,
             Optional<ClientSignedRequestObjectWithCredentialId> signedRequestObject,
-            Optional<ClientTokenVaultPrivilegedAccessWithCredentialId> tokenVaultPrivilegedAccess,
             OptionalNullable<ClientComplianceLevelEnum> complianceLevel,
             Optional<Boolean> skipNonVerifiableCallbackUriConfirmationPrompt,
             Optional<ClientTokenExchangeConfiguration> tokenExchange,
@@ -253,8 +244,6 @@ public final class GetClientResponseContent {
         this.clientMetadata = clientMetadata;
         this.mobile = mobile;
         this.initiateLoginUri = initiateLoginUri;
-        this.nativeSocialLogin = nativeSocialLogin;
-        this.fedcmLogin = fedcmLogin;
         this.refreshToken = refreshToken;
         this.defaultOrganization = defaultOrganization;
         this.organizationUsage = organizationUsage;
@@ -264,7 +253,6 @@ public final class GetClientResponseContent {
         this.requirePushedAuthorizationRequests = requirePushedAuthorizationRequests;
         this.requireProofOfPossession = requireProofOfPossession;
         this.signedRequestObject = signedRequestObject;
-        this.tokenVaultPrivilegedAccess = tokenVaultPrivilegedAccess;
         this.complianceLevel = complianceLevel;
         this.skipNonVerifiableCallbackUriConfirmationPrompt = skipNonVerifiableCallbackUriConfirmationPrompt;
         this.tokenExchange = tokenExchange;
@@ -553,16 +541,6 @@ public final class GetClientResponseContent {
         return initiateLoginUri;
     }
 
-    @JsonProperty("native_social_login")
-    public Optional<NativeSocialLogin> getNativeSocialLogin() {
-        return nativeSocialLogin;
-    }
-
-    @JsonProperty("fedcm_login")
-    public Optional<FedCmLogin> getFedcmLogin() {
-        return fedcmLogin;
-    }
-
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("refresh_token")
     public OptionalNullable<ClientRefreshTokenConfiguration> getRefreshToken() {
@@ -627,11 +605,6 @@ public final class GetClientResponseContent {
     @JsonProperty("signed_request_object")
     public Optional<ClientSignedRequestObjectWithCredentialId> getSignedRequestObject() {
         return signedRequestObject;
-    }
-
-    @JsonProperty("token_vault_privileged_access")
-    public Optional<ClientTokenVaultPrivilegedAccessWithCredentialId> getTokenVaultPrivilegedAccess() {
-        return tokenVaultPrivilegedAccess;
     }
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
@@ -830,8 +803,6 @@ public final class GetClientResponseContent {
                 && clientMetadata.equals(other.clientMetadata)
                 && mobile.equals(other.mobile)
                 && initiateLoginUri.equals(other.initiateLoginUri)
-                && nativeSocialLogin.equals(other.nativeSocialLogin)
-                && fedcmLogin.equals(other.fedcmLogin)
                 && refreshToken.equals(other.refreshToken)
                 && defaultOrganization.equals(other.defaultOrganization)
                 && organizationUsage.equals(other.organizationUsage)
@@ -841,7 +812,6 @@ public final class GetClientResponseContent {
                 && requirePushedAuthorizationRequests.equals(other.requirePushedAuthorizationRequests)
                 && requireProofOfPossession.equals(other.requireProofOfPossession)
                 && signedRequestObject.equals(other.signedRequestObject)
-                && tokenVaultPrivilegedAccess.equals(other.tokenVaultPrivilegedAccess)
                 && complianceLevel.equals(other.complianceLevel)
                 && skipNonVerifiableCallbackUriConfirmationPrompt.equals(
                         other.skipNonVerifiableCallbackUriConfirmationPrompt)
@@ -899,8 +869,6 @@ public final class GetClientResponseContent {
                 this.clientMetadata,
                 this.mobile,
                 this.initiateLoginUri,
-                this.nativeSocialLogin,
-                this.fedcmLogin,
                 this.refreshToken,
                 this.defaultOrganization,
                 this.organizationUsage,
@@ -910,7 +878,6 @@ public final class GetClientResponseContent {
                 this.requirePushedAuthorizationRequests,
                 this.requireProofOfPossession,
                 this.signedRequestObject,
-                this.tokenVaultPrivilegedAccess,
                 this.complianceLevel,
                 this.skipNonVerifiableCallbackUriConfirmationPrompt,
                 this.tokenExchange,
@@ -1011,10 +978,6 @@ public final class GetClientResponseContent {
 
         private Optional<String> initiateLoginUri = Optional.empty();
 
-        private Optional<NativeSocialLogin> nativeSocialLogin = Optional.empty();
-
-        private Optional<FedCmLogin> fedcmLogin = Optional.empty();
-
         private OptionalNullable<ClientRefreshTokenConfiguration> refreshToken = OptionalNullable.absent();
 
         private OptionalNullable<ClientDefaultOrganization> defaultOrganization = OptionalNullable.absent();
@@ -1032,9 +995,6 @@ public final class GetClientResponseContent {
         private Optional<Boolean> requireProofOfPossession = Optional.empty();
 
         private Optional<ClientSignedRequestObjectWithCredentialId> signedRequestObject = Optional.empty();
-
-        private Optional<ClientTokenVaultPrivilegedAccessWithCredentialId> tokenVaultPrivilegedAccess =
-                Optional.empty();
 
         private OptionalNullable<ClientComplianceLevelEnum> complianceLevel = OptionalNullable.absent();
 
@@ -1109,8 +1069,6 @@ public final class GetClientResponseContent {
             clientMetadata(other.getClientMetadata());
             mobile(other.getMobile());
             initiateLoginUri(other.getInitiateLoginUri());
-            nativeSocialLogin(other.getNativeSocialLogin());
-            fedcmLogin(other.getFedcmLogin());
             refreshToken(other.getRefreshToken());
             defaultOrganization(other.getDefaultOrganization());
             organizationUsage(other.getOrganizationUsage());
@@ -1120,7 +1078,6 @@ public final class GetClientResponseContent {
             requirePushedAuthorizationRequests(other.getRequirePushedAuthorizationRequests());
             requireProofOfPossession(other.getRequireProofOfPossession());
             signedRequestObject(other.getSignedRequestObject());
-            tokenVaultPrivilegedAccess(other.getTokenVaultPrivilegedAccess());
             complianceLevel(other.getComplianceLevel());
             skipNonVerifiableCallbackUriConfirmationPrompt(other.getSkipNonVerifiableCallbackUriConfirmationPrompt());
             tokenExchange(other.getTokenExchange());
@@ -1674,28 +1631,6 @@ public final class GetClientResponseContent {
             return this;
         }
 
-        @JsonSetter(value = "native_social_login", nulls = Nulls.SKIP)
-        public Builder nativeSocialLogin(Optional<NativeSocialLogin> nativeSocialLogin) {
-            this.nativeSocialLogin = nativeSocialLogin;
-            return this;
-        }
-
-        public Builder nativeSocialLogin(NativeSocialLogin nativeSocialLogin) {
-            this.nativeSocialLogin = Optional.ofNullable(nativeSocialLogin);
-            return this;
-        }
-
-        @JsonSetter(value = "fedcm_login", nulls = Nulls.SKIP)
-        public Builder fedcmLogin(Optional<FedCmLogin> fedcmLogin) {
-            this.fedcmLogin = fedcmLogin;
-            return this;
-        }
-
-        public Builder fedcmLogin(FedCmLogin fedcmLogin) {
-            this.fedcmLogin = Optional.ofNullable(fedcmLogin);
-            return this;
-        }
-
         @JsonSetter(value = "refresh_token", nulls = Nulls.SKIP)
         public Builder refreshToken(@Nullable OptionalNullable<ClientRefreshTokenConfiguration> refreshToken) {
             this.refreshToken = refreshToken;
@@ -1867,19 +1802,6 @@ public final class GetClientResponseContent {
 
         public Builder signedRequestObject(ClientSignedRequestObjectWithCredentialId signedRequestObject) {
             this.signedRequestObject = Optional.ofNullable(signedRequestObject);
-            return this;
-        }
-
-        @JsonSetter(value = "token_vault_privileged_access", nulls = Nulls.SKIP)
-        public Builder tokenVaultPrivilegedAccess(
-                Optional<ClientTokenVaultPrivilegedAccessWithCredentialId> tokenVaultPrivilegedAccess) {
-            this.tokenVaultPrivilegedAccess = tokenVaultPrivilegedAccess;
-            return this;
-        }
-
-        public Builder tokenVaultPrivilegedAccess(
-                ClientTokenVaultPrivilegedAccessWithCredentialId tokenVaultPrivilegedAccess) {
-            this.tokenVaultPrivilegedAccess = Optional.ofNullable(tokenVaultPrivilegedAccess);
             return this;
         }
 
@@ -2151,8 +2073,6 @@ public final class GetClientResponseContent {
                     clientMetadata,
                     mobile,
                     initiateLoginUri,
-                    nativeSocialLogin,
-                    fedcmLogin,
                     refreshToken,
                     defaultOrganization,
                     organizationUsage,
@@ -2162,7 +2082,6 @@ public final class GetClientResponseContent {
                     requirePushedAuthorizationRequests,
                     requireProofOfPossession,
                     signedRequestObject,
-                    tokenVaultPrivilegedAccess,
                     complianceLevel,
                     skipNonVerifiableCallbackUriConfirmationPrompt,
                     tokenExchange,

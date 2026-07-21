@@ -8,7 +8,6 @@ import com.auth0.client.mgmt.core.RequestOptions;
 import com.auth0.client.mgmt.core.Suppliers;
 import com.auth0.client.mgmt.core.SyncPagingIterable;
 import com.auth0.client.mgmt.groups.MembersClient;
-import com.auth0.client.mgmt.groups.RolesClient;
 import com.auth0.client.mgmt.types.GetGroupResponseContent;
 import com.auth0.client.mgmt.types.Group;
 import com.auth0.client.mgmt.types.ListGroupsRequestParameters;
@@ -21,13 +20,10 @@ public class GroupsClient {
 
     protected final Supplier<MembersClient> membersClient;
 
-    protected final Supplier<RolesClient> rolesClient;
-
     public GroupsClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.rawClient = new RawGroupsClient(clientOptions);
         this.membersClient = Suppliers.memoize(() -> new MembersClient(clientOptions));
-        this.rolesClient = Suppliers.memoize(() -> new RolesClient(clientOptions));
     }
 
     /**
@@ -95,9 +91,5 @@ public class GroupsClient {
 
     public MembersClient members() {
         return this.membersClient.get();
-    }
-
-    public RolesClient roles() {
-        return this.rolesClient.get();
     }
 }

@@ -33,8 +33,6 @@ public final class CreateConnectionRequestContentFitbit implements ICreateConnec
 
     private final Optional<Map<String, OptionalNullable<String>>> metadata;
 
-    private final CreateConnectionRequestContentFitbitStrategy strategy;
-
     private final Optional<ConnectionOptionsFitbit> options;
 
     private final Map<String, Object> additionalProperties;
@@ -45,7 +43,6 @@ public final class CreateConnectionRequestContentFitbit implements ICreateConnec
             Optional<String> displayName,
             Optional<Boolean> isDomainConnection,
             Optional<Map<String, OptionalNullable<String>>> metadata,
-            CreateConnectionRequestContentFitbitStrategy strategy,
             Optional<ConnectionOptionsFitbit> options,
             Map<String, Object> additionalProperties) {
         this.name = name;
@@ -53,7 +50,6 @@ public final class CreateConnectionRequestContentFitbit implements ICreateConnec
         this.displayName = displayName;
         this.isDomainConnection = isDomainConnection;
         this.metadata = metadata;
-        this.strategy = strategy;
         this.options = options;
         this.additionalProperties = additionalProperties;
     }
@@ -91,11 +87,6 @@ public final class CreateConnectionRequestContentFitbit implements ICreateConnec
         return metadata;
     }
 
-    @JsonProperty("strategy")
-    public CreateConnectionRequestContentFitbitStrategy getStrategy() {
-        return strategy;
-    }
-
     @JsonProperty("options")
     public Optional<ConnectionOptionsFitbit> getOptions() {
         return options;
@@ -119,20 +110,13 @@ public final class CreateConnectionRequestContentFitbit implements ICreateConnec
                 && displayName.equals(other.displayName)
                 && isDomainConnection.equals(other.isDomainConnection)
                 && metadata.equals(other.metadata)
-                && strategy.equals(other.strategy)
                 && options.equals(other.options);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.name,
-                this.enabledClients,
-                this.displayName,
-                this.isDomainConnection,
-                this.metadata,
-                this.strategy,
-                this.options);
+                this.name, this.enabledClients, this.displayName, this.isDomainConnection, this.metadata, this.options);
     }
 
     @java.lang.Override
@@ -145,13 +129,9 @@ public final class CreateConnectionRequestContentFitbit implements ICreateConnec
     }
 
     public interface NameStage {
-        StrategyStage name(@NotNull String name);
+        _FinalStage name(@NotNull String name);
 
         Builder from(CreateConnectionRequestContentFitbit other);
-    }
-
-    public interface StrategyStage {
-        _FinalStage strategy(@NotNull CreateConnectionRequestContentFitbitStrategy strategy);
     }
 
     public interface _FinalStage {
@@ -186,10 +166,8 @@ public final class CreateConnectionRequestContentFitbit implements ICreateConnec
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements NameStage, StrategyStage, _FinalStage {
+    public static final class Builder implements NameStage, _FinalStage {
         private String name;
-
-        private CreateConnectionRequestContentFitbitStrategy strategy;
 
         private Optional<ConnectionOptionsFitbit> options = Optional.empty();
 
@@ -213,22 +191,14 @@ public final class CreateConnectionRequestContentFitbit implements ICreateConnec
             displayName(other.getDisplayName());
             isDomainConnection(other.getIsDomainConnection());
             metadata(other.getMetadata());
-            strategy(other.getStrategy());
             options(other.getOptions());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
-        public StrategyStage name(@NotNull String name) {
+        public _FinalStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("strategy")
-        public _FinalStage strategy(@NotNull CreateConnectionRequestContentFitbitStrategy strategy) {
-            this.strategy = Objects.requireNonNull(strategy, "strategy must not be null");
             return this;
         }
 
@@ -307,14 +277,7 @@ public final class CreateConnectionRequestContentFitbit implements ICreateConnec
         @java.lang.Override
         public CreateConnectionRequestContentFitbit build() {
             return new CreateConnectionRequestContentFitbit(
-                    name,
-                    enabledClients,
-                    displayName,
-                    isDomainConnection,
-                    metadata,
-                    strategy,
-                    options,
-                    additionalProperties);
+                    name, enabledClients, displayName, isDomainConnection, metadata, options, additionalProperties);
         }
 
         @java.lang.Override

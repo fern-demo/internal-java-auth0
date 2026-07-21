@@ -14,7 +14,6 @@ import com.auth0.client.mgmt.core.RequestOptions;
 import com.auth0.client.mgmt.core.RetryInterceptor;
 import com.auth0.client.mgmt.errors.BadRequestError;
 import com.auth0.client.mgmt.errors.ForbiddenError;
-import com.auth0.client.mgmt.errors.NotFoundError;
 import com.auth0.client.mgmt.errors.TooManyRequestsError;
 import com.auth0.client.mgmt.errors.UnauthorizedError;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -92,9 +91,6 @@ public class RawUsersClient {
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response);
                     case 403:
                         throw new ForbiddenError(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response);
-                    case 404:
-                        throw new NotFoundError(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response);
                     case 429:
                         throw new TooManyRequestsError(

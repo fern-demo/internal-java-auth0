@@ -7,6 +7,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class ClientSessionTransferDelegationDeviceBindingEnum {
+    public static final ClientSessionTransferDelegationDeviceBindingEnum ASN =
+            new ClientSessionTransferDelegationDeviceBindingEnum(Value.ASN, "asn");
+
     public static final ClientSessionTransferDelegationDeviceBindingEnum IP =
             new ClientSessionTransferDelegationDeviceBindingEnum(Value.IP, "ip");
 
@@ -43,6 +46,8 @@ public final class ClientSessionTransferDelegationDeviceBindingEnum {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
+            case ASN:
+                return visitor.visitAsn();
             case IP:
                 return visitor.visitIp();
             case UNKNOWN:
@@ -54,6 +59,8 @@ public final class ClientSessionTransferDelegationDeviceBindingEnum {
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static ClientSessionTransferDelegationDeviceBindingEnum valueOf(String value) {
         switch (value) {
+            case "asn":
+                return ASN;
             case "ip":
                 return IP;
             default:
@@ -64,11 +71,15 @@ public final class ClientSessionTransferDelegationDeviceBindingEnum {
     public enum Value {
         IP,
 
+        ASN,
+
         UNKNOWN
     }
 
     public interface Visitor<T> {
         T visitIp();
+
+        T visitAsn();
 
         T visitUnknown(String unknownType);
     }

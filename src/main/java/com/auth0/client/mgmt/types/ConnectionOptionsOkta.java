@@ -39,9 +39,9 @@ public final class ConnectionOptionsOkta implements IConnectionOptionsCommon, IC
 
     private final Optional<ConnectionDpopSigningAlgEnum> dpopSigningAlg;
 
-    private final Optional<String> iconUrl;
+    private final OptionalNullable<ConnectionFederatedConnectionsAccessTokens> federatedConnectionsAccessTokens;
 
-    private final Optional<Boolean> idTokenSessionExpirySupported;
+    private final Optional<String> iconUrl;
 
     private final OptionalNullable<List<ConnectionIdTokenSignedResponseAlgEnum>> idTokenSignedResponseAlgs;
 
@@ -88,8 +88,8 @@ public final class ConnectionOptionsOkta implements IConnectionOptionsCommon, IC
             Optional<ConnectionConnectionSettings> connectionSettings,
             Optional<List<String>> domainAliases,
             Optional<ConnectionDpopSigningAlgEnum> dpopSigningAlg,
+            OptionalNullable<ConnectionFederatedConnectionsAccessTokens> federatedConnectionsAccessTokens,
             Optional<String> iconUrl,
-            Optional<Boolean> idTokenSessionExpirySupported,
             OptionalNullable<List<ConnectionIdTokenSignedResponseAlgEnum>> idTokenSignedResponseAlgs,
             Optional<String> issuer,
             Optional<String> jwksUri,
@@ -115,8 +115,8 @@ public final class ConnectionOptionsOkta implements IConnectionOptionsCommon, IC
         this.connectionSettings = connectionSettings;
         this.domainAliases = domainAliases;
         this.dpopSigningAlg = dpopSigningAlg;
+        this.federatedConnectionsAccessTokens = federatedConnectionsAccessTokens;
         this.iconUrl = iconUrl;
-        this.idTokenSessionExpirySupported = idTokenSessionExpirySupported;
         this.idTokenSignedResponseAlgs = idTokenSignedResponseAlgs;
         this.issuer = issuer;
         this.jwksUri = jwksUri;
@@ -179,16 +179,20 @@ public final class ConnectionOptionsOkta implements IConnectionOptionsCommon, IC
         return dpopSigningAlg;
     }
 
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("federated_connections_access_tokens")
+    @java.lang.Override
+    public OptionalNullable<ConnectionFederatedConnectionsAccessTokens> getFederatedConnectionsAccessTokens() {
+        if (federatedConnectionsAccessTokens == null) {
+            return OptionalNullable.absent();
+        }
+        return federatedConnectionsAccessTokens;
+    }
+
     @JsonProperty("icon_url")
     @java.lang.Override
     public Optional<String> getIconUrl() {
         return iconUrl;
-    }
-
-    @JsonProperty("id_token_session_expiry_supported")
-    @java.lang.Override
-    public Optional<Boolean> getIdTokenSessionExpirySupported() {
-        return idTokenSessionExpirySupported;
     }
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
@@ -307,6 +311,12 @@ public final class ConnectionOptionsOkta implements IConnectionOptionsCommon, IC
     }
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("federated_connections_access_tokens")
+    private OptionalNullable<ConnectionFederatedConnectionsAccessTokens> _getFederatedConnectionsAccessTokens() {
+        return federatedConnectionsAccessTokens;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("id_token_signed_response_algs")
     private OptionalNullable<List<ConnectionIdTokenSignedResponseAlgEnum>> _getIdTokenSignedResponseAlgs() {
         return idTokenSignedResponseAlgs;
@@ -350,8 +360,8 @@ public final class ConnectionOptionsOkta implements IConnectionOptionsCommon, IC
                 && connectionSettings.equals(other.connectionSettings)
                 && domainAliases.equals(other.domainAliases)
                 && dpopSigningAlg.equals(other.dpopSigningAlg)
+                && federatedConnectionsAccessTokens.equals(other.federatedConnectionsAccessTokens)
                 && iconUrl.equals(other.iconUrl)
-                && idTokenSessionExpirySupported.equals(other.idTokenSessionExpirySupported)
                 && idTokenSignedResponseAlgs.equals(other.idTokenSignedResponseAlgs)
                 && issuer.equals(other.issuer)
                 && jwksUri.equals(other.jwksUri)
@@ -381,8 +391,8 @@ public final class ConnectionOptionsOkta implements IConnectionOptionsCommon, IC
                 this.connectionSettings,
                 this.domainAliases,
                 this.dpopSigningAlg,
+                this.federatedConnectionsAccessTokens,
                 this.iconUrl,
-                this.idTokenSessionExpirySupported,
                 this.idTokenSignedResponseAlgs,
                 this.issuer,
                 this.jwksUri,
@@ -448,13 +458,23 @@ public final class ConnectionOptionsOkta implements IConnectionOptionsCommon, IC
 
         _FinalStage dpopSigningAlg(ConnectionDpopSigningAlgEnum dpopSigningAlg);
 
+        _FinalStage federatedConnectionsAccessTokens(
+                @Nullable
+                        OptionalNullable<ConnectionFederatedConnectionsAccessTokens> federatedConnectionsAccessTokens);
+
+        _FinalStage federatedConnectionsAccessTokens(
+                ConnectionFederatedConnectionsAccessTokens federatedConnectionsAccessTokens);
+
+        _FinalStage federatedConnectionsAccessTokens(
+                Optional<ConnectionFederatedConnectionsAccessTokens> federatedConnectionsAccessTokens);
+
+        _FinalStage federatedConnectionsAccessTokens(
+                com.auth0.client.mgmt.core.Nullable<ConnectionFederatedConnectionsAccessTokens>
+                        federatedConnectionsAccessTokens);
+
         _FinalStage iconUrl(Optional<String> iconUrl);
 
         _FinalStage iconUrl(String iconUrl);
-
-        _FinalStage idTokenSessionExpirySupported(Optional<Boolean> idTokenSessionExpirySupported);
-
-        _FinalStage idTokenSessionExpirySupported(Boolean idTokenSessionExpirySupported);
 
         _FinalStage idTokenSignedResponseAlgs(
                 @Nullable OptionalNullable<List<ConnectionIdTokenSignedResponseAlgEnum>> idTokenSignedResponseAlgs);
@@ -603,9 +623,10 @@ public final class ConnectionOptionsOkta implements IConnectionOptionsCommon, IC
         private OptionalNullable<List<ConnectionIdTokenSignedResponseAlgEnum>> idTokenSignedResponseAlgs =
                 OptionalNullable.absent();
 
-        private Optional<Boolean> idTokenSessionExpirySupported = Optional.empty();
-
         private Optional<String> iconUrl = Optional.empty();
+
+        private OptionalNullable<ConnectionFederatedConnectionsAccessTokens> federatedConnectionsAccessTokens =
+                OptionalNullable.absent();
 
         private Optional<ConnectionDpopSigningAlgEnum> dpopSigningAlg = Optional.empty();
 
@@ -633,8 +654,8 @@ public final class ConnectionOptionsOkta implements IConnectionOptionsCommon, IC
             connectionSettings(other.getConnectionSettings());
             domainAliases(other.getDomainAliases());
             dpopSigningAlg(other.getDpopSigningAlg());
+            federatedConnectionsAccessTokens(other.getFederatedConnectionsAccessTokens());
             iconUrl(other.getIconUrl());
-            idTokenSessionExpirySupported(other.getIdTokenSessionExpirySupported());
             idTokenSignedResponseAlgs(other.getIdTokenSignedResponseAlgs());
             issuer(other.getIssuer());
             jwksUri(other.getJwksUri());
@@ -995,19 +1016,6 @@ public final class ConnectionOptionsOkta implements IConnectionOptionsCommon, IC
         }
 
         @java.lang.Override
-        public _FinalStage idTokenSessionExpirySupported(Boolean idTokenSessionExpirySupported) {
-            this.idTokenSessionExpirySupported = Optional.ofNullable(idTokenSessionExpirySupported);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "id_token_session_expiry_supported", nulls = Nulls.SKIP)
-        public _FinalStage idTokenSessionExpirySupported(Optional<Boolean> idTokenSessionExpirySupported) {
-            this.idTokenSessionExpirySupported = idTokenSessionExpirySupported;
-            return this;
-        }
-
-        @java.lang.Override
         public _FinalStage iconUrl(String iconUrl) {
             this.iconUrl = Optional.ofNullable(iconUrl);
             return this;
@@ -1017,6 +1025,47 @@ public final class ConnectionOptionsOkta implements IConnectionOptionsCommon, IC
         @JsonSetter(value = "icon_url", nulls = Nulls.SKIP)
         public _FinalStage iconUrl(Optional<String> iconUrl) {
             this.iconUrl = iconUrl;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage federatedConnectionsAccessTokens(
+                com.auth0.client.mgmt.core.Nullable<ConnectionFederatedConnectionsAccessTokens>
+                        federatedConnectionsAccessTokens) {
+            if (federatedConnectionsAccessTokens.isNull()) {
+                this.federatedConnectionsAccessTokens = OptionalNullable.ofNull();
+            } else if (federatedConnectionsAccessTokens.isEmpty()) {
+                this.federatedConnectionsAccessTokens = OptionalNullable.absent();
+            } else {
+                this.federatedConnectionsAccessTokens = OptionalNullable.of(federatedConnectionsAccessTokens.get());
+            }
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage federatedConnectionsAccessTokens(
+                Optional<ConnectionFederatedConnectionsAccessTokens> federatedConnectionsAccessTokens) {
+            if (federatedConnectionsAccessTokens.isPresent()) {
+                this.federatedConnectionsAccessTokens = OptionalNullable.of(federatedConnectionsAccessTokens.get());
+            } else {
+                this.federatedConnectionsAccessTokens = OptionalNullable.absent();
+            }
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage federatedConnectionsAccessTokens(
+                ConnectionFederatedConnectionsAccessTokens federatedConnectionsAccessTokens) {
+            this.federatedConnectionsAccessTokens = OptionalNullable.of(federatedConnectionsAccessTokens);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "federated_connections_access_tokens", nulls = Nulls.SKIP)
+        public _FinalStage federatedConnectionsAccessTokens(
+                @Nullable
+                        OptionalNullable<ConnectionFederatedConnectionsAccessTokens> federatedConnectionsAccessTokens) {
+            this.federatedConnectionsAccessTokens = federatedConnectionsAccessTokens;
             return this;
         }
 
@@ -1108,8 +1157,8 @@ public final class ConnectionOptionsOkta implements IConnectionOptionsCommon, IC
                     connectionSettings,
                     domainAliases,
                     dpopSigningAlg,
+                    federatedConnectionsAccessTokens,
                     iconUrl,
-                    idTokenSessionExpirySupported,
                     idTokenSignedResponseAlgs,
                     issuer,
                     jwksUri,

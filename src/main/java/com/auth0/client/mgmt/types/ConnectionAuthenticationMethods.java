@@ -20,32 +20,32 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ConnectionAuthenticationMethods.Builder.class)
 public final class ConnectionAuthenticationMethods {
-    private final Optional<ConnectionPasswordAuthenticationMethod> password;
+    private final Optional<ConnectionEmailOtpAuthenticationMethod> emailOtp;
 
     private final Optional<ConnectionPasskeyAuthenticationMethod> passkey;
 
-    private final Optional<ConnectionEmailOtpAuthenticationMethod> emailOtp;
+    private final Optional<ConnectionPasswordAuthenticationMethod> password;
 
     private final Optional<ConnectionPhoneOtpAuthenticationMethod> phoneOtp;
 
     private final Map<String, Object> additionalProperties;
 
     private ConnectionAuthenticationMethods(
-            Optional<ConnectionPasswordAuthenticationMethod> password,
-            Optional<ConnectionPasskeyAuthenticationMethod> passkey,
             Optional<ConnectionEmailOtpAuthenticationMethod> emailOtp,
+            Optional<ConnectionPasskeyAuthenticationMethod> passkey,
+            Optional<ConnectionPasswordAuthenticationMethod> password,
             Optional<ConnectionPhoneOtpAuthenticationMethod> phoneOtp,
             Map<String, Object> additionalProperties) {
-        this.password = password;
-        this.passkey = passkey;
         this.emailOtp = emailOtp;
+        this.passkey = passkey;
+        this.password = password;
         this.phoneOtp = phoneOtp;
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("password")
-    public Optional<ConnectionPasswordAuthenticationMethod> getPassword() {
-        return password;
+    @JsonProperty("email_otp")
+    public Optional<ConnectionEmailOtpAuthenticationMethod> getEmailOtp() {
+        return emailOtp;
     }
 
     @JsonProperty("passkey")
@@ -53,9 +53,9 @@ public final class ConnectionAuthenticationMethods {
         return passkey;
     }
 
-    @JsonProperty("email_otp")
-    public Optional<ConnectionEmailOtpAuthenticationMethod> getEmailOtp() {
-        return emailOtp;
+    @JsonProperty("password")
+    public Optional<ConnectionPasswordAuthenticationMethod> getPassword() {
+        return password;
     }
 
     @JsonProperty("phone_otp")
@@ -75,15 +75,15 @@ public final class ConnectionAuthenticationMethods {
     }
 
     private boolean equalTo(ConnectionAuthenticationMethods other) {
-        return password.equals(other.password)
+        return emailOtp.equals(other.emailOtp)
                 && passkey.equals(other.passkey)
-                && emailOtp.equals(other.emailOtp)
+                && password.equals(other.password)
                 && phoneOtp.equals(other.phoneOtp);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.password, this.passkey, this.emailOtp, this.phoneOtp);
+        return Objects.hash(this.emailOtp, this.passkey, this.password, this.phoneOtp);
     }
 
     @java.lang.Override
@@ -97,11 +97,11 @@ public final class ConnectionAuthenticationMethods {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<ConnectionPasswordAuthenticationMethod> password = Optional.empty();
+        private Optional<ConnectionEmailOtpAuthenticationMethod> emailOtp = Optional.empty();
 
         private Optional<ConnectionPasskeyAuthenticationMethod> passkey = Optional.empty();
 
-        private Optional<ConnectionEmailOtpAuthenticationMethod> emailOtp = Optional.empty();
+        private Optional<ConnectionPasswordAuthenticationMethod> password = Optional.empty();
 
         private Optional<ConnectionPhoneOtpAuthenticationMethod> phoneOtp = Optional.empty();
 
@@ -111,21 +111,21 @@ public final class ConnectionAuthenticationMethods {
         private Builder() {}
 
         public Builder from(ConnectionAuthenticationMethods other) {
-            password(other.getPassword());
-            passkey(other.getPasskey());
             emailOtp(other.getEmailOtp());
+            passkey(other.getPasskey());
+            password(other.getPassword());
             phoneOtp(other.getPhoneOtp());
             return this;
         }
 
-        @JsonSetter(value = "password", nulls = Nulls.SKIP)
-        public Builder password(Optional<ConnectionPasswordAuthenticationMethod> password) {
-            this.password = password;
+        @JsonSetter(value = "email_otp", nulls = Nulls.SKIP)
+        public Builder emailOtp(Optional<ConnectionEmailOtpAuthenticationMethod> emailOtp) {
+            this.emailOtp = emailOtp;
             return this;
         }
 
-        public Builder password(ConnectionPasswordAuthenticationMethod password) {
-            this.password = Optional.ofNullable(password);
+        public Builder emailOtp(ConnectionEmailOtpAuthenticationMethod emailOtp) {
+            this.emailOtp = Optional.ofNullable(emailOtp);
             return this;
         }
 
@@ -140,14 +140,14 @@ public final class ConnectionAuthenticationMethods {
             return this;
         }
 
-        @JsonSetter(value = "email_otp", nulls = Nulls.SKIP)
-        public Builder emailOtp(Optional<ConnectionEmailOtpAuthenticationMethod> emailOtp) {
-            this.emailOtp = emailOtp;
+        @JsonSetter(value = "password", nulls = Nulls.SKIP)
+        public Builder password(Optional<ConnectionPasswordAuthenticationMethod> password) {
+            this.password = password;
             return this;
         }
 
-        public Builder emailOtp(ConnectionEmailOtpAuthenticationMethod emailOtp) {
-            this.emailOtp = Optional.ofNullable(emailOtp);
+        public Builder password(ConnectionPasswordAuthenticationMethod password) {
+            this.password = Optional.ofNullable(password);
             return this;
         }
 
@@ -163,7 +163,7 @@ public final class ConnectionAuthenticationMethods {
         }
 
         public ConnectionAuthenticationMethods build() {
-            return new ConnectionAuthenticationMethods(password, passkey, emailOtp, phoneOtp, additionalProperties);
+            return new ConnectionAuthenticationMethods(emailOtp, passkey, password, phoneOtp, additionalProperties);
         }
 
         public Builder additionalProperty(String key, Object value) {

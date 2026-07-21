@@ -33,8 +33,6 @@ public final class CreateConnectionRequestContentAzureAd implements ICreateConne
 
     private final Optional<Map<String, OptionalNullable<String>>> metadata;
 
-    private final CreateConnectionRequestContentAzureAdStrategy strategy;
-
     private final Optional<ConnectionOptionsAzureAd> options;
 
     private final Optional<Boolean> showAsButton;
@@ -47,7 +45,6 @@ public final class CreateConnectionRequestContentAzureAd implements ICreateConne
             Optional<String> displayName,
             Optional<Boolean> isDomainConnection,
             Optional<Map<String, OptionalNullable<String>>> metadata,
-            CreateConnectionRequestContentAzureAdStrategy strategy,
             Optional<ConnectionOptionsAzureAd> options,
             Optional<Boolean> showAsButton,
             Map<String, Object> additionalProperties) {
@@ -56,7 +53,6 @@ public final class CreateConnectionRequestContentAzureAd implements ICreateConne
         this.displayName = displayName;
         this.isDomainConnection = isDomainConnection;
         this.metadata = metadata;
-        this.strategy = strategy;
         this.options = options;
         this.showAsButton = showAsButton;
         this.additionalProperties = additionalProperties;
@@ -95,11 +91,6 @@ public final class CreateConnectionRequestContentAzureAd implements ICreateConne
         return metadata;
     }
 
-    @JsonProperty("strategy")
-    public CreateConnectionRequestContentAzureAdStrategy getStrategy() {
-        return strategy;
-    }
-
     @JsonProperty("options")
     public Optional<ConnectionOptionsAzureAd> getOptions() {
         return options;
@@ -128,7 +119,6 @@ public final class CreateConnectionRequestContentAzureAd implements ICreateConne
                 && displayName.equals(other.displayName)
                 && isDomainConnection.equals(other.isDomainConnection)
                 && metadata.equals(other.metadata)
-                && strategy.equals(other.strategy)
                 && options.equals(other.options)
                 && showAsButton.equals(other.showAsButton);
     }
@@ -141,7 +131,6 @@ public final class CreateConnectionRequestContentAzureAd implements ICreateConne
                 this.displayName,
                 this.isDomainConnection,
                 this.metadata,
-                this.strategy,
                 this.options,
                 this.showAsButton);
     }
@@ -156,13 +145,9 @@ public final class CreateConnectionRequestContentAzureAd implements ICreateConne
     }
 
     public interface NameStage {
-        StrategyStage name(@NotNull String name);
+        _FinalStage name(@NotNull String name);
 
         Builder from(CreateConnectionRequestContentAzureAd other);
-    }
-
-    public interface StrategyStage {
-        _FinalStage strategy(@NotNull CreateConnectionRequestContentAzureAdStrategy strategy);
     }
 
     public interface _FinalStage {
@@ -201,10 +186,8 @@ public final class CreateConnectionRequestContentAzureAd implements ICreateConne
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements NameStage, StrategyStage, _FinalStage {
+    public static final class Builder implements NameStage, _FinalStage {
         private String name;
-
-        private CreateConnectionRequestContentAzureAdStrategy strategy;
 
         private Optional<Boolean> showAsButton = Optional.empty();
 
@@ -230,7 +213,6 @@ public final class CreateConnectionRequestContentAzureAd implements ICreateConne
             displayName(other.getDisplayName());
             isDomainConnection(other.getIsDomainConnection());
             metadata(other.getMetadata());
-            strategy(other.getStrategy());
             options(other.getOptions());
             showAsButton(other.getShowAsButton());
             return this;
@@ -238,15 +220,8 @@ public final class CreateConnectionRequestContentAzureAd implements ICreateConne
 
         @java.lang.Override
         @JsonSetter("name")
-        public StrategyStage name(@NotNull String name) {
+        public _FinalStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("strategy")
-        public _FinalStage strategy(@NotNull CreateConnectionRequestContentAzureAdStrategy strategy) {
-            this.strategy = Objects.requireNonNull(strategy, "strategy must not be null");
             return this;
         }
 
@@ -343,7 +318,6 @@ public final class CreateConnectionRequestContentAzureAd implements ICreateConne
                     displayName,
                     isDomainConnection,
                     metadata,
-                    strategy,
                     options,
                     showAsButton,
                     additionalProperties);

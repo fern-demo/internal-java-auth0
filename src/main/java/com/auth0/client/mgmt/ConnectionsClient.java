@@ -12,14 +12,11 @@ import com.auth0.client.mgmt.core.ClientOptions;
 import com.auth0.client.mgmt.core.RequestOptions;
 import com.auth0.client.mgmt.core.Suppliers;
 import com.auth0.client.mgmt.core.SyncPagingIterable;
-import com.auth0.client.mgmt.types.ConnectionForList;
+import com.auth0.client.mgmt.types.ConnectionResponseContent;
 import com.auth0.client.mgmt.types.CreateConnectionRequestContent;
-import com.auth0.client.mgmt.types.CreateConnectionResponseContent;
 import com.auth0.client.mgmt.types.GetConnectionRequestParameters;
-import com.auth0.client.mgmt.types.GetConnectionResponseContent;
 import com.auth0.client.mgmt.types.ListConnectionsQueryParameters;
 import com.auth0.client.mgmt.types.UpdateConnectionRequestContent;
-import com.auth0.client.mgmt.types.UpdateConnectionResponseContent;
 import java.util.function.Supplier;
 
 public class ConnectionsClient {
@@ -57,133 +54,129 @@ public class ConnectionsClient {
     /**
      * Retrieves detailed list of all <a href="https://auth0.com/docs/authenticate/identity-providers">connections</a> that match the specified strategy. If no strategy is provided, all connections within your tenant are retrieved. This action can accept a list of fields to include or exclude from the resulting list of connections.
      * <p>This endpoint supports two types of pagination:</p>
-     * <ul>
+     * <p><ul>
      * <li>Offset pagination</li>
      * <li>Checkpoint pagination</li>
-     * </ul>
+     * </ul></p>
      * <p>Checkpoint pagination must be used if you need to retrieve more than 1000 connections.</p>
-     * <p><strong>Checkpoint Pagination</strong></p>
+     * <p><h2>Checkpoint Pagination</h2></p>
      * <p>To search by checkpoint, use the following parameters:</p>
-     * <ul>
+     * <p><ul>
      * <li><code>from</code>: Optional id from which to start selection.</li>
      * <li><code>take</code>: The total amount of entries to retrieve when using the from parameter. Defaults to 50.</li>
-     * </ul>
-     * <p><strong>Note</strong>: The first time you call this endpoint using checkpoint pagination, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no pages are remaining.</p>
+     * </ul></p>
+     * <p><b>Note</b>: The first time you call this endpoint using checkpoint pagination, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no pages are remaining.</p>
      */
-    public SyncPagingIterable<ConnectionForList> list() {
+    public SyncPagingIterable<ConnectionResponseContent> list() {
         return this.rawClient.list().body();
     }
 
     /**
      * Retrieves detailed list of all <a href="https://auth0.com/docs/authenticate/identity-providers">connections</a> that match the specified strategy. If no strategy is provided, all connections within your tenant are retrieved. This action can accept a list of fields to include or exclude from the resulting list of connections.
      * <p>This endpoint supports two types of pagination:</p>
-     * <ul>
+     * <p><ul>
      * <li>Offset pagination</li>
      * <li>Checkpoint pagination</li>
-     * </ul>
+     * </ul></p>
      * <p>Checkpoint pagination must be used if you need to retrieve more than 1000 connections.</p>
-     * <p><strong>Checkpoint Pagination</strong></p>
+     * <p><h2>Checkpoint Pagination</h2></p>
      * <p>To search by checkpoint, use the following parameters:</p>
-     * <ul>
+     * <p><ul>
      * <li><code>from</code>: Optional id from which to start selection.</li>
      * <li><code>take</code>: The total amount of entries to retrieve when using the from parameter. Defaults to 50.</li>
-     * </ul>
-     * <p><strong>Note</strong>: The first time you call this endpoint using checkpoint pagination, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no pages are remaining.</p>
+     * </ul></p>
+     * <p><b>Note</b>: The first time you call this endpoint using checkpoint pagination, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no pages are remaining.</p>
      */
-    public SyncPagingIterable<ConnectionForList> list(RequestOptions requestOptions) {
+    public SyncPagingIterable<ConnectionResponseContent> list(RequestOptions requestOptions) {
         return this.rawClient.list(requestOptions).body();
     }
 
     /**
      * Retrieves detailed list of all <a href="https://auth0.com/docs/authenticate/identity-providers">connections</a> that match the specified strategy. If no strategy is provided, all connections within your tenant are retrieved. This action can accept a list of fields to include or exclude from the resulting list of connections.
      * <p>This endpoint supports two types of pagination:</p>
-     * <ul>
+     * <p><ul>
      * <li>Offset pagination</li>
      * <li>Checkpoint pagination</li>
-     * </ul>
+     * </ul></p>
      * <p>Checkpoint pagination must be used if you need to retrieve more than 1000 connections.</p>
-     * <p><strong>Checkpoint Pagination</strong></p>
+     * <p><h2>Checkpoint Pagination</h2></p>
      * <p>To search by checkpoint, use the following parameters:</p>
-     * <ul>
+     * <p><ul>
      * <li><code>from</code>: Optional id from which to start selection.</li>
      * <li><code>take</code>: The total amount of entries to retrieve when using the from parameter. Defaults to 50.</li>
-     * </ul>
-     * <p><strong>Note</strong>: The first time you call this endpoint using checkpoint pagination, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no pages are remaining.</p>
+     * </ul></p>
+     * <p><b>Note</b>: The first time you call this endpoint using checkpoint pagination, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no pages are remaining.</p>
      */
-    public SyncPagingIterable<ConnectionForList> list(ListConnectionsQueryParameters request) {
+    public SyncPagingIterable<ConnectionResponseContent> list(ListConnectionsQueryParameters request) {
         return this.rawClient.list(request).body();
     }
 
     /**
      * Retrieves detailed list of all <a href="https://auth0.com/docs/authenticate/identity-providers">connections</a> that match the specified strategy. If no strategy is provided, all connections within your tenant are retrieved. This action can accept a list of fields to include or exclude from the resulting list of connections.
      * <p>This endpoint supports two types of pagination:</p>
-     * <ul>
+     * <p><ul>
      * <li>Offset pagination</li>
      * <li>Checkpoint pagination</li>
-     * </ul>
+     * </ul></p>
      * <p>Checkpoint pagination must be used if you need to retrieve more than 1000 connections.</p>
-     * <p><strong>Checkpoint Pagination</strong></p>
+     * <p><h2>Checkpoint Pagination</h2></p>
      * <p>To search by checkpoint, use the following parameters:</p>
-     * <ul>
+     * <p><ul>
      * <li><code>from</code>: Optional id from which to start selection.</li>
      * <li><code>take</code>: The total amount of entries to retrieve when using the from parameter. Defaults to 50.</li>
-     * </ul>
-     * <p><strong>Note</strong>: The first time you call this endpoint using checkpoint pagination, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no pages are remaining.</p>
+     * </ul></p>
+     * <p><b>Note</b>: The first time you call this endpoint using checkpoint pagination, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no pages are remaining.</p>
      */
-    public SyncPagingIterable<ConnectionForList> list(
+    public SyncPagingIterable<ConnectionResponseContent> list(
             ListConnectionsQueryParameters request, RequestOptions requestOptions) {
         return this.rawClient.list(request, requestOptions).body();
     }
 
     /**
-     * Creates a new connection according to the JSON object received in <code>body</code>.
-     * <p><strong>Note:</strong> If a connection with the same name was recently deleted and had a large number of associated users, the deletion may still be processing. Creating a new connection with that name before the deletion completes may fail or produce unexpected results.</p>
+     * Creates a new connection according to the JSON object received in <code>body</code>.<br/>
      */
-    public CreateConnectionResponseContent create(CreateConnectionRequestContent request) {
+    public ConnectionResponseContent create(CreateConnectionRequestContent request) {
         return this.rawClient.create(request).body();
     }
 
     /**
-     * Creates a new connection according to the JSON object received in <code>body</code>.
-     * <p><strong>Note:</strong> If a connection with the same name was recently deleted and had a large number of associated users, the deletion may still be processing. Creating a new connection with that name before the deletion completes may fail or produce unexpected results.</p>
+     * Creates a new connection according to the JSON object received in <code>body</code>.<br/>
      */
-    public CreateConnectionResponseContent create(
-            CreateConnectionRequestContent request, RequestOptions requestOptions) {
+    public ConnectionResponseContent create(CreateConnectionRequestContent request, RequestOptions requestOptions) {
         return this.rawClient.create(request, requestOptions).body();
     }
 
     /**
      * Retrieve details for a specified <a href="https://auth0.com/docs/authenticate/identity-providers">connection</a> along with options that can be used for identity provider configuration.
      */
-    public GetConnectionResponseContent get(String id) {
+    public ConnectionResponseContent get(String id) {
         return this.rawClient.get(id).body();
     }
 
     /**
      * Retrieve details for a specified <a href="https://auth0.com/docs/authenticate/identity-providers">connection</a> along with options that can be used for identity provider configuration.
      */
-    public GetConnectionResponseContent get(String id, RequestOptions requestOptions) {
+    public ConnectionResponseContent get(String id, RequestOptions requestOptions) {
         return this.rawClient.get(id, requestOptions).body();
     }
 
     /**
      * Retrieve details for a specified <a href="https://auth0.com/docs/authenticate/identity-providers">connection</a> along with options that can be used for identity provider configuration.
      */
-    public GetConnectionResponseContent get(String id, GetConnectionRequestParameters request) {
+    public ConnectionResponseContent get(String id, GetConnectionRequestParameters request) {
         return this.rawClient.get(id, request).body();
     }
 
     /**
      * Retrieve details for a specified <a href="https://auth0.com/docs/authenticate/identity-providers">connection</a> along with options that can be used for identity provider configuration.
      */
-    public GetConnectionResponseContent get(
+    public ConnectionResponseContent get(
             String id, GetConnectionRequestParameters request, RequestOptions requestOptions) {
         return this.rawClient.get(id, request, requestOptions).body();
     }
 
     /**
      * Removes a specific <a href="https://auth0.com/docs/authenticate/identity-providers">connection</a> from your tenant. This action cannot be undone. Once removed, users can no longer use this connection to authenticate.
-     * <p><strong>Note:</strong> If your connection has a large amount of users associated with it, please be aware that this operation can be long running after the response is returned and may impact concurrent <a href="https://auth0.com/docs/api/management/v2/connections/post-connections">create connection</a> requests, if they use an identical connection name.</p>
      */
     public void delete(String id) {
         this.rawClient.delete(id).body();
@@ -191,7 +184,6 @@ public class ConnectionsClient {
 
     /**
      * Removes a specific <a href="https://auth0.com/docs/authenticate/identity-providers">connection</a> from your tenant. This action cannot be undone. Once removed, users can no longer use this connection to authenticate.
-     * <p><strong>Note:</strong> If your connection has a large amount of users associated with it, please be aware that this operation can be long running after the response is returned and may impact concurrent <a href="https://auth0.com/docs/api/management/v2/connections/post-connections">create connection</a> requests, if they use an identical connection name.</p>
      */
     public void delete(String id, RequestOptions requestOptions) {
         this.rawClient.delete(id, requestOptions).body();
@@ -199,33 +191,17 @@ public class ConnectionsClient {
 
     /**
      * Update details for a specific <a href="https://auth0.com/docs/authenticate/identity-providers">connection</a>, including option properties for identity provider configuration.
-     * <p><strong>Note</strong>: If you use the <code>options</code> parameter, the entire <code>options</code> object is overridden. To avoid partial data or other issues, ensure all parameters are present when using this option.</p>
+     * <p><b>Note</b>: If you use the <code>options</code> parameter, the entire <code>options</code> object is overriden. To avoid partial data or other issues, ensure all parameters are present when using this option.</p>
      */
-    public UpdateConnectionResponseContent update(String id) {
-        return this.rawClient.update(id).body();
-    }
-
-    /**
-     * Update details for a specific <a href="https://auth0.com/docs/authenticate/identity-providers">connection</a>, including option properties for identity provider configuration.
-     * <p><strong>Note</strong>: If you use the <code>options</code> parameter, the entire <code>options</code> object is overridden. To avoid partial data or other issues, ensure all parameters are present when using this option.</p>
-     */
-    public UpdateConnectionResponseContent update(String id, RequestOptions requestOptions) {
-        return this.rawClient.update(id, requestOptions).body();
-    }
-
-    /**
-     * Update details for a specific <a href="https://auth0.com/docs/authenticate/identity-providers">connection</a>, including option properties for identity provider configuration.
-     * <p><strong>Note</strong>: If you use the <code>options</code> parameter, the entire <code>options</code> object is overridden. To avoid partial data or other issues, ensure all parameters are present when using this option.</p>
-     */
-    public UpdateConnectionResponseContent update(String id, UpdateConnectionRequestContent request) {
+    public ConnectionResponseContent update(String id, UpdateConnectionRequestContent request) {
         return this.rawClient.update(id, request).body();
     }
 
     /**
      * Update details for a specific <a href="https://auth0.com/docs/authenticate/identity-providers">connection</a>, including option properties for identity provider configuration.
-     * <p><strong>Note</strong>: If you use the <code>options</code> parameter, the entire <code>options</code> object is overridden. To avoid partial data or other issues, ensure all parameters are present when using this option.</p>
+     * <p><b>Note</b>: If you use the <code>options</code> parameter, the entire <code>options</code> object is overriden. To avoid partial data or other issues, ensure all parameters are present when using this option.</p>
      */
-    public UpdateConnectionResponseContent update(
+    public ConnectionResponseContent update(
             String id, UpdateConnectionRequestContent request, RequestOptions requestOptions) {
         return this.rawClient.update(id, request, requestOptions).body();
     }

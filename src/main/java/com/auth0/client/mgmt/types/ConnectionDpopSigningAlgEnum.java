@@ -10,11 +10,7 @@ public final class ConnectionDpopSigningAlgEnum {
     public static final ConnectionDpopSigningAlgEnum ED25519 =
             new ConnectionDpopSigningAlgEnum(Value.ED25519, "Ed25519");
 
-    public static final ConnectionDpopSigningAlgEnum ES384 = new ConnectionDpopSigningAlgEnum(Value.ES384, "ES384");
-
     public static final ConnectionDpopSigningAlgEnum ES256 = new ConnectionDpopSigningAlgEnum(Value.ES256, "ES256");
-
-    public static final ConnectionDpopSigningAlgEnum ES512 = new ConnectionDpopSigningAlgEnum(Value.ES512, "ES512");
 
     private final Value value;
 
@@ -51,12 +47,8 @@ public final class ConnectionDpopSigningAlgEnum {
         switch (value) {
             case ED25519:
                 return visitor.visitEd25519();
-            case ES384:
-                return visitor.visitEs384();
             case ES256:
                 return visitor.visitEs256();
-            case ES512:
-                return visitor.visitEs512();
             case UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
@@ -68,12 +60,8 @@ public final class ConnectionDpopSigningAlgEnum {
         switch (value) {
             case "Ed25519":
                 return ED25519;
-            case "ES384":
-                return ES384;
             case "ES256":
                 return ES256;
-            case "ES512":
-                return ES512;
             default:
                 return new ConnectionDpopSigningAlgEnum(Value.UNKNOWN, value);
         }
@@ -82,10 +70,6 @@ public final class ConnectionDpopSigningAlgEnum {
     public enum Value {
         ES256,
 
-        ES384,
-
-        ES512,
-
         ED25519,
 
         UNKNOWN
@@ -93,10 +77,6 @@ public final class ConnectionDpopSigningAlgEnum {
 
     public interface Visitor<T> {
         T visitEs256();
-
-        T visitEs384();
-
-        T visitEs512();
 
         T visitEd25519();
 

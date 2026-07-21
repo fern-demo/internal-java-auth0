@@ -158,7 +158,7 @@ public class RawUserAttributeProfilesClient {
     }
 
     /**
-     * Create a User Attribute Profile.
+     * Create a User Attribute Profile
      */
     public ManagementApiHttpResponse<CreateUserAttributeProfileResponseContent> create(
             CreateUserAttributeProfileRequestContent request) {
@@ -166,7 +166,7 @@ public class RawUserAttributeProfilesClient {
     }
 
     /**
-     * Create a User Attribute Profile.
+     * Create a User Attribute Profile
      */
     public ManagementApiHttpResponse<CreateUserAttributeProfileResponseContent> create(
             CreateUserAttributeProfileRequestContent request, RequestOptions requestOptions) {
@@ -625,9 +625,6 @@ public class RawUserAttributeProfilesClient {
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response);
                     case 403:
                         throw new ForbiddenError(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response);
-                    case 404:
-                        throw new NotFoundError(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class), response);
                     case 429:
                         throw new TooManyRequestsError(

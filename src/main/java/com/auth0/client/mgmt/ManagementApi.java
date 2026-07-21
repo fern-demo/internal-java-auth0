@@ -62,8 +62,6 @@ public class ManagementApi {
 
     protected final Supplier<PromptsClient> promptsClient;
 
-    protected final Supplier<RateLimitPoliciesClient> rateLimitPoliciesClient;
-
     protected final Supplier<RefreshTokensClient> refreshTokensClient;
 
     protected final Supplier<ResourceServersClient> resourceServersClient;
@@ -132,7 +130,6 @@ public class ManagementApi {
         this.networkAclsClient = Suppliers.memoize(() -> new NetworkAclsClient(clientOptions));
         this.organizationsClient = Suppliers.memoize(() -> new OrganizationsClient(clientOptions));
         this.promptsClient = Suppliers.memoize(() -> new PromptsClient(clientOptions));
-        this.rateLimitPoliciesClient = Suppliers.memoize(() -> new RateLimitPoliciesClient(clientOptions));
         this.refreshTokensClient = Suppliers.memoize(() -> new RefreshTokensClient(clientOptions));
         this.resourceServersClient = Suppliers.memoize(() -> new ResourceServersClient(clientOptions));
         this.rolesClient = Suppliers.memoize(() -> new RolesClient(clientOptions));
@@ -243,10 +240,6 @@ public class ManagementApi {
 
     public PromptsClient prompts() {
         return this.promptsClient.get();
-    }
-
-    public RateLimitPoliciesClient rateLimitPolicies() {
-        return this.rateLimitPoliciesClient.get();
     }
 
     public RefreshTokensClient refreshTokens() {

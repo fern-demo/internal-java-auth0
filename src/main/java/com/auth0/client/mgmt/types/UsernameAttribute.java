@@ -20,7 +20,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UsernameAttribute.Builder.class)
 public final class UsernameAttribute {
-    private final Optional<UsernameAttributeIdentifier> identifier;
+    private final Optional<ConnectionUsernameAttributeIdentifier> identifier;
 
     private final Optional<Boolean> profileRequired;
 
@@ -31,7 +31,7 @@ public final class UsernameAttribute {
     private final Map<String, Object> additionalProperties;
 
     private UsernameAttribute(
-            Optional<UsernameAttributeIdentifier> identifier,
+            Optional<ConnectionUsernameAttributeIdentifier> identifier,
             Optional<Boolean> profileRequired,
             Optional<SignupSchema> signup,
             Optional<UsernameValidation> validation,
@@ -44,7 +44,7 @@ public final class UsernameAttribute {
     }
 
     @JsonProperty("identifier")
-    public Optional<UsernameAttributeIdentifier> getIdentifier() {
+    public Optional<ConnectionUsernameAttributeIdentifier> getIdentifier() {
         return identifier;
     }
 
@@ -100,7 +100,7 @@ public final class UsernameAttribute {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<UsernameAttributeIdentifier> identifier = Optional.empty();
+        private Optional<ConnectionUsernameAttributeIdentifier> identifier = Optional.empty();
 
         private Optional<Boolean> profileRequired = Optional.empty();
 
@@ -122,12 +122,12 @@ public final class UsernameAttribute {
         }
 
         @JsonSetter(value = "identifier", nulls = Nulls.SKIP)
-        public Builder identifier(Optional<UsernameAttributeIdentifier> identifier) {
+        public Builder identifier(Optional<ConnectionUsernameAttributeIdentifier> identifier) {
             this.identifier = identifier;
             return this;
         }
 
-        public Builder identifier(UsernameAttributeIdentifier identifier) {
+        public Builder identifier(ConnectionUsernameAttributeIdentifier identifier) {
             this.identifier = Optional.ofNullable(identifier);
             return this;
         }

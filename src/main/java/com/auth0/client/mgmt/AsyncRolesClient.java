@@ -7,7 +7,6 @@ import com.auth0.client.mgmt.core.ClientOptions;
 import com.auth0.client.mgmt.core.RequestOptions;
 import com.auth0.client.mgmt.core.Suppliers;
 import com.auth0.client.mgmt.core.SyncPagingIterable;
-import com.auth0.client.mgmt.roles.AsyncGroupsClient;
 import com.auth0.client.mgmt.roles.AsyncPermissionsClient;
 import com.auth0.client.mgmt.roles.AsyncUsersClient;
 import com.auth0.client.mgmt.types.CreateRoleRequestContent;
@@ -25,8 +24,6 @@ public class AsyncRolesClient {
 
     private final AsyncRawRolesClient rawClient;
 
-    protected final Supplier<AsyncGroupsClient> groupsClient;
-
     protected final Supplier<AsyncPermissionsClient> permissionsClient;
 
     protected final Supplier<AsyncUsersClient> usersClient;
@@ -34,7 +31,6 @@ public class AsyncRolesClient {
     public AsyncRolesClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.rawClient = new AsyncRawRolesClient(clientOptions);
-        this.groupsClient = Suppliers.memoize(() -> new AsyncGroupsClient(clientOptions));
         this.permissionsClient = Suppliers.memoize(() -> new AsyncPermissionsClient(clientOptions));
         this.usersClient = Suppliers.memoize(() -> new AsyncUsersClient(clientOptions));
     }
@@ -48,7 +44,7 @@ public class AsyncRolesClient {
 
     /**
      * Retrieve detailed list of user roles created in your tenant.
-     * <p><strong>Note</strong>: The returned list does not include standard roles available for tenant members, such as Admin or Support Access.</p>
+     * <p><b>Note</b>: The returned list does not include standard roles available for tenant members, such as Admin or Support Access.</p>
      */
     public CompletableFuture<SyncPagingIterable<Role>> list() {
         return this.rawClient.list().thenApply(response -> response.body());
@@ -56,7 +52,7 @@ public class AsyncRolesClient {
 
     /**
      * Retrieve detailed list of user roles created in your tenant.
-     * <p><strong>Note</strong>: The returned list does not include standard roles available for tenant members, such as Admin or Support Access.</p>
+     * <p><b>Note</b>: The returned list does not include standard roles available for tenant members, such as Admin or Support Access.</p>
      */
     public CompletableFuture<SyncPagingIterable<Role>> list(RequestOptions requestOptions) {
         return this.rawClient.list(requestOptions).thenApply(response -> response.body());
@@ -64,7 +60,7 @@ public class AsyncRolesClient {
 
     /**
      * Retrieve detailed list of user roles created in your tenant.
-     * <p><strong>Note</strong>: The returned list does not include standard roles available for tenant members, such as Admin or Support Access.</p>
+     * <p><b>Note</b>: The returned list does not include standard roles available for tenant members, such as Admin or Support Access.</p>
      */
     public CompletableFuture<SyncPagingIterable<Role>> list(ListRolesRequestParameters request) {
         return this.rawClient.list(request).thenApply(response -> response.body());
@@ -72,7 +68,7 @@ public class AsyncRolesClient {
 
     /**
      * Retrieve detailed list of user roles created in your tenant.
-     * <p><strong>Note</strong>: The returned list does not include standard roles available for tenant members, such as Admin or Support Access.</p>
+     * <p><b>Note</b>: The returned list does not include standard roles available for tenant members, such as Admin or Support Access.</p>
      */
     public CompletableFuture<SyncPagingIterable<Role>> list(
             ListRolesRequestParameters request, RequestOptions requestOptions) {
@@ -81,7 +77,7 @@ public class AsyncRolesClient {
 
     /**
      * Create a user role for <a href="https://auth0.com/docs/manage-users/access-control/rbac">Role-Based Access Control</a>.
-     * <p><strong>Note</strong>: New roles are not associated with any permissions by default. To assign existing permissions to your role, review Associate Permissions with a Role. To create new permissions, review Add API Permissions.</p>
+     * <p><b>Note</b>: New roles are not associated with any permissions by default. To assign existing permissions to your role, review Associate Permissions with a Role. To create new permissions, review Add API Permissions.</p>
      */
     public CompletableFuture<CreateRoleResponseContent> create(CreateRoleRequestContent request) {
         return this.rawClient.create(request).thenApply(response -> response.body());
@@ -89,7 +85,7 @@ public class AsyncRolesClient {
 
     /**
      * Create a user role for <a href="https://auth0.com/docs/manage-users/access-control/rbac">Role-Based Access Control</a>.
-     * <p><strong>Note</strong>: New roles are not associated with any permissions by default. To assign existing permissions to your role, review Associate Permissions with a Role. To create new permissions, review Add API Permissions.</p>
+     * <p><b>Note</b>: New roles are not associated with any permissions by default. To assign existing permissions to your role, review Associate Permissions with a Role. To create new permissions, review Add API Permissions.</p>
      */
     public CompletableFuture<CreateRoleResponseContent> create(
             CreateRoleRequestContent request, RequestOptions requestOptions) {
@@ -151,10 +147,6 @@ public class AsyncRolesClient {
     public CompletableFuture<UpdateRoleResponseContent> update(
             String id, UpdateRoleRequestContent request, RequestOptions requestOptions) {
         return this.rawClient.update(id, request, requestOptions).thenApply(response -> response.body());
-    }
-
-    public AsyncGroupsClient groups() {
-        return this.groupsClient.get();
     }
 
     public AsyncPermissionsClient permissions() {

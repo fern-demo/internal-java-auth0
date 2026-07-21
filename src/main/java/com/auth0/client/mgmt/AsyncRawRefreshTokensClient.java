@@ -191,28 +191,28 @@ public class AsyncRawRefreshTokensClient {
     }
 
     /**
-     * Revoke refresh tokens in bulk by ID list, user, user+client, or user+client+audience.
+     * Revoke refresh tokens in bulk by ID list, user, user+client, or client.
      */
     public CompletableFuture<ManagementApiHttpResponse<Void>> revoke() {
         return revoke(RevokeRefreshTokensRequestContent.builder().build());
     }
 
     /**
-     * Revoke refresh tokens in bulk by ID list, user, user+client, or user+client+audience.
+     * Revoke refresh tokens in bulk by ID list, user, user+client, or client.
      */
     public CompletableFuture<ManagementApiHttpResponse<Void>> revoke(RequestOptions requestOptions) {
         return revoke(RevokeRefreshTokensRequestContent.builder().build(), requestOptions);
     }
 
     /**
-     * Revoke refresh tokens in bulk by ID list, user, user+client, or user+client+audience.
+     * Revoke refresh tokens in bulk by ID list, user, user+client, or client.
      */
     public CompletableFuture<ManagementApiHttpResponse<Void>> revoke(RevokeRefreshTokensRequestContent request) {
         return revoke(request, null);
     }
 
     /**
-     * Revoke refresh tokens in bulk by ID list, user, user+client, or user+client+audience.
+     * Revoke refresh tokens in bulk by ID list, user, user+client, or client.
      */
     public CompletableFuture<ManagementApiHttpResponse<Void>> revoke(
             RevokeRefreshTokensRequestContent request, RequestOptions requestOptions) {

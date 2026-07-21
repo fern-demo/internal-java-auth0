@@ -33,8 +33,6 @@ public final class GetOrganizationByNameResponseContent {
 
     private final Optional<TokenQuota> tokenQuota;
 
-    private final Optional<OrganizationThirdPartyClientAccessEnum> thirdPartyClientAccess;
-
     private final Map<String, Object> additionalProperties;
 
     private GetOrganizationByNameResponseContent(
@@ -44,7 +42,6 @@ public final class GetOrganizationByNameResponseContent {
             Optional<OrganizationBranding> branding,
             Optional<Map<String, OptionalNullable<String>>> metadata,
             Optional<TokenQuota> tokenQuota,
-            Optional<OrganizationThirdPartyClientAccessEnum> thirdPartyClientAccess,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.name = name;
@@ -52,7 +49,6 @@ public final class GetOrganizationByNameResponseContent {
         this.branding = branding;
         this.metadata = metadata;
         this.tokenQuota = tokenQuota;
-        this.thirdPartyClientAccess = thirdPartyClientAccess;
         this.additionalProperties = additionalProperties;
     }
 
@@ -95,11 +91,6 @@ public final class GetOrganizationByNameResponseContent {
         return tokenQuota;
     }
 
-    @JsonProperty("third_party_client_access")
-    public Optional<OrganizationThirdPartyClientAccessEnum> getThirdPartyClientAccess() {
-        return thirdPartyClientAccess;
-    }
-
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -118,20 +109,12 @@ public final class GetOrganizationByNameResponseContent {
                 && displayName.equals(other.displayName)
                 && branding.equals(other.branding)
                 && metadata.equals(other.metadata)
-                && tokenQuota.equals(other.tokenQuota)
-                && thirdPartyClientAccess.equals(other.thirdPartyClientAccess);
+                && tokenQuota.equals(other.tokenQuota);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(
-                this.id,
-                this.name,
-                this.displayName,
-                this.branding,
-                this.metadata,
-                this.tokenQuota,
-                this.thirdPartyClientAccess);
+        return Objects.hash(this.id, this.name, this.displayName, this.branding, this.metadata, this.tokenQuota);
     }
 
     @java.lang.Override
@@ -157,8 +140,6 @@ public final class GetOrganizationByNameResponseContent {
 
         private Optional<TokenQuota> tokenQuota = Optional.empty();
 
-        private Optional<OrganizationThirdPartyClientAccessEnum> thirdPartyClientAccess = Optional.empty();
-
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -171,7 +152,6 @@ public final class GetOrganizationByNameResponseContent {
             branding(other.getBranding());
             metadata(other.getMetadata());
             tokenQuota(other.getTokenQuota());
-            thirdPartyClientAccess(other.getThirdPartyClientAccess());
             return this;
         }
 
@@ -250,27 +230,9 @@ public final class GetOrganizationByNameResponseContent {
             return this;
         }
 
-        @JsonSetter(value = "third_party_client_access", nulls = Nulls.SKIP)
-        public Builder thirdPartyClientAccess(Optional<OrganizationThirdPartyClientAccessEnum> thirdPartyClientAccess) {
-            this.thirdPartyClientAccess = thirdPartyClientAccess;
-            return this;
-        }
-
-        public Builder thirdPartyClientAccess(OrganizationThirdPartyClientAccessEnum thirdPartyClientAccess) {
-            this.thirdPartyClientAccess = Optional.ofNullable(thirdPartyClientAccess);
-            return this;
-        }
-
         public GetOrganizationByNameResponseContent build() {
             return new GetOrganizationByNameResponseContent(
-                    id,
-                    name,
-                    displayName,
-                    branding,
-                    metadata,
-                    tokenQuota,
-                    thirdPartyClientAccess,
-                    additionalProperties);
+                    id, name, displayName, branding, metadata, tokenQuota, additionalProperties);
         }
 
         public Builder additionalProperty(String key, Object value) {

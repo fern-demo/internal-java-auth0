@@ -26,7 +26,7 @@ import org.jetbrains.annotations.Nullable;
 public final class ConnectionOptionsAuth0 implements IConnectionOptionsCommon {
     private final Optional<List<String>> nonPersistentAttrs;
 
-    private final Optional<ConnectionAttributes> attributes;
+    private final OptionalNullable<ConnectionAttributes> attributes;
 
     private final OptionalNullable<ConnectionAuthenticationMethods> authenticationMethods;
 
@@ -74,7 +74,7 @@ public final class ConnectionOptionsAuth0 implements IConnectionOptionsCommon {
 
     private ConnectionOptionsAuth0(
             Optional<List<String>> nonPersistentAttrs,
-            Optional<ConnectionAttributes> attributes,
+            OptionalNullable<ConnectionAttributes> attributes,
             OptionalNullable<ConnectionAuthenticationMethods> authenticationMethods,
             Optional<Boolean> bruteForceProtection,
             Optional<Map<String, String>> configuration,
@@ -129,8 +129,12 @@ public final class ConnectionOptionsAuth0 implements IConnectionOptionsCommon {
         return nonPersistentAttrs;
     }
 
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("attributes")
-    public Optional<ConnectionAttributes> getAttributes() {
+    public OptionalNullable<ConnectionAttributes> getAttributes() {
+        if (attributes == null) {
+            return OptionalNullable.absent();
+        }
         return attributes;
     }
 
@@ -272,6 +276,12 @@ public final class ConnectionOptionsAuth0 implements IConnectionOptionsCommon {
     }
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("attributes")
+    private OptionalNullable<ConnectionAttributes> _getAttributes() {
+        return attributes;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("authentication_methods")
     private OptionalNullable<ConnectionAuthenticationMethods> _getAuthenticationMethods() {
         return authenticationMethods;
@@ -397,7 +407,7 @@ public final class ConnectionOptionsAuth0 implements IConnectionOptionsCommon {
     public static final class Builder {
         private Optional<List<String>> nonPersistentAttrs = Optional.empty();
 
-        private Optional<ConnectionAttributes> attributes = Optional.empty();
+        private OptionalNullable<ConnectionAttributes> attributes = OptionalNullable.absent();
 
         private OptionalNullable<ConnectionAuthenticationMethods> authenticationMethods = OptionalNullable.absent();
 
@@ -487,13 +497,33 @@ public final class ConnectionOptionsAuth0 implements IConnectionOptionsCommon {
         }
 
         @JsonSetter(value = "attributes", nulls = Nulls.SKIP)
-        public Builder attributes(Optional<ConnectionAttributes> attributes) {
+        public Builder attributes(@Nullable OptionalNullable<ConnectionAttributes> attributes) {
             this.attributes = attributes;
             return this;
         }
 
         public Builder attributes(ConnectionAttributes attributes) {
-            this.attributes = Optional.ofNullable(attributes);
+            this.attributes = OptionalNullable.of(attributes);
+            return this;
+        }
+
+        public Builder attributes(Optional<ConnectionAttributes> attributes) {
+            if (attributes.isPresent()) {
+                this.attributes = OptionalNullable.of(attributes.get());
+            } else {
+                this.attributes = OptionalNullable.absent();
+            }
+            return this;
+        }
+
+        public Builder attributes(com.auth0.client.mgmt.core.Nullable<ConnectionAttributes> attributes) {
+            if (attributes.isNull()) {
+                this.attributes = OptionalNullable.ofNull();
+            } else if (attributes.isEmpty()) {
+                this.attributes = OptionalNullable.absent();
+            } else {
+                this.attributes = OptionalNullable.of(attributes.get());
+            }
             return this;
         }
 

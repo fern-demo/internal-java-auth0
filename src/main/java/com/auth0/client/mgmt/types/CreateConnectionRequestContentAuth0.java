@@ -33,8 +33,6 @@ public final class CreateConnectionRequestContentAuth0 implements ICreateConnect
 
     private final Optional<Map<String, OptionalNullable<String>>> metadata;
 
-    private final CreateConnectionRequestContentAuth0Strategy strategy;
-
     private final Optional<ConnectionOptionsAuth0> options;
 
     private final Optional<List<String>> realms;
@@ -47,7 +45,6 @@ public final class CreateConnectionRequestContentAuth0 implements ICreateConnect
             Optional<String> displayName,
             Optional<Boolean> isDomainConnection,
             Optional<Map<String, OptionalNullable<String>>> metadata,
-            CreateConnectionRequestContentAuth0Strategy strategy,
             Optional<ConnectionOptionsAuth0> options,
             Optional<List<String>> realms,
             Map<String, Object> additionalProperties) {
@@ -56,7 +53,6 @@ public final class CreateConnectionRequestContentAuth0 implements ICreateConnect
         this.displayName = displayName;
         this.isDomainConnection = isDomainConnection;
         this.metadata = metadata;
-        this.strategy = strategy;
         this.options = options;
         this.realms = realms;
         this.additionalProperties = additionalProperties;
@@ -95,11 +91,6 @@ public final class CreateConnectionRequestContentAuth0 implements ICreateConnect
         return metadata;
     }
 
-    @JsonProperty("strategy")
-    public CreateConnectionRequestContentAuth0Strategy getStrategy() {
-        return strategy;
-    }
-
     @JsonProperty("options")
     public Optional<ConnectionOptionsAuth0> getOptions() {
         return options;
@@ -128,7 +119,6 @@ public final class CreateConnectionRequestContentAuth0 implements ICreateConnect
                 && displayName.equals(other.displayName)
                 && isDomainConnection.equals(other.isDomainConnection)
                 && metadata.equals(other.metadata)
-                && strategy.equals(other.strategy)
                 && options.equals(other.options)
                 && realms.equals(other.realms);
     }
@@ -141,7 +131,6 @@ public final class CreateConnectionRequestContentAuth0 implements ICreateConnect
                 this.displayName,
                 this.isDomainConnection,
                 this.metadata,
-                this.strategy,
                 this.options,
                 this.realms);
     }
@@ -156,13 +145,9 @@ public final class CreateConnectionRequestContentAuth0 implements ICreateConnect
     }
 
     public interface NameStage {
-        StrategyStage name(@NotNull String name);
+        _FinalStage name(@NotNull String name);
 
         Builder from(CreateConnectionRequestContentAuth0 other);
-    }
-
-    public interface StrategyStage {
-        _FinalStage strategy(@NotNull CreateConnectionRequestContentAuth0Strategy strategy);
     }
 
     public interface _FinalStage {
@@ -201,10 +186,8 @@ public final class CreateConnectionRequestContentAuth0 implements ICreateConnect
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements NameStage, StrategyStage, _FinalStage {
+    public static final class Builder implements NameStage, _FinalStage {
         private String name;
-
-        private CreateConnectionRequestContentAuth0Strategy strategy;
 
         private Optional<List<String>> realms = Optional.empty();
 
@@ -230,7 +213,6 @@ public final class CreateConnectionRequestContentAuth0 implements ICreateConnect
             displayName(other.getDisplayName());
             isDomainConnection(other.getIsDomainConnection());
             metadata(other.getMetadata());
-            strategy(other.getStrategy());
             options(other.getOptions());
             realms(other.getRealms());
             return this;
@@ -238,15 +220,8 @@ public final class CreateConnectionRequestContentAuth0 implements ICreateConnect
 
         @java.lang.Override
         @JsonSetter("name")
-        public StrategyStage name(@NotNull String name) {
+        public _FinalStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("strategy")
-        public _FinalStage strategy(@NotNull CreateConnectionRequestContentAuth0Strategy strategy) {
-            this.strategy = Objects.requireNonNull(strategy, "strategy must not be null");
             return this;
         }
 
@@ -343,7 +318,6 @@ public final class CreateConnectionRequestContentAuth0 implements ICreateConnect
                     displayName,
                     isDomainConnection,
                     metadata,
-                    strategy,
                     options,
                     realms,
                     additionalProperties);

@@ -3,547 +3,3300 @@
  */
 package com.auth0.client.mgmt.types;
 
-import com.auth0.client.mgmt.core.ObjectMappers;
-import com.auth0.client.mgmt.core.OptionalNullable;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Objects;
 import java.util.Optional;
-import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = CreateConnectionRequestContent.Builder.class)
 public final class CreateConnectionRequestContent {
-    private final String name;
+    private final Value value;
 
-    private final Optional<String> displayName;
-
-    private final ConnectionIdentityProviderEnum strategy;
-
-    private final Optional<ConnectionPropertiesOptions> options;
-
-    private final Optional<List<String>> enabledClients;
-
-    private final Optional<Boolean> isDomainConnection;
-
-    private final Optional<Boolean> showAsButton;
-
-    private final Optional<List<String>> realms;
-
-    private final Optional<Map<String, OptionalNullable<String>>> metadata;
-
-    private final Optional<ConnectionAuthenticationPurpose> authentication;
-
-    private final Optional<ConnectionConnectedAccountsPurpose> connectedAccounts;
-
-    private final Optional<CrossAppAccessRequestingApp> crossAppAccessRequestingApp;
-
-    private final Map<String, Object> additionalProperties;
-
-    private CreateConnectionRequestContent(
-            String name,
-            Optional<String> displayName,
-            ConnectionIdentityProviderEnum strategy,
-            Optional<ConnectionPropertiesOptions> options,
-            Optional<List<String>> enabledClients,
-            Optional<Boolean> isDomainConnection,
-            Optional<Boolean> showAsButton,
-            Optional<List<String>> realms,
-            Optional<Map<String, OptionalNullable<String>>> metadata,
-            Optional<ConnectionAuthenticationPurpose> authentication,
-            Optional<ConnectionConnectedAccountsPurpose> connectedAccounts,
-            Optional<CrossAppAccessRequestingApp> crossAppAccessRequestingApp,
-            Map<String, Object> additionalProperties) {
-        this.name = name;
-        this.displayName = displayName;
-        this.strategy = strategy;
-        this.options = options;
-        this.enabledClients = enabledClients;
-        this.isDomainConnection = isDomainConnection;
-        this.showAsButton = showAsButton;
-        this.realms = realms;
-        this.metadata = metadata;
-        this.authentication = authentication;
-        this.connectedAccounts = connectedAccounts;
-        this.crossAppAccessRequestingApp = crossAppAccessRequestingApp;
-        this.additionalProperties = additionalProperties;
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    private CreateConnectionRequestContent(Value value) {
+        this.value = value;
     }
 
-    /**
-     * @return The name of the connection. Must start and end with an alphanumeric character and can only contain alphanumeric characters and '-'. Max length 128
-     */
-    @JsonProperty("name")
-    public String getName() {
-        return name;
+    public <T> T visit(Visitor<T> visitor) {
+        return value.visit(visitor);
     }
 
-    /**
-     * @return Connection name used in the new universal login experience
-     */
-    @JsonProperty("display_name")
-    public Optional<String> getDisplayName() {
-        return displayName;
+    public static CreateConnectionRequestContent ad(CreateConnectionRequestContentAd value) {
+        return new CreateConnectionRequestContent(new AdValue(value));
     }
 
-    @JsonProperty("strategy")
-    public ConnectionIdentityProviderEnum getStrategy() {
-        return strategy;
+    public static CreateConnectionRequestContent adfs(CreateConnectionRequestContentAdfs value) {
+        return new CreateConnectionRequestContent(new AdfsValue(value));
     }
 
-    @JsonProperty("options")
-    public Optional<ConnectionPropertiesOptions> getOptions() {
-        return options;
+    public static CreateConnectionRequestContent amazon(CreateConnectionRequestContentAmazon value) {
+        return new CreateConnectionRequestContent(new AmazonValue(value));
     }
 
-    /**
-     * @return Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
-     */
-    @JsonProperty("enabled_clients")
-    public Optional<List<String>> getEnabledClients() {
-        return enabledClients;
+    public static CreateConnectionRequestContent apple(CreateConnectionRequestContentApple value) {
+        return new CreateConnectionRequestContent(new AppleValue(value));
     }
 
-    /**
-     * @return <code>true</code> promotes to a domain-level connection so that third-party applications can use it. <code>false</code> does not promote the connection, so only first-party applications with the connection enabled can use it. (Defaults to <code>false</code>.)
-     */
-    @JsonProperty("is_domain_connection")
-    public Optional<Boolean> getIsDomainConnection() {
-        return isDomainConnection;
+    public static CreateConnectionRequestContent auth0Oidc(CreateConnectionRequestContentAuth0Oidc value) {
+        return new CreateConnectionRequestContent(new Auth0OidcValue(value));
     }
 
-    /**
-     * @return Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. (Defaults to <code>false</code>.)
-     */
-    @JsonProperty("show_as_button")
-    public Optional<Boolean> getShowAsButton() {
-        return showAsButton;
+    public static CreateConnectionRequestContent auth0(CreateConnectionRequestContentAuth0 value) {
+        return new CreateConnectionRequestContent(new Auth0Value(value));
     }
 
-    /**
-     * @return Defines the realms for which the connection will be used (ie: email domains). If the array is empty or the property is not specified, the connection name will be added as realm.
-     */
-    @JsonProperty("realms")
-    public Optional<List<String>> getRealms() {
-        return realms;
+    public static CreateConnectionRequestContent baidu(CreateConnectionRequestContentBaidu value) {
+        return new CreateConnectionRequestContent(new BaiduValue(value));
     }
 
-    @JsonProperty("metadata")
-    public Optional<Map<String, OptionalNullable<String>>> getMetadata() {
-        return metadata;
+    public static CreateConnectionRequestContent bitbucket(CreateConnectionRequestContentBitbucket value) {
+        return new CreateConnectionRequestContent(new BitbucketValue(value));
     }
 
-    @JsonProperty("authentication")
-    public Optional<ConnectionAuthenticationPurpose> getAuthentication() {
-        return authentication;
+    public static CreateConnectionRequestContent bitly(CreateConnectionRequestContentBitly value) {
+        return new CreateConnectionRequestContent(new BitlyValue(value));
     }
 
-    @JsonProperty("connected_accounts")
-    public Optional<ConnectionConnectedAccountsPurpose> getConnectedAccounts() {
-        return connectedAccounts;
+    public static CreateConnectionRequestContent box(CreateConnectionRequestContentBox value) {
+        return new CreateConnectionRequestContent(new BoxValue(value));
     }
 
-    @JsonProperty("cross_app_access_requesting_app")
-    public Optional<CrossAppAccessRequestingApp> getCrossAppAccessRequestingApp() {
-        return crossAppAccessRequestingApp;
+    public static CreateConnectionRequestContent custom(CreateConnectionRequestContentCustom value) {
+        return new CreateConnectionRequestContent(new CustomValue(value));
     }
 
-    @java.lang.Override
+    public static CreateConnectionRequestContent daccount(CreateConnectionRequestContentDaccount value) {
+        return new CreateConnectionRequestContent(new DaccountValue(value));
+    }
+
+    public static CreateConnectionRequestContent dropbox(CreateConnectionRequestContentDropbox value) {
+        return new CreateConnectionRequestContent(new DropboxValue(value));
+    }
+
+    public static CreateConnectionRequestContent dwolla(CreateConnectionRequestContentDwolla value) {
+        return new CreateConnectionRequestContent(new DwollaValue(value));
+    }
+
+    public static CreateConnectionRequestContent email(CreateConnectionRequestContentEmail value) {
+        return new CreateConnectionRequestContent(new EmailValue(value));
+    }
+
+    public static CreateConnectionRequestContent evernoteSandbox(CreateConnectionRequestContentEvernoteSandbox value) {
+        return new CreateConnectionRequestContent(new EvernoteSandboxValue(value));
+    }
+
+    public static CreateConnectionRequestContent evernote(CreateConnectionRequestContentEvernote value) {
+        return new CreateConnectionRequestContent(new EvernoteValue(value));
+    }
+
+    public static CreateConnectionRequestContent exact(CreateConnectionRequestContentExact value) {
+        return new CreateConnectionRequestContent(new ExactValue(value));
+    }
+
+    public static CreateConnectionRequestContent facebook(CreateConnectionRequestContentFacebook value) {
+        return new CreateConnectionRequestContent(new FacebookValue(value));
+    }
+
+    public static CreateConnectionRequestContent fitbit(CreateConnectionRequestContentFitbit value) {
+        return new CreateConnectionRequestContent(new FitbitValue(value));
+    }
+
+    public static CreateConnectionRequestContent github(CreateConnectionRequestContentGitHub value) {
+        return new CreateConnectionRequestContent(new GithubValue(value));
+    }
+
+    public static CreateConnectionRequestContent googleApps(CreateConnectionRequestContentGoogleApps value) {
+        return new CreateConnectionRequestContent(new GoogleAppsValue(value));
+    }
+
+    public static CreateConnectionRequestContent googleOauth2(CreateConnectionRequestContentGoogleOAuth2 value) {
+        return new CreateConnectionRequestContent(new GoogleOauth2Value(value));
+    }
+
+    public static CreateConnectionRequestContent instagram(CreateConnectionRequestContentInstagram value) {
+        return new CreateConnectionRequestContent(new InstagramValue(value));
+    }
+
+    public static CreateConnectionRequestContent ip(CreateConnectionRequestContentIp value) {
+        return new CreateConnectionRequestContent(new IpValue(value));
+    }
+
+    public static CreateConnectionRequestContent line(CreateConnectionRequestContentLine value) {
+        return new CreateConnectionRequestContent(new LineValue(value));
+    }
+
+    public static CreateConnectionRequestContent linkedin(CreateConnectionRequestContentLinkedin value) {
+        return new CreateConnectionRequestContent(new LinkedinValue(value));
+    }
+
+    public static CreateConnectionRequestContent oauth1(CreateConnectionRequestContentOAuth1 value) {
+        return new CreateConnectionRequestContent(new Oauth1Value(value));
+    }
+
+    public static CreateConnectionRequestContent oauth2(CreateConnectionRequestContentOAuth2 value) {
+        return new CreateConnectionRequestContent(new Oauth2Value(value));
+    }
+
+    public static CreateConnectionRequestContent office365(CreateConnectionRequestContentOffice365 value) {
+        return new CreateConnectionRequestContent(new Office365Value(value));
+    }
+
+    public static CreateConnectionRequestContent oidc(CreateConnectionRequestContentOidc value) {
+        return new CreateConnectionRequestContent(new OidcValue(value));
+    }
+
+    public static CreateConnectionRequestContent okta(CreateConnectionRequestContentOkta value) {
+        return new CreateConnectionRequestContent(new OktaValue(value));
+    }
+
+    public static CreateConnectionRequestContent paypalSandbox(CreateConnectionRequestContentPaypalSandbox value) {
+        return new CreateConnectionRequestContent(new PaypalSandboxValue(value));
+    }
+
+    public static CreateConnectionRequestContent paypal(CreateConnectionRequestContentPaypal value) {
+        return new CreateConnectionRequestContent(new PaypalValue(value));
+    }
+
+    public static CreateConnectionRequestContent pingfederate(CreateConnectionRequestContentPingFederate value) {
+        return new CreateConnectionRequestContent(new PingfederateValue(value));
+    }
+
+    public static CreateConnectionRequestContent planningcenter(CreateConnectionRequestContentPlanningCenter value) {
+        return new CreateConnectionRequestContent(new PlanningcenterValue(value));
+    }
+
+    public static CreateConnectionRequestContent salesforceCommunity(
+            CreateConnectionRequestContentSalesforceCommunity value) {
+        return new CreateConnectionRequestContent(new SalesforceCommunityValue(value));
+    }
+
+    public static CreateConnectionRequestContent salesforceSandbox(
+            CreateConnectionRequestContentSalesforceSandbox value) {
+        return new CreateConnectionRequestContent(new SalesforceSandboxValue(value));
+    }
+
+    public static CreateConnectionRequestContent salesforce(CreateConnectionRequestContentSalesforce value) {
+        return new CreateConnectionRequestContent(new SalesforceValue(value));
+    }
+
+    public static CreateConnectionRequestContent samlp(CreateConnectionRequestContentSaml value) {
+        return new CreateConnectionRequestContent(new SamlpValue(value));
+    }
+
+    public static CreateConnectionRequestContent sharepoint(CreateConnectionRequestContentSharepoint value) {
+        return new CreateConnectionRequestContent(new SharepointValue(value));
+    }
+
+    public static CreateConnectionRequestContent shop(CreateConnectionRequestContentShop value) {
+        return new CreateConnectionRequestContent(new ShopValue(value));
+    }
+
+    public static CreateConnectionRequestContent shopify(CreateConnectionRequestContentShopify value) {
+        return new CreateConnectionRequestContent(new ShopifyValue(value));
+    }
+
+    public static CreateConnectionRequestContent sms(CreateConnectionRequestContentSms value) {
+        return new CreateConnectionRequestContent(new SmsValue(value));
+    }
+
+    public static CreateConnectionRequestContent soundcloud(CreateConnectionRequestContentSoundcloud value) {
+        return new CreateConnectionRequestContent(new SoundcloudValue(value));
+    }
+
+    public static CreateConnectionRequestContent thirtysevensignals(
+            CreateConnectionRequestContentThirtySevenSignals value) {
+        return new CreateConnectionRequestContent(new ThirtysevensignalsValue(value));
+    }
+
+    public static CreateConnectionRequestContent twitter(CreateConnectionRequestContentTwitter value) {
+        return new CreateConnectionRequestContent(new TwitterValue(value));
+    }
+
+    public static CreateConnectionRequestContent untappd(CreateConnectionRequestContentUntappd value) {
+        return new CreateConnectionRequestContent(new UntappdValue(value));
+    }
+
+    public static CreateConnectionRequestContent vkontakte(CreateConnectionRequestContentVkontakte value) {
+        return new CreateConnectionRequestContent(new VkontakteValue(value));
+    }
+
+    public static CreateConnectionRequestContent waad(CreateConnectionRequestContentAzureAd value) {
+        return new CreateConnectionRequestContent(new WaadValue(value));
+    }
+
+    public static CreateConnectionRequestContent weibo(CreateConnectionRequestContentWeibo value) {
+        return new CreateConnectionRequestContent(new WeiboValue(value));
+    }
+
+    public static CreateConnectionRequestContent windowslive(CreateConnectionRequestContentWindowsLive value) {
+        return new CreateConnectionRequestContent(new WindowsliveValue(value));
+    }
+
+    public static CreateConnectionRequestContent wordpress(CreateConnectionRequestContentWordpress value) {
+        return new CreateConnectionRequestContent(new WordpressValue(value));
+    }
+
+    public static CreateConnectionRequestContent yahoo(CreateConnectionRequestContentYahoo value) {
+        return new CreateConnectionRequestContent(new YahooValue(value));
+    }
+
+    public static CreateConnectionRequestContent yandex(CreateConnectionRequestContentYandex value) {
+        return new CreateConnectionRequestContent(new YandexValue(value));
+    }
+
+    public boolean isAd() {
+        return value instanceof AdValue;
+    }
+
+    public boolean isAdfs() {
+        return value instanceof AdfsValue;
+    }
+
+    public boolean isAmazon() {
+        return value instanceof AmazonValue;
+    }
+
+    public boolean isApple() {
+        return value instanceof AppleValue;
+    }
+
+    public boolean isAuth0Oidc() {
+        return value instanceof Auth0OidcValue;
+    }
+
+    public boolean isAuth0() {
+        return value instanceof Auth0Value;
+    }
+
+    public boolean isBaidu() {
+        return value instanceof BaiduValue;
+    }
+
+    public boolean isBitbucket() {
+        return value instanceof BitbucketValue;
+    }
+
+    public boolean isBitly() {
+        return value instanceof BitlyValue;
+    }
+
+    public boolean isBox() {
+        return value instanceof BoxValue;
+    }
+
+    public boolean isCustom() {
+        return value instanceof CustomValue;
+    }
+
+    public boolean isDaccount() {
+        return value instanceof DaccountValue;
+    }
+
+    public boolean isDropbox() {
+        return value instanceof DropboxValue;
+    }
+
+    public boolean isDwolla() {
+        return value instanceof DwollaValue;
+    }
+
+    public boolean isEmail() {
+        return value instanceof EmailValue;
+    }
+
+    public boolean isEvernoteSandbox() {
+        return value instanceof EvernoteSandboxValue;
+    }
+
+    public boolean isEvernote() {
+        return value instanceof EvernoteValue;
+    }
+
+    public boolean isExact() {
+        return value instanceof ExactValue;
+    }
+
+    public boolean isFacebook() {
+        return value instanceof FacebookValue;
+    }
+
+    public boolean isFitbit() {
+        return value instanceof FitbitValue;
+    }
+
+    public boolean isGithub() {
+        return value instanceof GithubValue;
+    }
+
+    public boolean isGoogleApps() {
+        return value instanceof GoogleAppsValue;
+    }
+
+    public boolean isGoogleOauth2() {
+        return value instanceof GoogleOauth2Value;
+    }
+
+    public boolean isInstagram() {
+        return value instanceof InstagramValue;
+    }
+
+    public boolean isIp() {
+        return value instanceof IpValue;
+    }
+
+    public boolean isLine() {
+        return value instanceof LineValue;
+    }
+
+    public boolean isLinkedin() {
+        return value instanceof LinkedinValue;
+    }
+
+    public boolean isOauth1() {
+        return value instanceof Oauth1Value;
+    }
+
+    public boolean isOauth2() {
+        return value instanceof Oauth2Value;
+    }
+
+    public boolean isOffice365() {
+        return value instanceof Office365Value;
+    }
+
+    public boolean isOidc() {
+        return value instanceof OidcValue;
+    }
+
+    public boolean isOkta() {
+        return value instanceof OktaValue;
+    }
+
+    public boolean isPaypalSandbox() {
+        return value instanceof PaypalSandboxValue;
+    }
+
+    public boolean isPaypal() {
+        return value instanceof PaypalValue;
+    }
+
+    public boolean isPingfederate() {
+        return value instanceof PingfederateValue;
+    }
+
+    public boolean isPlanningcenter() {
+        return value instanceof PlanningcenterValue;
+    }
+
+    public boolean isSalesforceCommunity() {
+        return value instanceof SalesforceCommunityValue;
+    }
+
+    public boolean isSalesforceSandbox() {
+        return value instanceof SalesforceSandboxValue;
+    }
+
+    public boolean isSalesforce() {
+        return value instanceof SalesforceValue;
+    }
+
+    public boolean isSamlp() {
+        return value instanceof SamlpValue;
+    }
+
+    public boolean isSharepoint() {
+        return value instanceof SharepointValue;
+    }
+
+    public boolean isShop() {
+        return value instanceof ShopValue;
+    }
+
+    public boolean isShopify() {
+        return value instanceof ShopifyValue;
+    }
+
+    public boolean isSms() {
+        return value instanceof SmsValue;
+    }
+
+    public boolean isSoundcloud() {
+        return value instanceof SoundcloudValue;
+    }
+
+    public boolean isThirtysevensignals() {
+        return value instanceof ThirtysevensignalsValue;
+    }
+
+    public boolean isTwitter() {
+        return value instanceof TwitterValue;
+    }
+
+    public boolean isUntappd() {
+        return value instanceof UntappdValue;
+    }
+
+    public boolean isVkontakte() {
+        return value instanceof VkontakteValue;
+    }
+
+    public boolean isWaad() {
+        return value instanceof WaadValue;
+    }
+
+    public boolean isWeibo() {
+        return value instanceof WeiboValue;
+    }
+
+    public boolean isWindowslive() {
+        return value instanceof WindowsliveValue;
+    }
+
+    public boolean isWordpress() {
+        return value instanceof WordpressValue;
+    }
+
+    public boolean isYahoo() {
+        return value instanceof YahooValue;
+    }
+
+    public boolean isYandex() {
+        return value instanceof YandexValue;
+    }
+
+    public boolean _isUnknown() {
+        return value instanceof _UnknownValue;
+    }
+
+    public Optional<CreateConnectionRequestContentAd> getAd() {
+        if (isAd()) {
+            return Optional.of(((AdValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentAdfs> getAdfs() {
+        if (isAdfs()) {
+            return Optional.of(((AdfsValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentAmazon> getAmazon() {
+        if (isAmazon()) {
+            return Optional.of(((AmazonValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentApple> getApple() {
+        if (isApple()) {
+            return Optional.of(((AppleValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentAuth0Oidc> getAuth0Oidc() {
+        if (isAuth0Oidc()) {
+            return Optional.of(((Auth0OidcValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentAuth0> getAuth0() {
+        if (isAuth0()) {
+            return Optional.of(((Auth0Value) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentBaidu> getBaidu() {
+        if (isBaidu()) {
+            return Optional.of(((BaiduValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentBitbucket> getBitbucket() {
+        if (isBitbucket()) {
+            return Optional.of(((BitbucketValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentBitly> getBitly() {
+        if (isBitly()) {
+            return Optional.of(((BitlyValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentBox> getBox() {
+        if (isBox()) {
+            return Optional.of(((BoxValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentCustom> getCustom() {
+        if (isCustom()) {
+            return Optional.of(((CustomValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentDaccount> getDaccount() {
+        if (isDaccount()) {
+            return Optional.of(((DaccountValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentDropbox> getDropbox() {
+        if (isDropbox()) {
+            return Optional.of(((DropboxValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentDwolla> getDwolla() {
+        if (isDwolla()) {
+            return Optional.of(((DwollaValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentEmail> getEmail() {
+        if (isEmail()) {
+            return Optional.of(((EmailValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentEvernoteSandbox> getEvernoteSandbox() {
+        if (isEvernoteSandbox()) {
+            return Optional.of(((EvernoteSandboxValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentEvernote> getEvernote() {
+        if (isEvernote()) {
+            return Optional.of(((EvernoteValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentExact> getExact() {
+        if (isExact()) {
+            return Optional.of(((ExactValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentFacebook> getFacebook() {
+        if (isFacebook()) {
+            return Optional.of(((FacebookValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentFitbit> getFitbit() {
+        if (isFitbit()) {
+            return Optional.of(((FitbitValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentGitHub> getGithub() {
+        if (isGithub()) {
+            return Optional.of(((GithubValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentGoogleApps> getGoogleApps() {
+        if (isGoogleApps()) {
+            return Optional.of(((GoogleAppsValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentGoogleOAuth2> getGoogleOauth2() {
+        if (isGoogleOauth2()) {
+            return Optional.of(((GoogleOauth2Value) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentInstagram> getInstagram() {
+        if (isInstagram()) {
+            return Optional.of(((InstagramValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentIp> getIp() {
+        if (isIp()) {
+            return Optional.of(((IpValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentLine> getLine() {
+        if (isLine()) {
+            return Optional.of(((LineValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentLinkedin> getLinkedin() {
+        if (isLinkedin()) {
+            return Optional.of(((LinkedinValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentOAuth1> getOauth1() {
+        if (isOauth1()) {
+            return Optional.of(((Oauth1Value) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentOAuth2> getOauth2() {
+        if (isOauth2()) {
+            return Optional.of(((Oauth2Value) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentOffice365> getOffice365() {
+        if (isOffice365()) {
+            return Optional.of(((Office365Value) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentOidc> getOidc() {
+        if (isOidc()) {
+            return Optional.of(((OidcValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentOkta> getOkta() {
+        if (isOkta()) {
+            return Optional.of(((OktaValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentPaypalSandbox> getPaypalSandbox() {
+        if (isPaypalSandbox()) {
+            return Optional.of(((PaypalSandboxValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentPaypal> getPaypal() {
+        if (isPaypal()) {
+            return Optional.of(((PaypalValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentPingFederate> getPingfederate() {
+        if (isPingfederate()) {
+            return Optional.of(((PingfederateValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentPlanningCenter> getPlanningcenter() {
+        if (isPlanningcenter()) {
+            return Optional.of(((PlanningcenterValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentSalesforceCommunity> getSalesforceCommunity() {
+        if (isSalesforceCommunity()) {
+            return Optional.of(((SalesforceCommunityValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentSalesforceSandbox> getSalesforceSandbox() {
+        if (isSalesforceSandbox()) {
+            return Optional.of(((SalesforceSandboxValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentSalesforce> getSalesforce() {
+        if (isSalesforce()) {
+            return Optional.of(((SalesforceValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentSaml> getSamlp() {
+        if (isSamlp()) {
+            return Optional.of(((SamlpValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentSharepoint> getSharepoint() {
+        if (isSharepoint()) {
+            return Optional.of(((SharepointValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentShop> getShop() {
+        if (isShop()) {
+            return Optional.of(((ShopValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentShopify> getShopify() {
+        if (isShopify()) {
+            return Optional.of(((ShopifyValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentSms> getSms() {
+        if (isSms()) {
+            return Optional.of(((SmsValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentSoundcloud> getSoundcloud() {
+        if (isSoundcloud()) {
+            return Optional.of(((SoundcloudValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentThirtySevenSignals> getThirtysevensignals() {
+        if (isThirtysevensignals()) {
+            return Optional.of(((ThirtysevensignalsValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentTwitter> getTwitter() {
+        if (isTwitter()) {
+            return Optional.of(((TwitterValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentUntappd> getUntappd() {
+        if (isUntappd()) {
+            return Optional.of(((UntappdValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentVkontakte> getVkontakte() {
+        if (isVkontakte()) {
+            return Optional.of(((VkontakteValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentAzureAd> getWaad() {
+        if (isWaad()) {
+            return Optional.of(((WaadValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentWeibo> getWeibo() {
+        if (isWeibo()) {
+            return Optional.of(((WeiboValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentWindowsLive> getWindowslive() {
+        if (isWindowslive()) {
+            return Optional.of(((WindowsliveValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentWordpress> getWordpress() {
+        if (isWordpress()) {
+            return Optional.of(((WordpressValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentYahoo> getYahoo() {
+        if (isYahoo()) {
+            return Optional.of(((YahooValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<CreateConnectionRequestContentYandex> getYandex() {
+        if (isYandex()) {
+            return Optional.of(((YandexValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<Object> _getUnknown() {
+        if (_isUnknown()) {
+            return Optional.of(((_UnknownValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    @Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof CreateConnectionRequestContent && equalTo((CreateConnectionRequestContent) other);
+        return other instanceof CreateConnectionRequestContent
+                && value.equals(((CreateConnectionRequestContent) other).value);
     }
 
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
-    private boolean equalTo(CreateConnectionRequestContent other) {
-        return name.equals(other.name)
-                && displayName.equals(other.displayName)
-                && strategy.equals(other.strategy)
-                && options.equals(other.options)
-                && enabledClients.equals(other.enabledClients)
-                && isDomainConnection.equals(other.isDomainConnection)
-                && showAsButton.equals(other.showAsButton)
-                && realms.equals(other.realms)
-                && metadata.equals(other.metadata)
-                && authentication.equals(other.authentication)
-                && connectedAccounts.equals(other.connectedAccounts)
-                && crossAppAccessRequestingApp.equals(other.crossAppAccessRequestingApp);
-    }
-
-    @java.lang.Override
+    @Override
     public int hashCode() {
-        return Objects.hash(
-                this.name,
-                this.displayName,
-                this.strategy,
-                this.options,
-                this.enabledClients,
-                this.isDomainConnection,
-                this.showAsButton,
-                this.realms,
-                this.metadata,
-                this.authentication,
-                this.connectedAccounts,
-                this.crossAppAccessRequestingApp);
+        return Objects.hash(value);
     }
 
-    @java.lang.Override
+    @Override
     public String toString() {
-        return ObjectMappers.stringify(this);
+        return value.toString();
     }
 
-    public static NameStage builder() {
-        return new Builder();
+    @JsonValue
+    private Value getValue() {
+        return this.value;
     }
 
-    public interface NameStage {
-        /**
-         * <p>The name of the connection. Must start and end with an alphanumeric character and can only contain alphanumeric characters and '-'. Max length 128</p>
-         */
-        StrategyStage name(@NotNull String name);
+    public interface Visitor<T> {
+        T visitAd(CreateConnectionRequestContentAd ad);
 
-        Builder from(CreateConnectionRequestContent other);
+        T visitAdfs(CreateConnectionRequestContentAdfs adfs);
+
+        T visitAmazon(CreateConnectionRequestContentAmazon amazon);
+
+        T visitApple(CreateConnectionRequestContentApple apple);
+
+        T visitAuth0Oidc(CreateConnectionRequestContentAuth0Oidc auth0Oidc);
+
+        T visitAuth0(CreateConnectionRequestContentAuth0 auth0);
+
+        T visitBaidu(CreateConnectionRequestContentBaidu baidu);
+
+        T visitBitbucket(CreateConnectionRequestContentBitbucket bitbucket);
+
+        T visitBitly(CreateConnectionRequestContentBitly bitly);
+
+        T visitBox(CreateConnectionRequestContentBox box);
+
+        T visitCustom(CreateConnectionRequestContentCustom custom);
+
+        T visitDaccount(CreateConnectionRequestContentDaccount daccount);
+
+        T visitDropbox(CreateConnectionRequestContentDropbox dropbox);
+
+        T visitDwolla(CreateConnectionRequestContentDwolla dwolla);
+
+        T visitEmail(CreateConnectionRequestContentEmail email);
+
+        T visitEvernoteSandbox(CreateConnectionRequestContentEvernoteSandbox evernoteSandbox);
+
+        T visitEvernote(CreateConnectionRequestContentEvernote evernote);
+
+        T visitExact(CreateConnectionRequestContentExact exact);
+
+        T visitFacebook(CreateConnectionRequestContentFacebook facebook);
+
+        T visitFitbit(CreateConnectionRequestContentFitbit fitbit);
+
+        T visitGithub(CreateConnectionRequestContentGitHub github);
+
+        T visitGoogleApps(CreateConnectionRequestContentGoogleApps googleApps);
+
+        T visitGoogleOauth2(CreateConnectionRequestContentGoogleOAuth2 googleOauth2);
+
+        T visitInstagram(CreateConnectionRequestContentInstagram instagram);
+
+        T visitIp(CreateConnectionRequestContentIp ip);
+
+        T visitLine(CreateConnectionRequestContentLine line);
+
+        T visitLinkedin(CreateConnectionRequestContentLinkedin linkedin);
+
+        T visitOauth1(CreateConnectionRequestContentOAuth1 oauth1);
+
+        T visitOauth2(CreateConnectionRequestContentOAuth2 oauth2);
+
+        T visitOffice365(CreateConnectionRequestContentOffice365 office365);
+
+        T visitOidc(CreateConnectionRequestContentOidc oidc);
+
+        T visitOkta(CreateConnectionRequestContentOkta okta);
+
+        T visitPaypalSandbox(CreateConnectionRequestContentPaypalSandbox paypalSandbox);
+
+        T visitPaypal(CreateConnectionRequestContentPaypal paypal);
+
+        T visitPingfederate(CreateConnectionRequestContentPingFederate pingfederate);
+
+        T visitPlanningcenter(CreateConnectionRequestContentPlanningCenter planningcenter);
+
+        T visitSalesforceCommunity(CreateConnectionRequestContentSalesforceCommunity salesforceCommunity);
+
+        T visitSalesforceSandbox(CreateConnectionRequestContentSalesforceSandbox salesforceSandbox);
+
+        T visitSalesforce(CreateConnectionRequestContentSalesforce salesforce);
+
+        T visitSamlp(CreateConnectionRequestContentSaml samlp);
+
+        T visitSharepoint(CreateConnectionRequestContentSharepoint sharepoint);
+
+        T visitShop(CreateConnectionRequestContentShop shop);
+
+        T visitShopify(CreateConnectionRequestContentShopify shopify);
+
+        T visitSms(CreateConnectionRequestContentSms sms);
+
+        T visitSoundcloud(CreateConnectionRequestContentSoundcloud soundcloud);
+
+        T visitThirtysevensignals(CreateConnectionRequestContentThirtySevenSignals thirtysevensignals);
+
+        T visitTwitter(CreateConnectionRequestContentTwitter twitter);
+
+        T visitUntappd(CreateConnectionRequestContentUntappd untappd);
+
+        T visitVkontakte(CreateConnectionRequestContentVkontakte vkontakte);
+
+        T visitWaad(CreateConnectionRequestContentAzureAd waad);
+
+        T visitWeibo(CreateConnectionRequestContentWeibo weibo);
+
+        T visitWindowslive(CreateConnectionRequestContentWindowsLive windowslive);
+
+        T visitWordpress(CreateConnectionRequestContentWordpress wordpress);
+
+        T visitYahoo(CreateConnectionRequestContentYahoo yahoo);
+
+        T visitYandex(CreateConnectionRequestContentYandex yandex);
+
+        T _visitUnknown(Object unknownType);
     }
 
-    public interface StrategyStage {
-        _FinalStage strategy(@NotNull ConnectionIdentityProviderEnum strategy);
-    }
-
-    public interface _FinalStage {
-        CreateConnectionRequestContent build();
-
-        _FinalStage additionalProperty(String key, Object value);
-
-        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
-
-        /**
-         * <p>Connection name used in the new universal login experience</p>
-         */
-        _FinalStage displayName(Optional<String> displayName);
-
-        _FinalStage displayName(String displayName);
-
-        _FinalStage options(Optional<ConnectionPropertiesOptions> options);
-
-        _FinalStage options(ConnectionPropertiesOptions options);
-
-        /**
-         * <p>Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.</p>
-         */
-        _FinalStage enabledClients(Optional<List<String>> enabledClients);
-
-        _FinalStage enabledClients(List<String> enabledClients);
-
-        /**
-         * <p><code>true</code> promotes to a domain-level connection so that third-party applications can use it. <code>false</code> does not promote the connection, so only first-party applications with the connection enabled can use it. (Defaults to <code>false</code>.)</p>
-         */
-        _FinalStage isDomainConnection(Optional<Boolean> isDomainConnection);
-
-        _FinalStage isDomainConnection(Boolean isDomainConnection);
-
-        /**
-         * <p>Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. (Defaults to <code>false</code>.)</p>
-         */
-        _FinalStage showAsButton(Optional<Boolean> showAsButton);
-
-        _FinalStage showAsButton(Boolean showAsButton);
-
-        /**
-         * <p>Defines the realms for which the connection will be used (ie: email domains). If the array is empty or the property is not specified, the connection name will be added as realm.</p>
-         */
-        _FinalStage realms(Optional<List<String>> realms);
-
-        _FinalStage realms(List<String> realms);
-
-        _FinalStage metadata(Optional<Map<String, OptionalNullable<String>>> metadata);
-
-        _FinalStage metadata(Map<String, OptionalNullable<String>> metadata);
-
-        _FinalStage authentication(Optional<ConnectionAuthenticationPurpose> authentication);
-
-        _FinalStage authentication(ConnectionAuthenticationPurpose authentication);
-
-        _FinalStage connectedAccounts(Optional<ConnectionConnectedAccountsPurpose> connectedAccounts);
-
-        _FinalStage connectedAccounts(ConnectionConnectedAccountsPurpose connectedAccounts);
-
-        _FinalStage crossAppAccessRequestingApp(Optional<CrossAppAccessRequestingApp> crossAppAccessRequestingApp);
-
-        _FinalStage crossAppAccessRequestingApp(CrossAppAccessRequestingApp crossAppAccessRequestingApp);
-    }
-
+    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "strategy", visible = true, defaultImpl = _UnknownValue.class)
+    @JsonSubTypes({
+        @JsonSubTypes.Type(AdValue.class),
+        @JsonSubTypes.Type(AdfsValue.class),
+        @JsonSubTypes.Type(AmazonValue.class),
+        @JsonSubTypes.Type(AppleValue.class),
+        @JsonSubTypes.Type(Auth0OidcValue.class),
+        @JsonSubTypes.Type(Auth0Value.class),
+        @JsonSubTypes.Type(BaiduValue.class),
+        @JsonSubTypes.Type(BitbucketValue.class),
+        @JsonSubTypes.Type(BitlyValue.class),
+        @JsonSubTypes.Type(BoxValue.class),
+        @JsonSubTypes.Type(CustomValue.class),
+        @JsonSubTypes.Type(DaccountValue.class),
+        @JsonSubTypes.Type(DropboxValue.class),
+        @JsonSubTypes.Type(DwollaValue.class),
+        @JsonSubTypes.Type(EmailValue.class),
+        @JsonSubTypes.Type(EvernoteSandboxValue.class),
+        @JsonSubTypes.Type(EvernoteValue.class),
+        @JsonSubTypes.Type(ExactValue.class),
+        @JsonSubTypes.Type(FacebookValue.class),
+        @JsonSubTypes.Type(FitbitValue.class),
+        @JsonSubTypes.Type(GithubValue.class),
+        @JsonSubTypes.Type(GoogleAppsValue.class),
+        @JsonSubTypes.Type(GoogleOauth2Value.class),
+        @JsonSubTypes.Type(InstagramValue.class),
+        @JsonSubTypes.Type(IpValue.class),
+        @JsonSubTypes.Type(LineValue.class),
+        @JsonSubTypes.Type(LinkedinValue.class),
+        @JsonSubTypes.Type(Oauth1Value.class),
+        @JsonSubTypes.Type(Oauth2Value.class),
+        @JsonSubTypes.Type(Office365Value.class),
+        @JsonSubTypes.Type(OidcValue.class),
+        @JsonSubTypes.Type(OktaValue.class),
+        @JsonSubTypes.Type(PaypalSandboxValue.class),
+        @JsonSubTypes.Type(PaypalValue.class),
+        @JsonSubTypes.Type(PingfederateValue.class),
+        @JsonSubTypes.Type(PlanningcenterValue.class),
+        @JsonSubTypes.Type(SalesforceCommunityValue.class),
+        @JsonSubTypes.Type(SalesforceSandboxValue.class),
+        @JsonSubTypes.Type(SalesforceValue.class),
+        @JsonSubTypes.Type(SamlpValue.class),
+        @JsonSubTypes.Type(SharepointValue.class),
+        @JsonSubTypes.Type(ShopValue.class),
+        @JsonSubTypes.Type(ShopifyValue.class),
+        @JsonSubTypes.Type(SmsValue.class),
+        @JsonSubTypes.Type(SoundcloudValue.class),
+        @JsonSubTypes.Type(ThirtysevensignalsValue.class),
+        @JsonSubTypes.Type(TwitterValue.class),
+        @JsonSubTypes.Type(UntappdValue.class),
+        @JsonSubTypes.Type(VkontakteValue.class),
+        @JsonSubTypes.Type(WaadValue.class),
+        @JsonSubTypes.Type(WeiboValue.class),
+        @JsonSubTypes.Type(WindowsliveValue.class),
+        @JsonSubTypes.Type(WordpressValue.class),
+        @JsonSubTypes.Type(YahooValue.class),
+        @JsonSubTypes.Type(YandexValue.class)
+    })
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements NameStage, StrategyStage, _FinalStage {
-        private String name;
+    private interface Value {
+        <T> T visit(Visitor<T> visitor);
+    }
 
-        private ConnectionIdentityProviderEnum strategy;
+    @JsonTypeName("ad")
+    @JsonIgnoreProperties("strategy")
+    private static final class AdValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentAd value;
 
-        private Optional<CrossAppAccessRequestingApp> crossAppAccessRequestingApp = Optional.empty();
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private AdValue() {}
 
-        private Optional<ConnectionConnectedAccountsPurpose> connectedAccounts = Optional.empty();
-
-        private Optional<ConnectionAuthenticationPurpose> authentication = Optional.empty();
-
-        private Optional<Map<String, OptionalNullable<String>>> metadata = Optional.empty();
-
-        private Optional<List<String>> realms = Optional.empty();
-
-        private Optional<Boolean> showAsButton = Optional.empty();
-
-        private Optional<Boolean> isDomainConnection = Optional.empty();
-
-        private Optional<List<String>> enabledClients = Optional.empty();
-
-        private Optional<ConnectionPropertiesOptions> options = Optional.empty();
-
-        private Optional<String> displayName = Optional.empty();
-
-        @JsonAnySetter
-        private Map<String, Object> additionalProperties = new HashMap<>();
-
-        private Builder() {}
-
-        @java.lang.Override
-        public Builder from(CreateConnectionRequestContent other) {
-            name(other.getName());
-            displayName(other.getDisplayName());
-            strategy(other.getStrategy());
-            options(other.getOptions());
-            enabledClients(other.getEnabledClients());
-            isDomainConnection(other.getIsDomainConnection());
-            showAsButton(other.getShowAsButton());
-            realms(other.getRealms());
-            metadata(other.getMetadata());
-            authentication(other.getAuthentication());
-            connectedAccounts(other.getConnectedAccounts());
-            crossAppAccessRequestingApp(other.getCrossAppAccessRequestingApp());
-            return this;
-        }
-
-        /**
-         * <p>The name of the connection. Must start and end with an alphanumeric character and can only contain alphanumeric characters and '-'. Max length 128</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        @JsonSetter("name")
-        public StrategyStage name(@NotNull String name) {
-            this.name = Objects.requireNonNull(name, "name must not be null");
-            return this;
+        private AdValue(CreateConnectionRequestContentAd value) {
+            this.value = value;
         }
 
         @java.lang.Override
-        @JsonSetter("strategy")
-        public _FinalStage strategy(@NotNull ConnectionIdentityProviderEnum strategy) {
-            this.strategy = Objects.requireNonNull(strategy, "strategy must not be null");
-            return this;
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitAd(value);
         }
 
         @java.lang.Override
-        public _FinalStage crossAppAccessRequestingApp(CrossAppAccessRequestingApp crossAppAccessRequestingApp) {
-            this.crossAppAccessRequestingApp = Optional.ofNullable(crossAppAccessRequestingApp);
-            return this;
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof AdValue && equalTo((AdValue) other);
+        }
+
+        private boolean equalTo(AdValue other) {
+            return value.equals(other.value);
         }
 
         @java.lang.Override
-        @JsonSetter(value = "cross_app_access_requesting_app", nulls = Nulls.SKIP)
-        public _FinalStage crossAppAccessRequestingApp(
-                Optional<CrossAppAccessRequestingApp> crossAppAccessRequestingApp) {
-            this.crossAppAccessRequestingApp = crossAppAccessRequestingApp;
-            return this;
+        public int hashCode() {
+            return Objects.hash(this.value);
         }
 
         @java.lang.Override
-        public _FinalStage connectedAccounts(ConnectionConnectedAccountsPurpose connectedAccounts) {
-            this.connectedAccounts = Optional.ofNullable(connectedAccounts);
-            return this;
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("adfs")
+    @JsonIgnoreProperties("strategy")
+    private static final class AdfsValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentAdfs value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private AdfsValue() {}
+
+        private AdfsValue(CreateConnectionRequestContentAdfs value) {
+            this.value = value;
         }
 
         @java.lang.Override
-        @JsonSetter(value = "connected_accounts", nulls = Nulls.SKIP)
-        public _FinalStage connectedAccounts(Optional<ConnectionConnectedAccountsPurpose> connectedAccounts) {
-            this.connectedAccounts = connectedAccounts;
-            return this;
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitAdfs(value);
         }
 
         @java.lang.Override
-        public _FinalStage authentication(ConnectionAuthenticationPurpose authentication) {
-            this.authentication = Optional.ofNullable(authentication);
-            return this;
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof AdfsValue && equalTo((AdfsValue) other);
+        }
+
+        private boolean equalTo(AdfsValue other) {
+            return value.equals(other.value);
         }
 
         @java.lang.Override
-        @JsonSetter(value = "authentication", nulls = Nulls.SKIP)
-        public _FinalStage authentication(Optional<ConnectionAuthenticationPurpose> authentication) {
-            this.authentication = authentication;
-            return this;
+        public int hashCode() {
+            return Objects.hash(this.value);
         }
 
         @java.lang.Override
-        public _FinalStage metadata(Map<String, OptionalNullable<String>> metadata) {
-            this.metadata = Optional.ofNullable(metadata);
-            return this;
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("amazon")
+    @JsonIgnoreProperties("strategy")
+    private static final class AmazonValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentAmazon value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private AmazonValue() {}
+
+        private AmazonValue(CreateConnectionRequestContentAmazon value) {
+            this.value = value;
         }
 
         @java.lang.Override
-        @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
-        public _FinalStage metadata(Optional<Map<String, OptionalNullable<String>>> metadata) {
-            this.metadata = metadata;
-            return this;
-        }
-
-        /**
-         * <p>Defines the realms for which the connection will be used (ie: email domains). If the array is empty or the property is not specified, the connection name will be added as realm.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage realms(List<String> realms) {
-            this.realms = Optional.ofNullable(realms);
-            return this;
-        }
-
-        /**
-         * <p>Defines the realms for which the connection will be used (ie: email domains). If the array is empty or the property is not specified, the connection name will be added as realm.</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "realms", nulls = Nulls.SKIP)
-        public _FinalStage realms(Optional<List<String>> realms) {
-            this.realms = realms;
-            return this;
-        }
-
-        /**
-         * <p>Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. (Defaults to <code>false</code>.)</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage showAsButton(Boolean showAsButton) {
-            this.showAsButton = Optional.ofNullable(showAsButton);
-            return this;
-        }
-
-        /**
-         * <p>Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. (Defaults to <code>false</code>.)</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "show_as_button", nulls = Nulls.SKIP)
-        public _FinalStage showAsButton(Optional<Boolean> showAsButton) {
-            this.showAsButton = showAsButton;
-            return this;
-        }
-
-        /**
-         * <p><code>true</code> promotes to a domain-level connection so that third-party applications can use it. <code>false</code> does not promote the connection, so only first-party applications with the connection enabled can use it. (Defaults to <code>false</code>.)</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage isDomainConnection(Boolean isDomainConnection) {
-            this.isDomainConnection = Optional.ofNullable(isDomainConnection);
-            return this;
-        }
-
-        /**
-         * <p><code>true</code> promotes to a domain-level connection so that third-party applications can use it. <code>false</code> does not promote the connection, so only first-party applications with the connection enabled can use it. (Defaults to <code>false</code>.)</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "is_domain_connection", nulls = Nulls.SKIP)
-        public _FinalStage isDomainConnection(Optional<Boolean> isDomainConnection) {
-            this.isDomainConnection = isDomainConnection;
-            return this;
-        }
-
-        /**
-         * <p>Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage enabledClients(List<String> enabledClients) {
-            this.enabledClients = Optional.ofNullable(enabledClients);
-            return this;
-        }
-
-        /**
-         * <p>Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "enabled_clients", nulls = Nulls.SKIP)
-        public _FinalStage enabledClients(Optional<List<String>> enabledClients) {
-            this.enabledClients = enabledClients;
-            return this;
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitAmazon(value);
         }
 
         @java.lang.Override
-        public _FinalStage options(ConnectionPropertiesOptions options) {
-            this.options = Optional.ofNullable(options);
-            return this;
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof AmazonValue && equalTo((AmazonValue) other);
+        }
+
+        private boolean equalTo(AmazonValue other) {
+            return value.equals(other.value);
         }
 
         @java.lang.Override
-        @JsonSetter(value = "options", nulls = Nulls.SKIP)
-        public _FinalStage options(Optional<ConnectionPropertiesOptions> options) {
-            this.options = options;
-            return this;
-        }
-
-        /**
-         * <p>Connection name used in the new universal login experience</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage displayName(String displayName) {
-            this.displayName = Optional.ofNullable(displayName);
-            return this;
-        }
-
-        /**
-         * <p>Connection name used in the new universal login experience</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "display_name", nulls = Nulls.SKIP)
-        public _FinalStage displayName(Optional<String> displayName) {
-            this.displayName = displayName;
-            return this;
+        public int hashCode() {
+            return Objects.hash(this.value);
         }
 
         @java.lang.Override
-        public CreateConnectionRequestContent build() {
-            return new CreateConnectionRequestContent(
-                    name,
-                    displayName,
-                    strategy,
-                    options,
-                    enabledClients,
-                    isDomainConnection,
-                    showAsButton,
-                    realms,
-                    metadata,
-                    authentication,
-                    connectedAccounts,
-                    crossAppAccessRequestingApp,
-                    additionalProperties);
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("apple")
+    @JsonIgnoreProperties("strategy")
+    private static final class AppleValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentApple value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private AppleValue() {}
+
+        private AppleValue(CreateConnectionRequestContentApple value) {
+            this.value = value;
         }
 
         @java.lang.Override
-        public Builder additionalProperty(String key, Object value) {
-            this.additionalProperties.put(key, value);
-            return this;
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitApple(value);
         }
 
         @java.lang.Override
-        public Builder additionalProperties(Map<String, Object> additionalProperties) {
-            this.additionalProperties.putAll(additionalProperties);
-            return this;
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof AppleValue && equalTo((AppleValue) other);
+        }
+
+        private boolean equalTo(AppleValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("auth0-oidc")
+    @JsonIgnoreProperties("strategy")
+    private static final class Auth0OidcValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentAuth0Oidc value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private Auth0OidcValue() {}
+
+        private Auth0OidcValue(CreateConnectionRequestContentAuth0Oidc value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitAuth0Oidc(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof Auth0OidcValue && equalTo((Auth0OidcValue) other);
+        }
+
+        private boolean equalTo(Auth0OidcValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("auth0")
+    @JsonIgnoreProperties("strategy")
+    private static final class Auth0Value implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentAuth0 value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private Auth0Value() {}
+
+        private Auth0Value(CreateConnectionRequestContentAuth0 value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitAuth0(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof Auth0Value && equalTo((Auth0Value) other);
+        }
+
+        private boolean equalTo(Auth0Value other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("baidu")
+    @JsonIgnoreProperties("strategy")
+    private static final class BaiduValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentBaidu value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private BaiduValue() {}
+
+        private BaiduValue(CreateConnectionRequestContentBaidu value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitBaidu(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof BaiduValue && equalTo((BaiduValue) other);
+        }
+
+        private boolean equalTo(BaiduValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("bitbucket")
+    @JsonIgnoreProperties("strategy")
+    private static final class BitbucketValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentBitbucket value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private BitbucketValue() {}
+
+        private BitbucketValue(CreateConnectionRequestContentBitbucket value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitBitbucket(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof BitbucketValue && equalTo((BitbucketValue) other);
+        }
+
+        private boolean equalTo(BitbucketValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("bitly")
+    @JsonIgnoreProperties("strategy")
+    private static final class BitlyValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentBitly value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private BitlyValue() {}
+
+        private BitlyValue(CreateConnectionRequestContentBitly value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitBitly(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof BitlyValue && equalTo((BitlyValue) other);
+        }
+
+        private boolean equalTo(BitlyValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("box")
+    @JsonIgnoreProperties("strategy")
+    private static final class BoxValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentBox value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private BoxValue() {}
+
+        private BoxValue(CreateConnectionRequestContentBox value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitBox(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof BoxValue && equalTo((BoxValue) other);
+        }
+
+        private boolean equalTo(BoxValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("custom")
+    @JsonIgnoreProperties("strategy")
+    private static final class CustomValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentCustom value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private CustomValue() {}
+
+        private CustomValue(CreateConnectionRequestContentCustom value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitCustom(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof CustomValue && equalTo((CustomValue) other);
+        }
+
+        private boolean equalTo(CustomValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("daccount")
+    @JsonIgnoreProperties("strategy")
+    private static final class DaccountValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentDaccount value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private DaccountValue() {}
+
+        private DaccountValue(CreateConnectionRequestContentDaccount value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitDaccount(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof DaccountValue && equalTo((DaccountValue) other);
+        }
+
+        private boolean equalTo(DaccountValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("dropbox")
+    @JsonIgnoreProperties("strategy")
+    private static final class DropboxValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentDropbox value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private DropboxValue() {}
+
+        private DropboxValue(CreateConnectionRequestContentDropbox value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitDropbox(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof DropboxValue && equalTo((DropboxValue) other);
+        }
+
+        private boolean equalTo(DropboxValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("dwolla")
+    @JsonIgnoreProperties("strategy")
+    private static final class DwollaValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentDwolla value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private DwollaValue() {}
+
+        private DwollaValue(CreateConnectionRequestContentDwolla value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitDwolla(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof DwollaValue && equalTo((DwollaValue) other);
+        }
+
+        private boolean equalTo(DwollaValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("email")
+    @JsonIgnoreProperties("strategy")
+    private static final class EmailValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentEmail value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private EmailValue() {}
+
+        private EmailValue(CreateConnectionRequestContentEmail value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitEmail(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof EmailValue && equalTo((EmailValue) other);
+        }
+
+        private boolean equalTo(EmailValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("evernote-sandbox")
+    @JsonIgnoreProperties("strategy")
+    private static final class EvernoteSandboxValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentEvernoteSandbox value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private EvernoteSandboxValue() {}
+
+        private EvernoteSandboxValue(CreateConnectionRequestContentEvernoteSandbox value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitEvernoteSandbox(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof EvernoteSandboxValue && equalTo((EvernoteSandboxValue) other);
+        }
+
+        private boolean equalTo(EvernoteSandboxValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("evernote")
+    @JsonIgnoreProperties("strategy")
+    private static final class EvernoteValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentEvernote value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private EvernoteValue() {}
+
+        private EvernoteValue(CreateConnectionRequestContentEvernote value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitEvernote(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof EvernoteValue && equalTo((EvernoteValue) other);
+        }
+
+        private boolean equalTo(EvernoteValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("exact")
+    @JsonIgnoreProperties("strategy")
+    private static final class ExactValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentExact value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private ExactValue() {}
+
+        private ExactValue(CreateConnectionRequestContentExact value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitExact(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof ExactValue && equalTo((ExactValue) other);
+        }
+
+        private boolean equalTo(ExactValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("facebook")
+    @JsonIgnoreProperties("strategy")
+    private static final class FacebookValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentFacebook value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private FacebookValue() {}
+
+        private FacebookValue(CreateConnectionRequestContentFacebook value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitFacebook(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof FacebookValue && equalTo((FacebookValue) other);
+        }
+
+        private boolean equalTo(FacebookValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("fitbit")
+    @JsonIgnoreProperties("strategy")
+    private static final class FitbitValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentFitbit value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private FitbitValue() {}
+
+        private FitbitValue(CreateConnectionRequestContentFitbit value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitFitbit(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof FitbitValue && equalTo((FitbitValue) other);
+        }
+
+        private boolean equalTo(FitbitValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("github")
+    @JsonIgnoreProperties("strategy")
+    private static final class GithubValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentGitHub value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private GithubValue() {}
+
+        private GithubValue(CreateConnectionRequestContentGitHub value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitGithub(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof GithubValue && equalTo((GithubValue) other);
+        }
+
+        private boolean equalTo(GithubValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("google-apps")
+    @JsonIgnoreProperties("strategy")
+    private static final class GoogleAppsValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentGoogleApps value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private GoogleAppsValue() {}
+
+        private GoogleAppsValue(CreateConnectionRequestContentGoogleApps value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitGoogleApps(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof GoogleAppsValue && equalTo((GoogleAppsValue) other);
+        }
+
+        private boolean equalTo(GoogleAppsValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("google-oauth2")
+    @JsonIgnoreProperties("strategy")
+    private static final class GoogleOauth2Value implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentGoogleOAuth2 value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private GoogleOauth2Value() {}
+
+        private GoogleOauth2Value(CreateConnectionRequestContentGoogleOAuth2 value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitGoogleOauth2(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof GoogleOauth2Value && equalTo((GoogleOauth2Value) other);
+        }
+
+        private boolean equalTo(GoogleOauth2Value other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("instagram")
+    @JsonIgnoreProperties("strategy")
+    private static final class InstagramValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentInstagram value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private InstagramValue() {}
+
+        private InstagramValue(CreateConnectionRequestContentInstagram value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitInstagram(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof InstagramValue && equalTo((InstagramValue) other);
+        }
+
+        private boolean equalTo(InstagramValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("ip")
+    @JsonIgnoreProperties("strategy")
+    private static final class IpValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentIp value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private IpValue() {}
+
+        private IpValue(CreateConnectionRequestContentIp value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitIp(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof IpValue && equalTo((IpValue) other);
+        }
+
+        private boolean equalTo(IpValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("line")
+    @JsonIgnoreProperties("strategy")
+    private static final class LineValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentLine value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private LineValue() {}
+
+        private LineValue(CreateConnectionRequestContentLine value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitLine(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof LineValue && equalTo((LineValue) other);
+        }
+
+        private boolean equalTo(LineValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("linkedin")
+    @JsonIgnoreProperties("strategy")
+    private static final class LinkedinValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentLinkedin value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private LinkedinValue() {}
+
+        private LinkedinValue(CreateConnectionRequestContentLinkedin value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitLinkedin(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof LinkedinValue && equalTo((LinkedinValue) other);
+        }
+
+        private boolean equalTo(LinkedinValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("oauth1")
+    @JsonIgnoreProperties("strategy")
+    private static final class Oauth1Value implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentOAuth1 value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private Oauth1Value() {}
+
+        private Oauth1Value(CreateConnectionRequestContentOAuth1 value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitOauth1(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof Oauth1Value && equalTo((Oauth1Value) other);
+        }
+
+        private boolean equalTo(Oauth1Value other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("oauth2")
+    @JsonIgnoreProperties("strategy")
+    private static final class Oauth2Value implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentOAuth2 value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private Oauth2Value() {}
+
+        private Oauth2Value(CreateConnectionRequestContentOAuth2 value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitOauth2(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof Oauth2Value && equalTo((Oauth2Value) other);
+        }
+
+        private boolean equalTo(Oauth2Value other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("office365")
+    @JsonIgnoreProperties("strategy")
+    private static final class Office365Value implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentOffice365 value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private Office365Value() {}
+
+        private Office365Value(CreateConnectionRequestContentOffice365 value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitOffice365(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof Office365Value && equalTo((Office365Value) other);
+        }
+
+        private boolean equalTo(Office365Value other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("oidc")
+    @JsonIgnoreProperties("strategy")
+    private static final class OidcValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentOidc value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private OidcValue() {}
+
+        private OidcValue(CreateConnectionRequestContentOidc value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitOidc(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof OidcValue && equalTo((OidcValue) other);
+        }
+
+        private boolean equalTo(OidcValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("okta")
+    @JsonIgnoreProperties("strategy")
+    private static final class OktaValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentOkta value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private OktaValue() {}
+
+        private OktaValue(CreateConnectionRequestContentOkta value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitOkta(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof OktaValue && equalTo((OktaValue) other);
+        }
+
+        private boolean equalTo(OktaValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("paypal-sandbox")
+    @JsonIgnoreProperties("strategy")
+    private static final class PaypalSandboxValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentPaypalSandbox value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private PaypalSandboxValue() {}
+
+        private PaypalSandboxValue(CreateConnectionRequestContentPaypalSandbox value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitPaypalSandbox(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof PaypalSandboxValue && equalTo((PaypalSandboxValue) other);
+        }
+
+        private boolean equalTo(PaypalSandboxValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("paypal")
+    @JsonIgnoreProperties("strategy")
+    private static final class PaypalValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentPaypal value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private PaypalValue() {}
+
+        private PaypalValue(CreateConnectionRequestContentPaypal value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitPaypal(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof PaypalValue && equalTo((PaypalValue) other);
+        }
+
+        private boolean equalTo(PaypalValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("pingfederate")
+    @JsonIgnoreProperties("strategy")
+    private static final class PingfederateValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentPingFederate value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private PingfederateValue() {}
+
+        private PingfederateValue(CreateConnectionRequestContentPingFederate value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitPingfederate(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof PingfederateValue && equalTo((PingfederateValue) other);
+        }
+
+        private boolean equalTo(PingfederateValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("planningcenter")
+    @JsonIgnoreProperties("strategy")
+    private static final class PlanningcenterValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentPlanningCenter value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private PlanningcenterValue() {}
+
+        private PlanningcenterValue(CreateConnectionRequestContentPlanningCenter value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitPlanningcenter(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof PlanningcenterValue && equalTo((PlanningcenterValue) other);
+        }
+
+        private boolean equalTo(PlanningcenterValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("salesforce-community")
+    @JsonIgnoreProperties("strategy")
+    private static final class SalesforceCommunityValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentSalesforceCommunity value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private SalesforceCommunityValue() {}
+
+        private SalesforceCommunityValue(CreateConnectionRequestContentSalesforceCommunity value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitSalesforceCommunity(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof SalesforceCommunityValue && equalTo((SalesforceCommunityValue) other);
+        }
+
+        private boolean equalTo(SalesforceCommunityValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("salesforce-sandbox")
+    @JsonIgnoreProperties("strategy")
+    private static final class SalesforceSandboxValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentSalesforceSandbox value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private SalesforceSandboxValue() {}
+
+        private SalesforceSandboxValue(CreateConnectionRequestContentSalesforceSandbox value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitSalesforceSandbox(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof SalesforceSandboxValue && equalTo((SalesforceSandboxValue) other);
+        }
+
+        private boolean equalTo(SalesforceSandboxValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("salesforce")
+    @JsonIgnoreProperties("strategy")
+    private static final class SalesforceValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentSalesforce value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private SalesforceValue() {}
+
+        private SalesforceValue(CreateConnectionRequestContentSalesforce value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitSalesforce(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof SalesforceValue && equalTo((SalesforceValue) other);
+        }
+
+        private boolean equalTo(SalesforceValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("samlp")
+    @JsonIgnoreProperties("strategy")
+    private static final class SamlpValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentSaml value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private SamlpValue() {}
+
+        private SamlpValue(CreateConnectionRequestContentSaml value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitSamlp(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof SamlpValue && equalTo((SamlpValue) other);
+        }
+
+        private boolean equalTo(SamlpValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("sharepoint")
+    @JsonIgnoreProperties("strategy")
+    private static final class SharepointValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentSharepoint value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private SharepointValue() {}
+
+        private SharepointValue(CreateConnectionRequestContentSharepoint value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitSharepoint(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof SharepointValue && equalTo((SharepointValue) other);
+        }
+
+        private boolean equalTo(SharepointValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("shop")
+    @JsonIgnoreProperties("strategy")
+    private static final class ShopValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentShop value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private ShopValue() {}
+
+        private ShopValue(CreateConnectionRequestContentShop value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitShop(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof ShopValue && equalTo((ShopValue) other);
+        }
+
+        private boolean equalTo(ShopValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("shopify")
+    @JsonIgnoreProperties("strategy")
+    private static final class ShopifyValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentShopify value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private ShopifyValue() {}
+
+        private ShopifyValue(CreateConnectionRequestContentShopify value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitShopify(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof ShopifyValue && equalTo((ShopifyValue) other);
+        }
+
+        private boolean equalTo(ShopifyValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("sms")
+    @JsonIgnoreProperties("strategy")
+    private static final class SmsValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentSms value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private SmsValue() {}
+
+        private SmsValue(CreateConnectionRequestContentSms value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitSms(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof SmsValue && equalTo((SmsValue) other);
+        }
+
+        private boolean equalTo(SmsValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("soundcloud")
+    @JsonIgnoreProperties("strategy")
+    private static final class SoundcloudValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentSoundcloud value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private SoundcloudValue() {}
+
+        private SoundcloudValue(CreateConnectionRequestContentSoundcloud value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitSoundcloud(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof SoundcloudValue && equalTo((SoundcloudValue) other);
+        }
+
+        private boolean equalTo(SoundcloudValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("thirtysevensignals")
+    @JsonIgnoreProperties("strategy")
+    private static final class ThirtysevensignalsValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentThirtySevenSignals value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private ThirtysevensignalsValue() {}
+
+        private ThirtysevensignalsValue(CreateConnectionRequestContentThirtySevenSignals value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitThirtysevensignals(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof ThirtysevensignalsValue && equalTo((ThirtysevensignalsValue) other);
+        }
+
+        private boolean equalTo(ThirtysevensignalsValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("twitter")
+    @JsonIgnoreProperties("strategy")
+    private static final class TwitterValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentTwitter value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private TwitterValue() {}
+
+        private TwitterValue(CreateConnectionRequestContentTwitter value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitTwitter(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof TwitterValue && equalTo((TwitterValue) other);
+        }
+
+        private boolean equalTo(TwitterValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("untappd")
+    @JsonIgnoreProperties("strategy")
+    private static final class UntappdValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentUntappd value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private UntappdValue() {}
+
+        private UntappdValue(CreateConnectionRequestContentUntappd value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitUntappd(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof UntappdValue && equalTo((UntappdValue) other);
+        }
+
+        private boolean equalTo(UntappdValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("vkontakte")
+    @JsonIgnoreProperties("strategy")
+    private static final class VkontakteValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentVkontakte value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private VkontakteValue() {}
+
+        private VkontakteValue(CreateConnectionRequestContentVkontakte value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitVkontakte(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof VkontakteValue && equalTo((VkontakteValue) other);
+        }
+
+        private boolean equalTo(VkontakteValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("waad")
+    @JsonIgnoreProperties("strategy")
+    private static final class WaadValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentAzureAd value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private WaadValue() {}
+
+        private WaadValue(CreateConnectionRequestContentAzureAd value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitWaad(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof WaadValue && equalTo((WaadValue) other);
+        }
+
+        private boolean equalTo(WaadValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("weibo")
+    @JsonIgnoreProperties("strategy")
+    private static final class WeiboValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentWeibo value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private WeiboValue() {}
+
+        private WeiboValue(CreateConnectionRequestContentWeibo value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitWeibo(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof WeiboValue && equalTo((WeiboValue) other);
+        }
+
+        private boolean equalTo(WeiboValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("windowslive")
+    @JsonIgnoreProperties("strategy")
+    private static final class WindowsliveValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentWindowsLive value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private WindowsliveValue() {}
+
+        private WindowsliveValue(CreateConnectionRequestContentWindowsLive value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitWindowslive(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof WindowsliveValue && equalTo((WindowsliveValue) other);
+        }
+
+        private boolean equalTo(WindowsliveValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("wordpress")
+    @JsonIgnoreProperties("strategy")
+    private static final class WordpressValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentWordpress value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private WordpressValue() {}
+
+        private WordpressValue(CreateConnectionRequestContentWordpress value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitWordpress(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof WordpressValue && equalTo((WordpressValue) other);
+        }
+
+        private boolean equalTo(WordpressValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("yahoo")
+    @JsonIgnoreProperties("strategy")
+    private static final class YahooValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentYahoo value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private YahooValue() {}
+
+        private YahooValue(CreateConnectionRequestContentYahoo value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitYahoo(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof YahooValue && equalTo((YahooValue) other);
+        }
+
+        private boolean equalTo(YahooValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("yandex")
+    @JsonIgnoreProperties("strategy")
+    private static final class YandexValue implements Value {
+        @JsonUnwrapped
+        @JsonIgnoreProperties(value = "strategy", allowSetters = true)
+        private CreateConnectionRequestContentYandex value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private YandexValue() {}
+
+        private YandexValue(CreateConnectionRequestContentYandex value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitYandex(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof YandexValue && equalTo((YandexValue) other);
+        }
+
+        private boolean equalTo(YandexValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonIgnoreProperties("strategy")
+    private static final class _UnknownValue implements Value {
+        private String type;
+
+        @JsonValue
+        private Object value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private _UnknownValue(@JsonProperty("value") Object value) {}
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor._visitUnknown(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof _UnknownValue && equalTo((_UnknownValue) other);
+        }
+
+        private boolean equalTo(_UnknownValue other) {
+            return type.equals(other.type) && value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.type, this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "CreateConnectionRequestContent{" + "type: " + type + ", value: " + value + "}";
         }
     }
 }

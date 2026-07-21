@@ -42,8 +42,6 @@ public final class ConnectionResponseContentAd
 
     private final Optional<Map<String, OptionalNullable<String>>> metadata;
 
-    private final ConnectionResponseContentAdStrategy strategy;
-
     private final Optional<ConnectionOptionsAd> options;
 
     private final Optional<String> provisioningTicketUrl;
@@ -60,7 +58,6 @@ public final class ConnectionResponseContentAd
             Optional<String> displayName,
             Optional<Boolean> isDomainConnection,
             Optional<Map<String, OptionalNullable<String>>> metadata,
-            ConnectionResponseContentAdStrategy strategy,
             Optional<ConnectionOptionsAd> options,
             Optional<String> provisioningTicketUrl,
             Map<String, Object> additionalProperties) {
@@ -73,7 +70,6 @@ public final class ConnectionResponseContentAd
         this.displayName = displayName;
         this.isDomainConnection = isDomainConnection;
         this.metadata = metadata;
-        this.strategy = strategy;
         this.options = options;
         this.provisioningTicketUrl = provisioningTicketUrl;
         this.additionalProperties = additionalProperties;
@@ -136,11 +132,6 @@ public final class ConnectionResponseContentAd
         return metadata;
     }
 
-    @JsonProperty("strategy")
-    public ConnectionResponseContentAdStrategy getStrategy() {
-        return strategy;
-    }
-
     @JsonProperty("options")
     public Optional<ConnectionOptionsAd> getOptions() {
         return options;
@@ -172,7 +163,6 @@ public final class ConnectionResponseContentAd
                 && displayName.equals(other.displayName)
                 && isDomainConnection.equals(other.isDomainConnection)
                 && metadata.equals(other.metadata)
-                && strategy.equals(other.strategy)
                 && options.equals(other.options)
                 && provisioningTicketUrl.equals(other.provisioningTicketUrl);
     }
@@ -189,7 +179,6 @@ public final class ConnectionResponseContentAd
                 this.displayName,
                 this.isDomainConnection,
                 this.metadata,
-                this.strategy,
                 this.options,
                 this.provisioningTicketUrl);
     }
@@ -210,11 +199,7 @@ public final class ConnectionResponseContentAd
     }
 
     public interface NameStage {
-        StrategyStage name(@NotNull String name);
-    }
-
-    public interface StrategyStage {
-        _FinalStage strategy(@NotNull ConnectionResponseContentAdStrategy strategy);
+        _FinalStage name(@NotNull String name);
     }
 
     public interface _FinalStage {
@@ -265,12 +250,10 @@ public final class ConnectionResponseContentAd
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IdStage, NameStage, StrategyStage, _FinalStage {
+    public static final class Builder implements IdStage, NameStage, _FinalStage {
         private String id;
 
         private String name;
-
-        private ConnectionResponseContentAdStrategy strategy;
 
         private Optional<String> provisioningTicketUrl = Optional.empty();
 
@@ -306,7 +289,6 @@ public final class ConnectionResponseContentAd
             displayName(other.getDisplayName());
             isDomainConnection(other.getIsDomainConnection());
             metadata(other.getMetadata());
-            strategy(other.getStrategy());
             options(other.getOptions());
             provisioningTicketUrl(other.getProvisioningTicketUrl());
             return this;
@@ -321,15 +303,8 @@ public final class ConnectionResponseContentAd
 
         @java.lang.Override
         @JsonSetter("name")
-        public StrategyStage name(@NotNull String name) {
+        public _FinalStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("strategy")
-        public _FinalStage strategy(@NotNull ConnectionResponseContentAdStrategy strategy) {
-            this.strategy = Objects.requireNonNull(strategy, "strategy must not be null");
             return this;
         }
 
@@ -469,7 +444,6 @@ public final class ConnectionResponseContentAd
                     displayName,
                     isDomainConnection,
                     metadata,
-                    strategy,
                     options,
                     provisioningTicketUrl,
                     additionalProperties);

@@ -42,8 +42,6 @@ public final class ConnectionResponseContentAuth0Oidc
 
     private final Optional<Map<String, OptionalNullable<String>>> metadata;
 
-    private final ConnectionResponseContentAuth0OidcStrategy strategy;
-
     private final Optional<ConnectionOptionsAuth0Oidc> options;
 
     private final Map<String, Object> additionalProperties;
@@ -58,7 +56,6 @@ public final class ConnectionResponseContentAuth0Oidc
             Optional<String> displayName,
             Optional<Boolean> isDomainConnection,
             Optional<Map<String, OptionalNullable<String>>> metadata,
-            ConnectionResponseContentAuth0OidcStrategy strategy,
             Optional<ConnectionOptionsAuth0Oidc> options,
             Map<String, Object> additionalProperties) {
         this.authentication = authentication;
@@ -70,7 +67,6 @@ public final class ConnectionResponseContentAuth0Oidc
         this.displayName = displayName;
         this.isDomainConnection = isDomainConnection;
         this.metadata = metadata;
-        this.strategy = strategy;
         this.options = options;
         this.additionalProperties = additionalProperties;
     }
@@ -132,11 +128,6 @@ public final class ConnectionResponseContentAuth0Oidc
         return metadata;
     }
 
-    @JsonProperty("strategy")
-    public ConnectionResponseContentAuth0OidcStrategy getStrategy() {
-        return strategy;
-    }
-
     @JsonProperty("options")
     public Optional<ConnectionOptionsAuth0Oidc> getOptions() {
         return options;
@@ -164,7 +155,6 @@ public final class ConnectionResponseContentAuth0Oidc
                 && displayName.equals(other.displayName)
                 && isDomainConnection.equals(other.isDomainConnection)
                 && metadata.equals(other.metadata)
-                && strategy.equals(other.strategy)
                 && options.equals(other.options);
     }
 
@@ -180,7 +170,6 @@ public final class ConnectionResponseContentAuth0Oidc
                 this.displayName,
                 this.isDomainConnection,
                 this.metadata,
-                this.strategy,
                 this.options);
     }
 
@@ -200,11 +189,7 @@ public final class ConnectionResponseContentAuth0Oidc
     }
 
     public interface NameStage {
-        StrategyStage name(@NotNull String name);
-    }
-
-    public interface StrategyStage {
-        _FinalStage strategy(@NotNull ConnectionResponseContentAuth0OidcStrategy strategy);
+        _FinalStage name(@NotNull String name);
     }
 
     public interface _FinalStage {
@@ -251,12 +236,10 @@ public final class ConnectionResponseContentAuth0Oidc
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IdStage, NameStage, StrategyStage, _FinalStage {
+    public static final class Builder implements IdStage, NameStage, _FinalStage {
         private String id;
 
         private String name;
-
-        private ConnectionResponseContentAuth0OidcStrategy strategy;
 
         private Optional<ConnectionOptionsAuth0Oidc> options = Optional.empty();
 
@@ -290,7 +273,6 @@ public final class ConnectionResponseContentAuth0Oidc
             displayName(other.getDisplayName());
             isDomainConnection(other.getIsDomainConnection());
             metadata(other.getMetadata());
-            strategy(other.getStrategy());
             options(other.getOptions());
             return this;
         }
@@ -304,15 +286,8 @@ public final class ConnectionResponseContentAuth0Oidc
 
         @java.lang.Override
         @JsonSetter("name")
-        public StrategyStage name(@NotNull String name) {
+        public _FinalStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("strategy")
-        public _FinalStage strategy(@NotNull ConnectionResponseContentAuth0OidcStrategy strategy) {
-            this.strategy = Objects.requireNonNull(strategy, "strategy must not be null");
             return this;
         }
 
@@ -439,7 +414,6 @@ public final class ConnectionResponseContentAuth0Oidc
                     displayName,
                     isDomainConnection,
                     metadata,
-                    strategy,
                     options,
                     additionalProperties);
         }

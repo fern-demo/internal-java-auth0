@@ -42,8 +42,6 @@ public final class ConnectionResponseContentPingFederate
 
     private final Optional<Map<String, OptionalNullable<String>>> metadata;
 
-    private final ConnectionResponseContentPingFederateStrategy strategy;
-
     private final Optional<ConnectionOptionsPingFederate> options;
 
     private final Optional<String> provisioningTicketUrl;
@@ -62,7 +60,6 @@ public final class ConnectionResponseContentPingFederate
             Optional<String> displayName,
             Optional<Boolean> isDomainConnection,
             Optional<Map<String, OptionalNullable<String>>> metadata,
-            ConnectionResponseContentPingFederateStrategy strategy,
             Optional<ConnectionOptionsPingFederate> options,
             Optional<String> provisioningTicketUrl,
             Optional<Boolean> showAsButton,
@@ -76,7 +73,6 @@ public final class ConnectionResponseContentPingFederate
         this.displayName = displayName;
         this.isDomainConnection = isDomainConnection;
         this.metadata = metadata;
-        this.strategy = strategy;
         this.options = options;
         this.provisioningTicketUrl = provisioningTicketUrl;
         this.showAsButton = showAsButton;
@@ -140,11 +136,6 @@ public final class ConnectionResponseContentPingFederate
         return metadata;
     }
 
-    @JsonProperty("strategy")
-    public ConnectionResponseContentPingFederateStrategy getStrategy() {
-        return strategy;
-    }
-
     @JsonProperty("options")
     public Optional<ConnectionOptionsPingFederate> getOptions() {
         return options;
@@ -182,7 +173,6 @@ public final class ConnectionResponseContentPingFederate
                 && displayName.equals(other.displayName)
                 && isDomainConnection.equals(other.isDomainConnection)
                 && metadata.equals(other.metadata)
-                && strategy.equals(other.strategy)
                 && options.equals(other.options)
                 && provisioningTicketUrl.equals(other.provisioningTicketUrl)
                 && showAsButton.equals(other.showAsButton);
@@ -200,7 +190,6 @@ public final class ConnectionResponseContentPingFederate
                 this.displayName,
                 this.isDomainConnection,
                 this.metadata,
-                this.strategy,
                 this.options,
                 this.provisioningTicketUrl,
                 this.showAsButton);
@@ -222,11 +211,7 @@ public final class ConnectionResponseContentPingFederate
     }
 
     public interface NameStage {
-        StrategyStage name(@NotNull String name);
-    }
-
-    public interface StrategyStage {
-        _FinalStage strategy(@NotNull ConnectionResponseContentPingFederateStrategy strategy);
+        _FinalStage name(@NotNull String name);
     }
 
     public interface _FinalStage {
@@ -281,12 +266,10 @@ public final class ConnectionResponseContentPingFederate
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IdStage, NameStage, StrategyStage, _FinalStage {
+    public static final class Builder implements IdStage, NameStage, _FinalStage {
         private String id;
 
         private String name;
-
-        private ConnectionResponseContentPingFederateStrategy strategy;
 
         private Optional<Boolean> showAsButton = Optional.empty();
 
@@ -324,7 +307,6 @@ public final class ConnectionResponseContentPingFederate
             displayName(other.getDisplayName());
             isDomainConnection(other.getIsDomainConnection());
             metadata(other.getMetadata());
-            strategy(other.getStrategy());
             options(other.getOptions());
             provisioningTicketUrl(other.getProvisioningTicketUrl());
             showAsButton(other.getShowAsButton());
@@ -340,15 +322,8 @@ public final class ConnectionResponseContentPingFederate
 
         @java.lang.Override
         @JsonSetter("name")
-        public StrategyStage name(@NotNull String name) {
+        public _FinalStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("strategy")
-        public _FinalStage strategy(@NotNull ConnectionResponseContentPingFederateStrategy strategy) {
-            this.strategy = Objects.requireNonNull(strategy, "strategy must not be null");
             return this;
         }
 
@@ -501,7 +476,6 @@ public final class ConnectionResponseContentPingFederate
                     displayName,
                     isDomainConnection,
                     metadata,
-                    strategy,
                     options,
                     provisioningTicketUrl,
                     showAsButton,

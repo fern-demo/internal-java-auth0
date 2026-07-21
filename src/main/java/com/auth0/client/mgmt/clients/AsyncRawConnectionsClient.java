@@ -15,10 +15,11 @@ import com.auth0.client.mgmt.core.RetryInterceptor;
 import com.auth0.client.mgmt.core.SyncPagingIterable;
 import com.auth0.client.mgmt.errors.BadRequestError;
 import com.auth0.client.mgmt.errors.ForbiddenError;
+import com.auth0.client.mgmt.errors.InternalServerError;
 import com.auth0.client.mgmt.errors.NotFoundError;
 import com.auth0.client.mgmt.errors.TooManyRequestsError;
 import com.auth0.client.mgmt.errors.UnauthorizedError;
-import com.auth0.client.mgmt.types.ConnectionForList;
+import com.auth0.client.mgmt.types.ConnectionResponseContent;
 import com.auth0.client.mgmt.types.ListClientConnectionsResponseContent;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.io.IOException;
@@ -44,48 +45,64 @@ public class AsyncRawConnectionsClient {
     }
 
     /**
-     * Retrieve all connections that are enabled for the specified <a href="https://www.auth0.com/docs/get-started/applications">Application</a>, using checkpoint pagination. A list of fields to include or exclude for each connection may also be specified.
-     * <ul>
-     * <li>This endpoint requires the <code>read:connections</code> scope and any one of <code>read:clients</code> or <code>read:client_summary</code>.</li>
-     * <li><strong>Note</strong>: The first time you call this endpoint, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no further results are remaining.</li>
-     * </ul>
+     * Retrieve all connections that are enabled for the specified <a href="https://www.auth0.com/docs/get-started/applications"> Application</a>, using checkpoint pagination. A list of fields to include or exclude for each connection may also be specified.
+     * <p><ul>
+     *   <li>
+     *     This endpoint requires the <code>read:connections</code> scope and any one of <code>read:clients</code> or <code>read:client_summary</code>.
+     *   </li>
+     *   <li>
+     *     <b>Note</b>: The first time you call this endpoint, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no further results are remaining.
+     *   </li>
+     * </ul></p>
      */
-    public CompletableFuture<ManagementApiHttpResponse<SyncPagingIterable<ConnectionForList>>> get(String id) {
+    public CompletableFuture<ManagementApiHttpResponse<SyncPagingIterable<ConnectionResponseContent>>> get(String id) {
         return get(id, ConnectionsGetRequest.builder().build());
     }
 
     /**
-     * Retrieve all connections that are enabled for the specified <a href="https://www.auth0.com/docs/get-started/applications">Application</a>, using checkpoint pagination. A list of fields to include or exclude for each connection may also be specified.
-     * <ul>
-     * <li>This endpoint requires the <code>read:connections</code> scope and any one of <code>read:clients</code> or <code>read:client_summary</code>.</li>
-     * <li><strong>Note</strong>: The first time you call this endpoint, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no further results are remaining.</li>
-     * </ul>
+     * Retrieve all connections that are enabled for the specified <a href="https://www.auth0.com/docs/get-started/applications"> Application</a>, using checkpoint pagination. A list of fields to include or exclude for each connection may also be specified.
+     * <p><ul>
+     *   <li>
+     *     This endpoint requires the <code>read:connections</code> scope and any one of <code>read:clients</code> or <code>read:client_summary</code>.
+     *   </li>
+     *   <li>
+     *     <b>Note</b>: The first time you call this endpoint, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no further results are remaining.
+     *   </li>
+     * </ul></p>
      */
-    public CompletableFuture<ManagementApiHttpResponse<SyncPagingIterable<ConnectionForList>>> get(
+    public CompletableFuture<ManagementApiHttpResponse<SyncPagingIterable<ConnectionResponseContent>>> get(
             String id, RequestOptions requestOptions) {
         return get(id, ConnectionsGetRequest.builder().build(), requestOptions);
     }
 
     /**
-     * Retrieve all connections that are enabled for the specified <a href="https://www.auth0.com/docs/get-started/applications">Application</a>, using checkpoint pagination. A list of fields to include or exclude for each connection may also be specified.
-     * <ul>
-     * <li>This endpoint requires the <code>read:connections</code> scope and any one of <code>read:clients</code> or <code>read:client_summary</code>.</li>
-     * <li><strong>Note</strong>: The first time you call this endpoint, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no further results are remaining.</li>
-     * </ul>
+     * Retrieve all connections that are enabled for the specified <a href="https://www.auth0.com/docs/get-started/applications"> Application</a>, using checkpoint pagination. A list of fields to include or exclude for each connection may also be specified.
+     * <p><ul>
+     *   <li>
+     *     This endpoint requires the <code>read:connections</code> scope and any one of <code>read:clients</code> or <code>read:client_summary</code>.
+     *   </li>
+     *   <li>
+     *     <b>Note</b>: The first time you call this endpoint, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no further results are remaining.
+     *   </li>
+     * </ul></p>
      */
-    public CompletableFuture<ManagementApiHttpResponse<SyncPagingIterable<ConnectionForList>>> get(
+    public CompletableFuture<ManagementApiHttpResponse<SyncPagingIterable<ConnectionResponseContent>>> get(
             String id, ConnectionsGetRequest request) {
         return get(id, request, null);
     }
 
     /**
-     * Retrieve all connections that are enabled for the specified <a href="https://www.auth0.com/docs/get-started/applications">Application</a>, using checkpoint pagination. A list of fields to include or exclude for each connection may also be specified.
-     * <ul>
-     * <li>This endpoint requires the <code>read:connections</code> scope and any one of <code>read:clients</code> or <code>read:client_summary</code>.</li>
-     * <li><strong>Note</strong>: The first time you call this endpoint, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no further results are remaining.</li>
-     * </ul>
+     * Retrieve all connections that are enabled for the specified <a href="https://www.auth0.com/docs/get-started/applications"> Application</a>, using checkpoint pagination. A list of fields to include or exclude for each connection may also be specified.
+     * <p><ul>
+     *   <li>
+     *     This endpoint requires the <code>read:connections</code> scope and any one of <code>read:clients</code> or <code>read:client_summary</code>.
+     *   </li>
+     *   <li>
+     *     <b>Note</b>: The first time you call this endpoint, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no further results are remaining.
+     *   </li>
+     * </ul></p>
      */
-    public CompletableFuture<ManagementApiHttpResponse<SyncPagingIterable<ConnectionForList>>> get(
+    public CompletableFuture<ManagementApiHttpResponse<SyncPagingIterable<ConnectionResponseContent>>> get(
             String id, ConnectionsGetRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -101,10 +118,8 @@ public class AsyncRawConnectionsClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "fields", request.getFields().orElse(null), false);
         }
-        if (!request.getIncludeFields().isAbsent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "include_fields", request.getIncludeFields().orElse(null), false);
-        }
+        QueryStringMapper.addQueryParameter(
+                httpUrl, "include_fields", request.getIncludeFields().orElse(true), false);
         if (request.getStrategy().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "strategy", request.getStrategy().get(), true);
@@ -133,7 +148,7 @@ public class AsyncRawConnectionsClient {
                                     requestOptions.getMaxRetries().get()))
                     .build();
         }
-        CompletableFuture<ManagementApiHttpResponse<SyncPagingIterable<ConnectionForList>>> future =
+        CompletableFuture<ManagementApiHttpResponse<SyncPagingIterable<ConnectionResponseContent>>> future =
                 new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
@@ -148,9 +163,9 @@ public class AsyncRawConnectionsClient {
                                 .from(request)
                                 .from(startingAfter)
                                 .build();
-                        List<ConnectionForList> result = parsedResponse.getConnections();
+                        List<ConnectionResponseContent> result = parsedResponse.getConnections();
                         future.complete(new ManagementApiHttpResponse<>(
-                                new SyncPagingIterable<ConnectionForList>(
+                                new SyncPagingIterable<ConnectionResponseContent>(
                                         startingAfter.isPresent(), result, parsedResponse, () -> {
                                             try {
                                                 return get(id, nextRequest, requestOptions)
@@ -187,6 +202,11 @@ public class AsyncRawConnectionsClient {
                                 return;
                             case 429:
                                 future.completeExceptionally(new TooManyRequestsError(
+                                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                                        response));
+                                return;
+                            case 500:
+                                future.completeExceptionally(new InternalServerError(
                                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
                                         response));
                                 return;

@@ -37,13 +37,9 @@ public final class ConnectionResponseContentOidc implements IConnectionResponseC
 
     private final Optional<Map<String, OptionalNullable<String>>> metadata;
 
-    private final ConnectionResponseContentOidcStrategy strategy;
-
     private final Optional<ConnectionAuthenticationPurpose> authentication;
 
     private final Optional<ConnectionConnectedAccountsPurposeXaa> connectedAccounts;
-
-    private final Optional<CrossAppAccessRequestingApp> crossAppAccessRequestingApp;
 
     private final Optional<ConnectionOptionsOidc> options;
 
@@ -59,10 +55,8 @@ public final class ConnectionResponseContentOidc implements IConnectionResponseC
             Optional<String> displayName,
             Optional<Boolean> isDomainConnection,
             Optional<Map<String, OptionalNullable<String>>> metadata,
-            ConnectionResponseContentOidcStrategy strategy,
             Optional<ConnectionAuthenticationPurpose> authentication,
             Optional<ConnectionConnectedAccountsPurposeXaa> connectedAccounts,
-            Optional<CrossAppAccessRequestingApp> crossAppAccessRequestingApp,
             Optional<ConnectionOptionsOidc> options,
             Optional<Boolean> showAsButton,
             Map<String, Object> additionalProperties) {
@@ -73,10 +67,8 @@ public final class ConnectionResponseContentOidc implements IConnectionResponseC
         this.displayName = displayName;
         this.isDomainConnection = isDomainConnection;
         this.metadata = metadata;
-        this.strategy = strategy;
         this.authentication = authentication;
         this.connectedAccounts = connectedAccounts;
-        this.crossAppAccessRequestingApp = crossAppAccessRequestingApp;
         this.options = options;
         this.showAsButton = showAsButton;
         this.additionalProperties = additionalProperties;
@@ -127,11 +119,6 @@ public final class ConnectionResponseContentOidc implements IConnectionResponseC
         return metadata;
     }
 
-    @JsonProperty("strategy")
-    public ConnectionResponseContentOidcStrategy getStrategy() {
-        return strategy;
-    }
-
     @JsonProperty("authentication")
     public Optional<ConnectionAuthenticationPurpose> getAuthentication() {
         return authentication;
@@ -140,11 +127,6 @@ public final class ConnectionResponseContentOidc implements IConnectionResponseC
     @JsonProperty("connected_accounts")
     public Optional<ConnectionConnectedAccountsPurposeXaa> getConnectedAccounts() {
         return connectedAccounts;
-    }
-
-    @JsonProperty("cross_app_access_requesting_app")
-    public Optional<CrossAppAccessRequestingApp> getCrossAppAccessRequestingApp() {
-        return crossAppAccessRequestingApp;
     }
 
     @JsonProperty("options")
@@ -176,10 +158,8 @@ public final class ConnectionResponseContentOidc implements IConnectionResponseC
                 && displayName.equals(other.displayName)
                 && isDomainConnection.equals(other.isDomainConnection)
                 && metadata.equals(other.metadata)
-                && strategy.equals(other.strategy)
                 && authentication.equals(other.authentication)
                 && connectedAccounts.equals(other.connectedAccounts)
-                && crossAppAccessRequestingApp.equals(other.crossAppAccessRequestingApp)
                 && options.equals(other.options)
                 && showAsButton.equals(other.showAsButton);
     }
@@ -194,10 +174,8 @@ public final class ConnectionResponseContentOidc implements IConnectionResponseC
                 this.displayName,
                 this.isDomainConnection,
                 this.metadata,
-                this.strategy,
                 this.authentication,
                 this.connectedAccounts,
-                this.crossAppAccessRequestingApp,
                 this.options,
                 this.showAsButton);
     }
@@ -218,11 +196,7 @@ public final class ConnectionResponseContentOidc implements IConnectionResponseC
     }
 
     public interface NameStage {
-        StrategyStage name(@NotNull String name);
-    }
-
-    public interface StrategyStage {
-        _FinalStage strategy(@NotNull ConnectionResponseContentOidcStrategy strategy);
+        _FinalStage name(@NotNull String name);
     }
 
     public interface _FinalStage {
@@ -263,10 +237,6 @@ public final class ConnectionResponseContentOidc implements IConnectionResponseC
 
         _FinalStage connectedAccounts(ConnectionConnectedAccountsPurposeXaa connectedAccounts);
 
-        _FinalStage crossAppAccessRequestingApp(Optional<CrossAppAccessRequestingApp> crossAppAccessRequestingApp);
-
-        _FinalStage crossAppAccessRequestingApp(CrossAppAccessRequestingApp crossAppAccessRequestingApp);
-
         _FinalStage options(Optional<ConnectionOptionsOidc> options);
 
         _FinalStage options(ConnectionOptionsOidc options);
@@ -277,18 +247,14 @@ public final class ConnectionResponseContentOidc implements IConnectionResponseC
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IdStage, NameStage, StrategyStage, _FinalStage {
+    public static final class Builder implements IdStage, NameStage, _FinalStage {
         private String id;
 
         private String name;
 
-        private ConnectionResponseContentOidcStrategy strategy;
-
         private Optional<Boolean> showAsButton = Optional.empty();
 
         private Optional<ConnectionOptionsOidc> options = Optional.empty();
-
-        private Optional<CrossAppAccessRequestingApp> crossAppAccessRequestingApp = Optional.empty();
 
         private Optional<ConnectionConnectedAccountsPurposeXaa> connectedAccounts = Optional.empty();
 
@@ -318,10 +284,8 @@ public final class ConnectionResponseContentOidc implements IConnectionResponseC
             displayName(other.getDisplayName());
             isDomainConnection(other.getIsDomainConnection());
             metadata(other.getMetadata());
-            strategy(other.getStrategy());
             authentication(other.getAuthentication());
             connectedAccounts(other.getConnectedAccounts());
-            crossAppAccessRequestingApp(other.getCrossAppAccessRequestingApp());
             options(other.getOptions());
             showAsButton(other.getShowAsButton());
             return this;
@@ -336,15 +300,8 @@ public final class ConnectionResponseContentOidc implements IConnectionResponseC
 
         @java.lang.Override
         @JsonSetter("name")
-        public StrategyStage name(@NotNull String name) {
+        public _FinalStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("strategy")
-        public _FinalStage strategy(@NotNull ConnectionResponseContentOidcStrategy strategy) {
-            this.strategy = Objects.requireNonNull(strategy, "strategy must not be null");
             return this;
         }
 
@@ -371,20 +328,6 @@ public final class ConnectionResponseContentOidc implements IConnectionResponseC
         @JsonSetter(value = "options", nulls = Nulls.SKIP)
         public _FinalStage options(Optional<ConnectionOptionsOidc> options) {
             this.options = options;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage crossAppAccessRequestingApp(CrossAppAccessRequestingApp crossAppAccessRequestingApp) {
-            this.crossAppAccessRequestingApp = Optional.ofNullable(crossAppAccessRequestingApp);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "cross_app_access_requesting_app", nulls = Nulls.SKIP)
-        public _FinalStage crossAppAccessRequestingApp(
-                Optional<CrossAppAccessRequestingApp> crossAppAccessRequestingApp) {
-            this.crossAppAccessRequestingApp = crossAppAccessRequestingApp;
             return this;
         }
 
@@ -496,10 +439,8 @@ public final class ConnectionResponseContentOidc implements IConnectionResponseC
                     displayName,
                     isDomainConnection,
                     metadata,
-                    strategy,
                     authentication,
                     connectedAccounts,
-                    crossAppAccessRequestingApp,
                     options,
                     showAsButton,
                     additionalProperties);

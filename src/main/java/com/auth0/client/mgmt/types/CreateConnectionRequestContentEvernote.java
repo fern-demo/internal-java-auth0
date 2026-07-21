@@ -33,8 +33,6 @@ public final class CreateConnectionRequestContentEvernote implements ICreateConn
 
     private final Optional<Map<String, OptionalNullable<String>>> metadata;
 
-    private final CreateConnectionRequestContentEvernoteStrategy strategy;
-
     private final Optional<ConnectionOptionsEvernote> options;
 
     private final Map<String, Object> additionalProperties;
@@ -45,7 +43,6 @@ public final class CreateConnectionRequestContentEvernote implements ICreateConn
             Optional<String> displayName,
             Optional<Boolean> isDomainConnection,
             Optional<Map<String, OptionalNullable<String>>> metadata,
-            CreateConnectionRequestContentEvernoteStrategy strategy,
             Optional<ConnectionOptionsEvernote> options,
             Map<String, Object> additionalProperties) {
         this.name = name;
@@ -53,7 +50,6 @@ public final class CreateConnectionRequestContentEvernote implements ICreateConn
         this.displayName = displayName;
         this.isDomainConnection = isDomainConnection;
         this.metadata = metadata;
-        this.strategy = strategy;
         this.options = options;
         this.additionalProperties = additionalProperties;
     }
@@ -91,11 +87,6 @@ public final class CreateConnectionRequestContentEvernote implements ICreateConn
         return metadata;
     }
 
-    @JsonProperty("strategy")
-    public CreateConnectionRequestContentEvernoteStrategy getStrategy() {
-        return strategy;
-    }
-
     @JsonProperty("options")
     public Optional<ConnectionOptionsEvernote> getOptions() {
         return options;
@@ -119,20 +110,13 @@ public final class CreateConnectionRequestContentEvernote implements ICreateConn
                 && displayName.equals(other.displayName)
                 && isDomainConnection.equals(other.isDomainConnection)
                 && metadata.equals(other.metadata)
-                && strategy.equals(other.strategy)
                 && options.equals(other.options);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.name,
-                this.enabledClients,
-                this.displayName,
-                this.isDomainConnection,
-                this.metadata,
-                this.strategy,
-                this.options);
+                this.name, this.enabledClients, this.displayName, this.isDomainConnection, this.metadata, this.options);
     }
 
     @java.lang.Override
@@ -145,13 +129,9 @@ public final class CreateConnectionRequestContentEvernote implements ICreateConn
     }
 
     public interface NameStage {
-        StrategyStage name(@NotNull String name);
+        _FinalStage name(@NotNull String name);
 
         Builder from(CreateConnectionRequestContentEvernote other);
-    }
-
-    public interface StrategyStage {
-        _FinalStage strategy(@NotNull CreateConnectionRequestContentEvernoteStrategy strategy);
     }
 
     public interface _FinalStage {
@@ -186,10 +166,8 @@ public final class CreateConnectionRequestContentEvernote implements ICreateConn
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements NameStage, StrategyStage, _FinalStage {
+    public static final class Builder implements NameStage, _FinalStage {
         private String name;
-
-        private CreateConnectionRequestContentEvernoteStrategy strategy;
 
         private Optional<ConnectionOptionsEvernote> options = Optional.empty();
 
@@ -213,22 +191,14 @@ public final class CreateConnectionRequestContentEvernote implements ICreateConn
             displayName(other.getDisplayName());
             isDomainConnection(other.getIsDomainConnection());
             metadata(other.getMetadata());
-            strategy(other.getStrategy());
             options(other.getOptions());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
-        public StrategyStage name(@NotNull String name) {
+        public _FinalStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("strategy")
-        public _FinalStage strategy(@NotNull CreateConnectionRequestContentEvernoteStrategy strategy) {
-            this.strategy = Objects.requireNonNull(strategy, "strategy must not be null");
             return this;
         }
 
@@ -307,14 +277,7 @@ public final class CreateConnectionRequestContentEvernote implements ICreateConn
         @java.lang.Override
         public CreateConnectionRequestContentEvernote build() {
             return new CreateConnectionRequestContentEvernote(
-                    name,
-                    enabledClients,
-                    displayName,
-                    isDomainConnection,
-                    metadata,
-                    strategy,
-                    options,
-                    additionalProperties);
+                    name, enabledClients, displayName, isDomainConnection, metadata, options, additionalProperties);
         }
 
         @java.lang.Override

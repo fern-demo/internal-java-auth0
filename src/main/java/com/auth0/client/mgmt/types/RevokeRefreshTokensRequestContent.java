@@ -27,20 +27,16 @@ public final class RevokeRefreshTokensRequestContent {
 
     private final Optional<String> clientId;
 
-    private final Optional<String> audience;
-
     private final Map<String, Object> additionalProperties;
 
     private RevokeRefreshTokensRequestContent(
             Optional<List<String>> ids,
             Optional<String> userId,
             Optional<String> clientId,
-            Optional<String> audience,
             Map<String, Object> additionalProperties) {
         this.ids = ids;
         this.userId = userId;
         this.clientId = clientId;
-        this.audience = audience;
         this.additionalProperties = additionalProperties;
     }
 
@@ -61,19 +57,11 @@ public final class RevokeRefreshTokensRequestContent {
     }
 
     /**
-     * @return Revoke refresh tokens for this client. Must be paired with <code>user_id</code>; optionally narrowed further with <code>audience</code>.
+     * @return Revoke all refresh tokens for this client.
      */
     @JsonProperty("client_id")
     public Optional<String> getClientId() {
         return clientId;
-    }
-
-    /**
-     * @return Resource server identifier (audience) to scope the revocation. Must be used with both <code>user_id</code> and <code>client_id</code>.
-     */
-    @JsonProperty("audience")
-    public Optional<String> getAudience() {
-        return audience;
     }
 
     @java.lang.Override
@@ -88,15 +76,12 @@ public final class RevokeRefreshTokensRequestContent {
     }
 
     private boolean equalTo(RevokeRefreshTokensRequestContent other) {
-        return ids.equals(other.ids)
-                && userId.equals(other.userId)
-                && clientId.equals(other.clientId)
-                && audience.equals(other.audience);
+        return ids.equals(other.ids) && userId.equals(other.userId) && clientId.equals(other.clientId);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.ids, this.userId, this.clientId, this.audience);
+        return Objects.hash(this.ids, this.userId, this.clientId);
     }
 
     @java.lang.Override
@@ -116,8 +101,6 @@ public final class RevokeRefreshTokensRequestContent {
 
         private Optional<String> clientId = Optional.empty();
 
-        private Optional<String> audience = Optional.empty();
-
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -127,7 +110,6 @@ public final class RevokeRefreshTokensRequestContent {
             ids(other.getIds());
             userId(other.getUserId());
             clientId(other.getClientId());
-            audience(other.getAudience());
             return this;
         }
 
@@ -160,7 +142,7 @@ public final class RevokeRefreshTokensRequestContent {
         }
 
         /**
-         * <p>Revoke refresh tokens for this client. Must be paired with <code>user_id</code>; optionally narrowed further with <code>audience</code>.</p>
+         * <p>Revoke all refresh tokens for this client.</p>
          */
         @JsonSetter(value = "client_id", nulls = Nulls.SKIP)
         public Builder clientId(Optional<String> clientId) {
@@ -173,22 +155,8 @@ public final class RevokeRefreshTokensRequestContent {
             return this;
         }
 
-        /**
-         * <p>Resource server identifier (audience) to scope the revocation. Must be used with both <code>user_id</code> and <code>client_id</code>.</p>
-         */
-        @JsonSetter(value = "audience", nulls = Nulls.SKIP)
-        public Builder audience(Optional<String> audience) {
-            this.audience = audience;
-            return this;
-        }
-
-        public Builder audience(String audience) {
-            this.audience = Optional.ofNullable(audience);
-            return this;
-        }
-
         public RevokeRefreshTokensRequestContent build() {
-            return new RevokeRefreshTokensRequestContent(ids, userId, clientId, audience, additionalProperties);
+            return new RevokeRefreshTokensRequestContent(ids, userId, clientId, additionalProperties);
         }
 
         public Builder additionalProperty(String key, Object value) {

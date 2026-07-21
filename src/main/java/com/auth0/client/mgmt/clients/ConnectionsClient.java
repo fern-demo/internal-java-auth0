@@ -7,7 +7,7 @@ import com.auth0.client.mgmt.clients.types.ConnectionsGetRequest;
 import com.auth0.client.mgmt.core.ClientOptions;
 import com.auth0.client.mgmt.core.RequestOptions;
 import com.auth0.client.mgmt.core.SyncPagingIterable;
-import com.auth0.client.mgmt.types.ConnectionForList;
+import com.auth0.client.mgmt.types.ConnectionResponseContent;
 
 public class ConnectionsClient {
     protected final ClientOptions clientOptions;
@@ -27,46 +27,62 @@ public class ConnectionsClient {
     }
 
     /**
-     * Retrieve all connections that are enabled for the specified <a href="https://www.auth0.com/docs/get-started/applications">Application</a>, using checkpoint pagination. A list of fields to include or exclude for each connection may also be specified.
-     * <ul>
-     * <li>This endpoint requires the <code>read:connections</code> scope and any one of <code>read:clients</code> or <code>read:client_summary</code>.</li>
-     * <li><strong>Note</strong>: The first time you call this endpoint, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no further results are remaining.</li>
-     * </ul>
+     * Retrieve all connections that are enabled for the specified <a href="https://www.auth0.com/docs/get-started/applications"> Application</a>, using checkpoint pagination. A list of fields to include or exclude for each connection may also be specified.
+     * <p><ul>
+     *   <li>
+     *     This endpoint requires the <code>read:connections</code> scope and any one of <code>read:clients</code> or <code>read:client_summary</code>.
+     *   </li>
+     *   <li>
+     *     <b>Note</b>: The first time you call this endpoint, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no further results are remaining.
+     *   </li>
+     * </ul></p>
      */
-    public SyncPagingIterable<ConnectionForList> get(String id) {
+    public SyncPagingIterable<ConnectionResponseContent> get(String id) {
         return this.rawClient.get(id).body();
     }
 
     /**
-     * Retrieve all connections that are enabled for the specified <a href="https://www.auth0.com/docs/get-started/applications">Application</a>, using checkpoint pagination. A list of fields to include or exclude for each connection may also be specified.
-     * <ul>
-     * <li>This endpoint requires the <code>read:connections</code> scope and any one of <code>read:clients</code> or <code>read:client_summary</code>.</li>
-     * <li><strong>Note</strong>: The first time you call this endpoint, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no further results are remaining.</li>
-     * </ul>
+     * Retrieve all connections that are enabled for the specified <a href="https://www.auth0.com/docs/get-started/applications"> Application</a>, using checkpoint pagination. A list of fields to include or exclude for each connection may also be specified.
+     * <p><ul>
+     *   <li>
+     *     This endpoint requires the <code>read:connections</code> scope and any one of <code>read:clients</code> or <code>read:client_summary</code>.
+     *   </li>
+     *   <li>
+     *     <b>Note</b>: The first time you call this endpoint, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no further results are remaining.
+     *   </li>
+     * </ul></p>
      */
-    public SyncPagingIterable<ConnectionForList> get(String id, RequestOptions requestOptions) {
+    public SyncPagingIterable<ConnectionResponseContent> get(String id, RequestOptions requestOptions) {
         return this.rawClient.get(id, requestOptions).body();
     }
 
     /**
-     * Retrieve all connections that are enabled for the specified <a href="https://www.auth0.com/docs/get-started/applications">Application</a>, using checkpoint pagination. A list of fields to include or exclude for each connection may also be specified.
-     * <ul>
-     * <li>This endpoint requires the <code>read:connections</code> scope and any one of <code>read:clients</code> or <code>read:client_summary</code>.</li>
-     * <li><strong>Note</strong>: The first time you call this endpoint, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no further results are remaining.</li>
-     * </ul>
+     * Retrieve all connections that are enabled for the specified <a href="https://www.auth0.com/docs/get-started/applications"> Application</a>, using checkpoint pagination. A list of fields to include or exclude for each connection may also be specified.
+     * <p><ul>
+     *   <li>
+     *     This endpoint requires the <code>read:connections</code> scope and any one of <code>read:clients</code> or <code>read:client_summary</code>.
+     *   </li>
+     *   <li>
+     *     <b>Note</b>: The first time you call this endpoint, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no further results are remaining.
+     *   </li>
+     * </ul></p>
      */
-    public SyncPagingIterable<ConnectionForList> get(String id, ConnectionsGetRequest request) {
+    public SyncPagingIterable<ConnectionResponseContent> get(String id, ConnectionsGetRequest request) {
         return this.rawClient.get(id, request).body();
     }
 
     /**
-     * Retrieve all connections that are enabled for the specified <a href="https://www.auth0.com/docs/get-started/applications">Application</a>, using checkpoint pagination. A list of fields to include or exclude for each connection may also be specified.
-     * <ul>
-     * <li>This endpoint requires the <code>read:connections</code> scope and any one of <code>read:clients</code> or <code>read:client_summary</code>.</li>
-     * <li><strong>Note</strong>: The first time you call this endpoint, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no further results are remaining.</li>
-     * </ul>
+     * Retrieve all connections that are enabled for the specified <a href="https://www.auth0.com/docs/get-started/applications"> Application</a>, using checkpoint pagination. A list of fields to include or exclude for each connection may also be specified.
+     * <p><ul>
+     *   <li>
+     *     This endpoint requires the <code>read:connections</code> scope and any one of <code>read:clients</code> or <code>read:client_summary</code>.
+     *   </li>
+     *   <li>
+     *     <b>Note</b>: The first time you call this endpoint, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no further results are remaining.
+     *   </li>
+     * </ul></p>
      */
-    public SyncPagingIterable<ConnectionForList> get(
+    public SyncPagingIterable<ConnectionResponseContent> get(
             String id, ConnectionsGetRequest request, RequestOptions requestOptions) {
         return this.rawClient.get(id, request, requestOptions).body();
     }

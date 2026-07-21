@@ -33,8 +33,6 @@ public final class Organization {
 
     private final Optional<TokenQuota> tokenQuota;
 
-    private final Optional<OrganizationThirdPartyClientAccessEnum> thirdPartyClientAccess;
-
     private final Map<String, Object> additionalProperties;
 
     private Organization(
@@ -44,7 +42,6 @@ public final class Organization {
             Optional<OrganizationBranding> branding,
             Optional<Map<String, OptionalNullable<String>>> metadata,
             Optional<TokenQuota> tokenQuota,
-            Optional<OrganizationThirdPartyClientAccessEnum> thirdPartyClientAccess,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.name = name;
@@ -52,7 +49,6 @@ public final class Organization {
         this.branding = branding;
         this.metadata = metadata;
         this.tokenQuota = tokenQuota;
-        this.thirdPartyClientAccess = thirdPartyClientAccess;
         this.additionalProperties = additionalProperties;
     }
 
@@ -95,11 +91,6 @@ public final class Organization {
         return tokenQuota;
     }
 
-    @JsonProperty("third_party_client_access")
-    public Optional<OrganizationThirdPartyClientAccessEnum> getThirdPartyClientAccess() {
-        return thirdPartyClientAccess;
-    }
-
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -117,20 +108,12 @@ public final class Organization {
                 && displayName.equals(other.displayName)
                 && branding.equals(other.branding)
                 && metadata.equals(other.metadata)
-                && tokenQuota.equals(other.tokenQuota)
-                && thirdPartyClientAccess.equals(other.thirdPartyClientAccess);
+                && tokenQuota.equals(other.tokenQuota);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(
-                this.id,
-                this.name,
-                this.displayName,
-                this.branding,
-                this.metadata,
-                this.tokenQuota,
-                this.thirdPartyClientAccess);
+        return Objects.hash(this.id, this.name, this.displayName, this.branding, this.metadata, this.tokenQuota);
     }
 
     @java.lang.Override
@@ -156,8 +139,6 @@ public final class Organization {
 
         private Optional<TokenQuota> tokenQuota = Optional.empty();
 
-        private Optional<OrganizationThirdPartyClientAccessEnum> thirdPartyClientAccess = Optional.empty();
-
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -170,7 +151,6 @@ public final class Organization {
             branding(other.getBranding());
             metadata(other.getMetadata());
             tokenQuota(other.getTokenQuota());
-            thirdPartyClientAccess(other.getThirdPartyClientAccess());
             return this;
         }
 
@@ -249,27 +229,8 @@ public final class Organization {
             return this;
         }
 
-        @JsonSetter(value = "third_party_client_access", nulls = Nulls.SKIP)
-        public Builder thirdPartyClientAccess(Optional<OrganizationThirdPartyClientAccessEnum> thirdPartyClientAccess) {
-            this.thirdPartyClientAccess = thirdPartyClientAccess;
-            return this;
-        }
-
-        public Builder thirdPartyClientAccess(OrganizationThirdPartyClientAccessEnum thirdPartyClientAccess) {
-            this.thirdPartyClientAccess = Optional.ofNullable(thirdPartyClientAccess);
-            return this;
-        }
-
         public Organization build() {
-            return new Organization(
-                    id,
-                    name,
-                    displayName,
-                    branding,
-                    metadata,
-                    tokenQuota,
-                    thirdPartyClientAccess,
-                    additionalProperties);
+            return new Organization(id, name, displayName, branding, metadata, tokenQuota, additionalProperties);
         }
 
         public Builder additionalProperty(String key, Object value) {

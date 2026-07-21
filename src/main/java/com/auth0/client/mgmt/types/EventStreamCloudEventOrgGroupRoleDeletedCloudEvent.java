@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = EventStreamCloudEventOrgGroupRoleDeletedCloudEvent.Builder.class)
 public final class EventStreamCloudEventOrgGroupRoleDeletedCloudEvent {
-    private final EventStreamCloudEventSpecVersionEnum specversion;
+    private final String specversion;
 
     private final EventStreamCloudEventOrgGroupRoleDeletedCloudEventTypeEnum type;
 
@@ -43,7 +43,7 @@ public final class EventStreamCloudEventOrgGroupRoleDeletedCloudEvent {
     private final Map<String, Object> additionalProperties;
 
     private EventStreamCloudEventOrgGroupRoleDeletedCloudEvent(
-            EventStreamCloudEventSpecVersionEnum specversion,
+            String specversion,
             EventStreamCloudEventOrgGroupRoleDeletedCloudEventTypeEnum type,
             String source,
             String id,
@@ -65,8 +65,11 @@ public final class EventStreamCloudEventOrgGroupRoleDeletedCloudEvent {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return The version of the CloudEvents specification which the event uses.
+     */
     @JsonProperty("specversion")
-    public EventStreamCloudEventSpecVersionEnum getSpecversion() {
+    public String getSpecversion() {
         return specversion;
     }
 
@@ -173,7 +176,10 @@ public final class EventStreamCloudEventOrgGroupRoleDeletedCloudEvent {
     }
 
     public interface SpecversionStage {
-        TypeStage specversion(@NotNull EventStreamCloudEventSpecVersionEnum specversion);
+        /**
+         * <p>The version of the CloudEvents specification which the event uses.</p>
+         */
+        TypeStage specversion(@NotNull String specversion);
 
         Builder from(EventStreamCloudEventOrgGroupRoleDeletedCloudEvent other);
     }
@@ -244,7 +250,7 @@ public final class EventStreamCloudEventOrgGroupRoleDeletedCloudEvent {
                     A0TenantStage,
                     A0StreamStage,
                     _FinalStage {
-        private EventStreamCloudEventSpecVersionEnum specversion;
+        private String specversion;
 
         private EventStreamCloudEventOrgGroupRoleDeletedCloudEventTypeEnum type;
 
@@ -281,9 +287,13 @@ public final class EventStreamCloudEventOrgGroupRoleDeletedCloudEvent {
             return this;
         }
 
+        /**
+         * <p>The version of the CloudEvents specification which the event uses.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         @JsonSetter("specversion")
-        public TypeStage specversion(@NotNull EventStreamCloudEventSpecVersionEnum specversion) {
+        public TypeStage specversion(@NotNull String specversion) {
             this.specversion = Objects.requireNonNull(specversion, "specversion must not be null");
             return this;
         }

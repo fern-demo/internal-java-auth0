@@ -3,7 +3,7 @@ package com.auth0.client.mgmt;
 import com.auth0.client.mgmt.clients.types.ConnectionsGetRequest;
 import com.auth0.client.mgmt.core.ObjectMappers;
 import com.auth0.client.mgmt.core.SyncPagingIterable;
-import com.auth0.client.mgmt.types.ConnectionForList;
+import com.auth0.client.mgmt.types.ConnectionResponseContent;
 import com.auth0.client.mgmt.types.ConnectionStrategyEnum;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,8 +42,8 @@ public class ClientsConnectionsWireTest {
                 new MockResponse()
                         .setResponseCode(200)
                         .setBody(
-                                "{\"connections\":[{\"name\":\"name\",\"display_name\":\"display_name\",\"options\":{\"key\":\"value\"},\"id\":\"id\",\"strategy\":\"strategy\",\"realms\":[\"realms\"],\"is_domain_connection\":true,\"show_as_button\":true,\"authentication\":{\"active\":true},\"connected_accounts\":{\"active\":true},\"cross_app_access_requesting_app\":{\"active\":true}}],\"next\":\"next\"}"));
-        SyncPagingIterable<ConnectionForList> response = client.clients()
+                                "{\"connections\":[{\"display_name\":\"connections\",\"enabled_clients\":[\"connections\"],\"is_domain_connection\":true,\"name\":\"connections\",\"id\":\"connections\",\"realms\":[\"connections\"],\"authentication\":{\"active\":true},\"connected_accounts\":{\"active\":true},\"provisioning_ticket_url\":\"provisioning_ticket_url\",\"strategy\":\"ad\"}],\"next\":\"next\"}"));
+        SyncPagingIterable<ConnectionResponseContent> response = client.clients()
                 .connections()
                 .get(
                         "id",

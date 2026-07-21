@@ -9,14 +9,12 @@ import com.auth0.client.mgmt.core.OptionalNullable;
 import com.auth0.client.mgmt.types.DefaultTokenQuota;
 import com.auth0.client.mgmt.types.SessionCookieSchema;
 import com.auth0.client.mgmt.types.TenantOidcLogoutSettings;
-import com.auth0.client.mgmt.types.TenantSettingsCountryCodes;
 import com.auth0.client.mgmt.types.TenantSettingsDeviceFlow;
 import com.auth0.client.mgmt.types.TenantSettingsDynamicClientRegistrationSecurityMode;
 import com.auth0.client.mgmt.types.TenantSettingsErrorPage;
 import com.auth0.client.mgmt.types.TenantSettingsFlags;
 import com.auth0.client.mgmt.types.TenantSettingsGuardianPage;
 import com.auth0.client.mgmt.types.TenantSettingsMtls;
-import com.auth0.client.mgmt.types.TenantSettingsNullableSecurityHeaders;
 import com.auth0.client.mgmt.types.TenantSettingsPasswordPage;
 import com.auth0.client.mgmt.types.TenantSettingsResourceParameterProfile;
 import com.auth0.client.mgmt.types.TenantSettingsSessions;
@@ -67,19 +65,11 @@ public final class UpdateTenantSettingsRequestContent {
 
     private final Optional<Integer> sessionLifetime;
 
-    private final Optional<Integer> sessionLifetimeInMinutes;
-
     private final Optional<Integer> idleSessionLifetime;
-
-    private final Optional<Integer> idleSessionLifetimeInMinutes;
 
     private final Optional<Integer> ephemeralSessionLifetime;
 
     private final Optional<Integer> idleEphemeralSessionLifetime;
-
-    private final Optional<Integer> ephemeralSessionLifetimeInMinutes;
-
-    private final Optional<Integer> idleEphemeralSessionLifetimeInMinutes;
 
     private final Optional<String> sandboxVersion;
 
@@ -88,8 +78,6 @@ public final class UpdateTenantSettingsRequestContent {
     private final Optional<String> defaultRedirectionUri;
 
     private final Optional<List<TenantSettingsSupportedLocalesEnum>> enabledLocales;
-
-    private final OptionalNullable<TenantSettingsNullableSecurityHeaders> securityHeaders;
 
     private final OptionalNullable<SessionCookieSchema> sessionCookie;
 
@@ -119,11 +107,7 @@ public final class UpdateTenantSettingsRequestContent {
 
     private final Optional<Boolean> phoneConsolidatedExperience;
 
-    private final Optional<Boolean> includeSessionMetadataInTenantLogs;
-
     private final Optional<TenantSettingsDynamicClientRegistrationSecurityMode> dynamicClientRegistrationSecurityMode;
-
-    private final OptionalNullable<TenantSettingsCountryCodes> countryCodes;
 
     private final Map<String, Object> additionalProperties;
 
@@ -142,18 +126,13 @@ public final class UpdateTenantSettingsRequestContent {
             Optional<String> supportUrl,
             Optional<List<String>> allowedLogoutUrls,
             Optional<Integer> sessionLifetime,
-            Optional<Integer> sessionLifetimeInMinutes,
             Optional<Integer> idleSessionLifetime,
-            Optional<Integer> idleSessionLifetimeInMinutes,
             Optional<Integer> ephemeralSessionLifetime,
             Optional<Integer> idleEphemeralSessionLifetime,
-            Optional<Integer> ephemeralSessionLifetimeInMinutes,
-            Optional<Integer> idleEphemeralSessionLifetimeInMinutes,
             Optional<String> sandboxVersion,
             Optional<String> legacySandboxVersion,
             Optional<String> defaultRedirectionUri,
             Optional<List<TenantSettingsSupportedLocalesEnum>> enabledLocales,
-            OptionalNullable<TenantSettingsNullableSecurityHeaders> securityHeaders,
             OptionalNullable<SessionCookieSchema> sessionCookie,
             OptionalNullable<TenantSettingsSessions> sessions,
             Optional<TenantOidcLogoutSettings> oidcLogout,
@@ -168,9 +147,7 @@ public final class UpdateTenantSettingsRequestContent {
             Optional<Boolean> clientIdMetadataDocumentSupported,
             Optional<Boolean> enableAiGuide,
             Optional<Boolean> phoneConsolidatedExperience,
-            Optional<Boolean> includeSessionMetadataInTenantLogs,
             Optional<TenantSettingsDynamicClientRegistrationSecurityMode> dynamicClientRegistrationSecurityMode,
-            OptionalNullable<TenantSettingsCountryCodes> countryCodes,
             Map<String, Object> additionalProperties) {
         this.changePassword = changePassword;
         this.deviceFlow = deviceFlow;
@@ -186,18 +163,13 @@ public final class UpdateTenantSettingsRequestContent {
         this.supportUrl = supportUrl;
         this.allowedLogoutUrls = allowedLogoutUrls;
         this.sessionLifetime = sessionLifetime;
-        this.sessionLifetimeInMinutes = sessionLifetimeInMinutes;
         this.idleSessionLifetime = idleSessionLifetime;
-        this.idleSessionLifetimeInMinutes = idleSessionLifetimeInMinutes;
         this.ephemeralSessionLifetime = ephemeralSessionLifetime;
         this.idleEphemeralSessionLifetime = idleEphemeralSessionLifetime;
-        this.ephemeralSessionLifetimeInMinutes = ephemeralSessionLifetimeInMinutes;
-        this.idleEphemeralSessionLifetimeInMinutes = idleEphemeralSessionLifetimeInMinutes;
         this.sandboxVersion = sandboxVersion;
         this.legacySandboxVersion = legacySandboxVersion;
         this.defaultRedirectionUri = defaultRedirectionUri;
         this.enabledLocales = enabledLocales;
-        this.securityHeaders = securityHeaders;
         this.sessionCookie = sessionCookie;
         this.sessions = sessions;
         this.oidcLogout = oidcLogout;
@@ -212,9 +184,7 @@ public final class UpdateTenantSettingsRequestContent {
         this.clientIdMetadataDocumentSupported = clientIdMetadataDocumentSupported;
         this.enableAiGuide = enableAiGuide;
         this.phoneConsolidatedExperience = phoneConsolidatedExperience;
-        this.includeSessionMetadataInTenantLogs = includeSessionMetadataInTenantLogs;
         this.dynamicClientRegistrationSecurityMode = dynamicClientRegistrationSecurityMode;
-        this.countryCodes = countryCodes;
         this.additionalProperties = additionalProperties;
     }
 
@@ -336,27 +306,11 @@ public final class UpdateTenantSettingsRequestContent {
     }
 
     /**
-     * @return Number of minutes a session will stay valid. Cannot be specified together with <code>session_lifetime</code>.
-     */
-    @JsonProperty("session_lifetime_in_minutes")
-    public Optional<Integer> getSessionLifetimeInMinutes() {
-        return sessionLifetimeInMinutes;
-    }
-
-    /**
      * @return Number of hours for which a session can be inactive before the user must log in again.
      */
     @JsonProperty("idle_session_lifetime")
     public Optional<Integer> getIdleSessionLifetime() {
         return idleSessionLifetime;
-    }
-
-    /**
-     * @return Number of minutes a session can be inactive before the user must log in again. Cannot be specified together with <code>idle_session_lifetime</code>.
-     */
-    @JsonProperty("idle_session_lifetime_in_minutes")
-    public Optional<Integer> getIdleSessionLifetimeInMinutes() {
-        return idleSessionLifetimeInMinutes;
     }
 
     /**
@@ -373,22 +327,6 @@ public final class UpdateTenantSettingsRequestContent {
     @JsonProperty("idle_ephemeral_session_lifetime")
     public Optional<Integer> getIdleEphemeralSessionLifetime() {
         return idleEphemeralSessionLifetime;
-    }
-
-    /**
-     * @return Number of minutes an ephemeral (non-persistent) session will stay valid. Cannot be specified together with <code>ephemeral_session_lifetime</code>.
-     */
-    @JsonProperty("ephemeral_session_lifetime_in_minutes")
-    public Optional<Integer> getEphemeralSessionLifetimeInMinutes() {
-        return ephemeralSessionLifetimeInMinutes;
-    }
-
-    /**
-     * @return Number of minutes an ephemeral (non-persistent) session can be inactive before the user must log in again. Cannot be specified together with <code>idle_ephemeral_session_lifetime</code>.
-     */
-    @JsonProperty("idle_ephemeral_session_lifetime_in_minutes")
-    public Optional<Integer> getIdleEphemeralSessionLifetimeInMinutes() {
-        return idleEphemeralSessionLifetimeInMinutes;
     }
 
     /**
@@ -421,15 +359,6 @@ public final class UpdateTenantSettingsRequestContent {
     @JsonProperty("enabled_locales")
     public Optional<List<TenantSettingsSupportedLocalesEnum>> getEnabledLocales() {
         return enabledLocales;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("security_headers")
-    public OptionalNullable<TenantSettingsNullableSecurityHeaders> getSecurityHeaders() {
-        if (securityHeaders == null) {
-            return OptionalNullable.absent();
-        }
-        return securityHeaders;
     }
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
@@ -567,26 +496,9 @@ public final class UpdateTenantSettingsRequestContent {
         return phoneConsolidatedExperience;
     }
 
-    /**
-     * @return Whether session metadata is included in specific tenant logs (slo, oidc_backchannel_logout_failed, oidc_backchannel_logout_succeeded).
-     */
-    @JsonProperty("include_session_metadata_in_tenant_logs")
-    public Optional<Boolean> getIncludeSessionMetadataInTenantLogs() {
-        return includeSessionMetadataInTenantLogs;
-    }
-
     @JsonProperty("dynamic_client_registration_security_mode")
     public Optional<TenantSettingsDynamicClientRegistrationSecurityMode> getDynamicClientRegistrationSecurityMode() {
         return dynamicClientRegistrationSecurityMode;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("country_codes")
-    public OptionalNullable<TenantSettingsCountryCodes> getCountryCodes() {
-        if (countryCodes == null) {
-            return OptionalNullable.absent();
-        }
-        return countryCodes;
     }
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
@@ -617,12 +529,6 @@ public final class UpdateTenantSettingsRequestContent {
     @JsonProperty("default_token_quota")
     private OptionalNullable<DefaultTokenQuota> _getDefaultTokenQuota() {
         return defaultTokenQuota;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("security_headers")
-    private OptionalNullable<TenantSettingsNullableSecurityHeaders> _getSecurityHeaders() {
-        return securityHeaders;
     }
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
@@ -679,12 +585,6 @@ public final class UpdateTenantSettingsRequestContent {
         return skipNonVerifiableCallbackUriConfirmationPrompt;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("country_codes")
-    private OptionalNullable<TenantSettingsCountryCodes> _getCountryCodes() {
-        return countryCodes;
-    }
-
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -712,18 +612,13 @@ public final class UpdateTenantSettingsRequestContent {
                 && supportUrl.equals(other.supportUrl)
                 && allowedLogoutUrls.equals(other.allowedLogoutUrls)
                 && sessionLifetime.equals(other.sessionLifetime)
-                && sessionLifetimeInMinutes.equals(other.sessionLifetimeInMinutes)
                 && idleSessionLifetime.equals(other.idleSessionLifetime)
-                && idleSessionLifetimeInMinutes.equals(other.idleSessionLifetimeInMinutes)
                 && ephemeralSessionLifetime.equals(other.ephemeralSessionLifetime)
                 && idleEphemeralSessionLifetime.equals(other.idleEphemeralSessionLifetime)
-                && ephemeralSessionLifetimeInMinutes.equals(other.ephemeralSessionLifetimeInMinutes)
-                && idleEphemeralSessionLifetimeInMinutes.equals(other.idleEphemeralSessionLifetimeInMinutes)
                 && sandboxVersion.equals(other.sandboxVersion)
                 && legacySandboxVersion.equals(other.legacySandboxVersion)
                 && defaultRedirectionUri.equals(other.defaultRedirectionUri)
                 && enabledLocales.equals(other.enabledLocales)
-                && securityHeaders.equals(other.securityHeaders)
                 && sessionCookie.equals(other.sessionCookie)
                 && sessions.equals(other.sessions)
                 && oidcLogout.equals(other.oidcLogout)
@@ -739,9 +634,7 @@ public final class UpdateTenantSettingsRequestContent {
                 && clientIdMetadataDocumentSupported.equals(other.clientIdMetadataDocumentSupported)
                 && enableAiGuide.equals(other.enableAiGuide)
                 && phoneConsolidatedExperience.equals(other.phoneConsolidatedExperience)
-                && includeSessionMetadataInTenantLogs.equals(other.includeSessionMetadataInTenantLogs)
-                && dynamicClientRegistrationSecurityMode.equals(other.dynamicClientRegistrationSecurityMode)
-                && countryCodes.equals(other.countryCodes);
+                && dynamicClientRegistrationSecurityMode.equals(other.dynamicClientRegistrationSecurityMode);
     }
 
     @java.lang.Override
@@ -761,18 +654,13 @@ public final class UpdateTenantSettingsRequestContent {
                 this.supportUrl,
                 this.allowedLogoutUrls,
                 this.sessionLifetime,
-                this.sessionLifetimeInMinutes,
                 this.idleSessionLifetime,
-                this.idleSessionLifetimeInMinutes,
                 this.ephemeralSessionLifetime,
                 this.idleEphemeralSessionLifetime,
-                this.ephemeralSessionLifetimeInMinutes,
-                this.idleEphemeralSessionLifetimeInMinutes,
                 this.sandboxVersion,
                 this.legacySandboxVersion,
                 this.defaultRedirectionUri,
                 this.enabledLocales,
-                this.securityHeaders,
                 this.sessionCookie,
                 this.sessions,
                 this.oidcLogout,
@@ -787,9 +675,7 @@ public final class UpdateTenantSettingsRequestContent {
                 this.clientIdMetadataDocumentSupported,
                 this.enableAiGuide,
                 this.phoneConsolidatedExperience,
-                this.includeSessionMetadataInTenantLogs,
-                this.dynamicClientRegistrationSecurityMode,
-                this.countryCodes);
+                this.dynamicClientRegistrationSecurityMode);
     }
 
     @java.lang.Override
@@ -831,19 +717,11 @@ public final class UpdateTenantSettingsRequestContent {
 
         private Optional<Integer> sessionLifetime = Optional.empty();
 
-        private Optional<Integer> sessionLifetimeInMinutes = Optional.empty();
-
         private Optional<Integer> idleSessionLifetime = Optional.empty();
-
-        private Optional<Integer> idleSessionLifetimeInMinutes = Optional.empty();
 
         private Optional<Integer> ephemeralSessionLifetime = Optional.empty();
 
         private Optional<Integer> idleEphemeralSessionLifetime = Optional.empty();
-
-        private Optional<Integer> ephemeralSessionLifetimeInMinutes = Optional.empty();
-
-        private Optional<Integer> idleEphemeralSessionLifetimeInMinutes = Optional.empty();
 
         private Optional<String> sandboxVersion = Optional.empty();
 
@@ -852,8 +730,6 @@ public final class UpdateTenantSettingsRequestContent {
         private Optional<String> defaultRedirectionUri = Optional.empty();
 
         private Optional<List<TenantSettingsSupportedLocalesEnum>> enabledLocales = Optional.empty();
-
-        private OptionalNullable<TenantSettingsNullableSecurityHeaders> securityHeaders = OptionalNullable.absent();
 
         private OptionalNullable<SessionCookieSchema> sessionCookie = OptionalNullable.absent();
 
@@ -883,12 +759,8 @@ public final class UpdateTenantSettingsRequestContent {
 
         private Optional<Boolean> phoneConsolidatedExperience = Optional.empty();
 
-        private Optional<Boolean> includeSessionMetadataInTenantLogs = Optional.empty();
-
         private Optional<TenantSettingsDynamicClientRegistrationSecurityMode> dynamicClientRegistrationSecurityMode =
                 Optional.empty();
-
-        private OptionalNullable<TenantSettingsCountryCodes> countryCodes = OptionalNullable.absent();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -910,18 +782,13 @@ public final class UpdateTenantSettingsRequestContent {
             supportUrl(other.getSupportUrl());
             allowedLogoutUrls(other.getAllowedLogoutUrls());
             sessionLifetime(other.getSessionLifetime());
-            sessionLifetimeInMinutes(other.getSessionLifetimeInMinutes());
             idleSessionLifetime(other.getIdleSessionLifetime());
-            idleSessionLifetimeInMinutes(other.getIdleSessionLifetimeInMinutes());
             ephemeralSessionLifetime(other.getEphemeralSessionLifetime());
             idleEphemeralSessionLifetime(other.getIdleEphemeralSessionLifetime());
-            ephemeralSessionLifetimeInMinutes(other.getEphemeralSessionLifetimeInMinutes());
-            idleEphemeralSessionLifetimeInMinutes(other.getIdleEphemeralSessionLifetimeInMinutes());
             sandboxVersion(other.getSandboxVersion());
             legacySandboxVersion(other.getLegacySandboxVersion());
             defaultRedirectionUri(other.getDefaultRedirectionUri());
             enabledLocales(other.getEnabledLocales());
-            securityHeaders(other.getSecurityHeaders());
             sessionCookie(other.getSessionCookie());
             sessions(other.getSessions());
             oidcLogout(other.getOidcLogout());
@@ -936,9 +803,7 @@ public final class UpdateTenantSettingsRequestContent {
             clientIdMetadataDocumentSupported(other.getClientIdMetadataDocumentSupported());
             enableAiGuide(other.getEnableAiGuide());
             phoneConsolidatedExperience(other.getPhoneConsolidatedExperience());
-            includeSessionMetadataInTenantLogs(other.getIncludeSessionMetadataInTenantLogs());
             dynamicClientRegistrationSecurityMode(other.getDynamicClientRegistrationSecurityMode());
-            countryCodes(other.getCountryCodes());
             return this;
         }
 
@@ -1225,20 +1090,6 @@ public final class UpdateTenantSettingsRequestContent {
         }
 
         /**
-         * <p>Number of minutes a session will stay valid. Cannot be specified together with <code>session_lifetime</code>.</p>
-         */
-        @JsonSetter(value = "session_lifetime_in_minutes", nulls = Nulls.SKIP)
-        public Builder sessionLifetimeInMinutes(Optional<Integer> sessionLifetimeInMinutes) {
-            this.sessionLifetimeInMinutes = sessionLifetimeInMinutes;
-            return this;
-        }
-
-        public Builder sessionLifetimeInMinutes(Integer sessionLifetimeInMinutes) {
-            this.sessionLifetimeInMinutes = Optional.ofNullable(sessionLifetimeInMinutes);
-            return this;
-        }
-
-        /**
          * <p>Number of hours for which a session can be inactive before the user must log in again.</p>
          */
         @JsonSetter(value = "idle_session_lifetime", nulls = Nulls.SKIP)
@@ -1249,20 +1100,6 @@ public final class UpdateTenantSettingsRequestContent {
 
         public Builder idleSessionLifetime(Integer idleSessionLifetime) {
             this.idleSessionLifetime = Optional.ofNullable(idleSessionLifetime);
-            return this;
-        }
-
-        /**
-         * <p>Number of minutes a session can be inactive before the user must log in again. Cannot be specified together with <code>idle_session_lifetime</code>.</p>
-         */
-        @JsonSetter(value = "idle_session_lifetime_in_minutes", nulls = Nulls.SKIP)
-        public Builder idleSessionLifetimeInMinutes(Optional<Integer> idleSessionLifetimeInMinutes) {
-            this.idleSessionLifetimeInMinutes = idleSessionLifetimeInMinutes;
-            return this;
-        }
-
-        public Builder idleSessionLifetimeInMinutes(Integer idleSessionLifetimeInMinutes) {
-            this.idleSessionLifetimeInMinutes = Optional.ofNullable(idleSessionLifetimeInMinutes);
             return this;
         }
 
@@ -1291,34 +1128,6 @@ public final class UpdateTenantSettingsRequestContent {
 
         public Builder idleEphemeralSessionLifetime(Integer idleEphemeralSessionLifetime) {
             this.idleEphemeralSessionLifetime = Optional.ofNullable(idleEphemeralSessionLifetime);
-            return this;
-        }
-
-        /**
-         * <p>Number of minutes an ephemeral (non-persistent) session will stay valid. Cannot be specified together with <code>ephemeral_session_lifetime</code>.</p>
-         */
-        @JsonSetter(value = "ephemeral_session_lifetime_in_minutes", nulls = Nulls.SKIP)
-        public Builder ephemeralSessionLifetimeInMinutes(Optional<Integer> ephemeralSessionLifetimeInMinutes) {
-            this.ephemeralSessionLifetimeInMinutes = ephemeralSessionLifetimeInMinutes;
-            return this;
-        }
-
-        public Builder ephemeralSessionLifetimeInMinutes(Integer ephemeralSessionLifetimeInMinutes) {
-            this.ephemeralSessionLifetimeInMinutes = Optional.ofNullable(ephemeralSessionLifetimeInMinutes);
-            return this;
-        }
-
-        /**
-         * <p>Number of minutes an ephemeral (non-persistent) session can be inactive before the user must log in again. Cannot be specified together with <code>idle_ephemeral_session_lifetime</code>.</p>
-         */
-        @JsonSetter(value = "idle_ephemeral_session_lifetime_in_minutes", nulls = Nulls.SKIP)
-        public Builder idleEphemeralSessionLifetimeInMinutes(Optional<Integer> idleEphemeralSessionLifetimeInMinutes) {
-            this.idleEphemeralSessionLifetimeInMinutes = idleEphemeralSessionLifetimeInMinutes;
-            return this;
-        }
-
-        public Builder idleEphemeralSessionLifetimeInMinutes(Integer idleEphemeralSessionLifetimeInMinutes) {
-            this.idleEphemeralSessionLifetimeInMinutes = Optional.ofNullable(idleEphemeralSessionLifetimeInMinutes);
             return this;
         }
 
@@ -1375,39 +1184,6 @@ public final class UpdateTenantSettingsRequestContent {
 
         public Builder enabledLocales(List<TenantSettingsSupportedLocalesEnum> enabledLocales) {
             this.enabledLocales = Optional.ofNullable(enabledLocales);
-            return this;
-        }
-
-        @JsonSetter(value = "security_headers", nulls = Nulls.SKIP)
-        public Builder securityHeaders(
-                @Nullable OptionalNullable<TenantSettingsNullableSecurityHeaders> securityHeaders) {
-            this.securityHeaders = securityHeaders;
-            return this;
-        }
-
-        public Builder securityHeaders(TenantSettingsNullableSecurityHeaders securityHeaders) {
-            this.securityHeaders = OptionalNullable.of(securityHeaders);
-            return this;
-        }
-
-        public Builder securityHeaders(Optional<TenantSettingsNullableSecurityHeaders> securityHeaders) {
-            if (securityHeaders.isPresent()) {
-                this.securityHeaders = OptionalNullable.of(securityHeaders.get());
-            } else {
-                this.securityHeaders = OptionalNullable.absent();
-            }
-            return this;
-        }
-
-        public Builder securityHeaders(
-                com.auth0.client.mgmt.core.Nullable<TenantSettingsNullableSecurityHeaders> securityHeaders) {
-            if (securityHeaders.isNull()) {
-                this.securityHeaders = OptionalNullable.ofNull();
-            } else if (securityHeaders.isEmpty()) {
-                this.securityHeaders = OptionalNullable.absent();
-            } else {
-                this.securityHeaders = OptionalNullable.of(securityHeaders.get());
-            }
             return this;
         }
 
@@ -1800,20 +1576,6 @@ public final class UpdateTenantSettingsRequestContent {
             return this;
         }
 
-        /**
-         * <p>Whether session metadata is included in specific tenant logs (slo, oidc_backchannel_logout_failed, oidc_backchannel_logout_succeeded).</p>
-         */
-        @JsonSetter(value = "include_session_metadata_in_tenant_logs", nulls = Nulls.SKIP)
-        public Builder includeSessionMetadataInTenantLogs(Optional<Boolean> includeSessionMetadataInTenantLogs) {
-            this.includeSessionMetadataInTenantLogs = includeSessionMetadataInTenantLogs;
-            return this;
-        }
-
-        public Builder includeSessionMetadataInTenantLogs(Boolean includeSessionMetadataInTenantLogs) {
-            this.includeSessionMetadataInTenantLogs = Optional.ofNullable(includeSessionMetadataInTenantLogs);
-            return this;
-        }
-
         @JsonSetter(value = "dynamic_client_registration_security_mode", nulls = Nulls.SKIP)
         public Builder dynamicClientRegistrationSecurityMode(
                 Optional<TenantSettingsDynamicClientRegistrationSecurityMode> dynamicClientRegistrationSecurityMode) {
@@ -1824,37 +1586,6 @@ public final class UpdateTenantSettingsRequestContent {
         public Builder dynamicClientRegistrationSecurityMode(
                 TenantSettingsDynamicClientRegistrationSecurityMode dynamicClientRegistrationSecurityMode) {
             this.dynamicClientRegistrationSecurityMode = Optional.ofNullable(dynamicClientRegistrationSecurityMode);
-            return this;
-        }
-
-        @JsonSetter(value = "country_codes", nulls = Nulls.SKIP)
-        public Builder countryCodes(@Nullable OptionalNullable<TenantSettingsCountryCodes> countryCodes) {
-            this.countryCodes = countryCodes;
-            return this;
-        }
-
-        public Builder countryCodes(TenantSettingsCountryCodes countryCodes) {
-            this.countryCodes = OptionalNullable.of(countryCodes);
-            return this;
-        }
-
-        public Builder countryCodes(Optional<TenantSettingsCountryCodes> countryCodes) {
-            if (countryCodes.isPresent()) {
-                this.countryCodes = OptionalNullable.of(countryCodes.get());
-            } else {
-                this.countryCodes = OptionalNullable.absent();
-            }
-            return this;
-        }
-
-        public Builder countryCodes(com.auth0.client.mgmt.core.Nullable<TenantSettingsCountryCodes> countryCodes) {
-            if (countryCodes.isNull()) {
-                this.countryCodes = OptionalNullable.ofNull();
-            } else if (countryCodes.isEmpty()) {
-                this.countryCodes = OptionalNullable.absent();
-            } else {
-                this.countryCodes = OptionalNullable.of(countryCodes.get());
-            }
             return this;
         }
 
@@ -1874,18 +1605,13 @@ public final class UpdateTenantSettingsRequestContent {
                     supportUrl,
                     allowedLogoutUrls,
                     sessionLifetime,
-                    sessionLifetimeInMinutes,
                     idleSessionLifetime,
-                    idleSessionLifetimeInMinutes,
                     ephemeralSessionLifetime,
                     idleEphemeralSessionLifetime,
-                    ephemeralSessionLifetimeInMinutes,
-                    idleEphemeralSessionLifetimeInMinutes,
                     sandboxVersion,
                     legacySandboxVersion,
                     defaultRedirectionUri,
                     enabledLocales,
-                    securityHeaders,
                     sessionCookie,
                     sessions,
                     oidcLogout,
@@ -1900,9 +1626,7 @@ public final class UpdateTenantSettingsRequestContent {
                     clientIdMetadataDocumentSupported,
                     enableAiGuide,
                     phoneConsolidatedExperience,
-                    includeSessionMetadataInTenantLogs,
                     dynamicClientRegistrationSecurityMode,
-                    countryCodes,
                     additionalProperties);
         }
 

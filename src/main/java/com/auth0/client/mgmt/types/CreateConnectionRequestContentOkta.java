@@ -33,10 +33,6 @@ public final class CreateConnectionRequestContentOkta implements ICreateConnecti
 
     private final Optional<Map<String, OptionalNullable<String>>> metadata;
 
-    private final CreateConnectionRequestContentOktaStrategy strategy;
-
-    private final Optional<CrossAppAccessRequestingApp> crossAppAccessRequestingApp;
-
     private final Optional<ConnectionOptionsOkta> options;
 
     private final Optional<Boolean> showAsButton;
@@ -49,8 +45,6 @@ public final class CreateConnectionRequestContentOkta implements ICreateConnecti
             Optional<String> displayName,
             Optional<Boolean> isDomainConnection,
             Optional<Map<String, OptionalNullable<String>>> metadata,
-            CreateConnectionRequestContentOktaStrategy strategy,
-            Optional<CrossAppAccessRequestingApp> crossAppAccessRequestingApp,
             Optional<ConnectionOptionsOkta> options,
             Optional<Boolean> showAsButton,
             Map<String, Object> additionalProperties) {
@@ -59,8 +53,6 @@ public final class CreateConnectionRequestContentOkta implements ICreateConnecti
         this.displayName = displayName;
         this.isDomainConnection = isDomainConnection;
         this.metadata = metadata;
-        this.strategy = strategy;
-        this.crossAppAccessRequestingApp = crossAppAccessRequestingApp;
         this.options = options;
         this.showAsButton = showAsButton;
         this.additionalProperties = additionalProperties;
@@ -99,16 +91,6 @@ public final class CreateConnectionRequestContentOkta implements ICreateConnecti
         return metadata;
     }
 
-    @JsonProperty("strategy")
-    public CreateConnectionRequestContentOktaStrategy getStrategy() {
-        return strategy;
-    }
-
-    @JsonProperty("cross_app_access_requesting_app")
-    public Optional<CrossAppAccessRequestingApp> getCrossAppAccessRequestingApp() {
-        return crossAppAccessRequestingApp;
-    }
-
     @JsonProperty("options")
     public Optional<ConnectionOptionsOkta> getOptions() {
         return options;
@@ -137,8 +119,6 @@ public final class CreateConnectionRequestContentOkta implements ICreateConnecti
                 && displayName.equals(other.displayName)
                 && isDomainConnection.equals(other.isDomainConnection)
                 && metadata.equals(other.metadata)
-                && strategy.equals(other.strategy)
-                && crossAppAccessRequestingApp.equals(other.crossAppAccessRequestingApp)
                 && options.equals(other.options)
                 && showAsButton.equals(other.showAsButton);
     }
@@ -151,8 +131,6 @@ public final class CreateConnectionRequestContentOkta implements ICreateConnecti
                 this.displayName,
                 this.isDomainConnection,
                 this.metadata,
-                this.strategy,
-                this.crossAppAccessRequestingApp,
                 this.options,
                 this.showAsButton);
     }
@@ -167,13 +145,9 @@ public final class CreateConnectionRequestContentOkta implements ICreateConnecti
     }
 
     public interface NameStage {
-        StrategyStage name(@NotNull String name);
+        _FinalStage name(@NotNull String name);
 
         Builder from(CreateConnectionRequestContentOkta other);
-    }
-
-    public interface StrategyStage {
-        _FinalStage strategy(@NotNull CreateConnectionRequestContentOktaStrategy strategy);
     }
 
     public interface _FinalStage {
@@ -202,10 +176,6 @@ public final class CreateConnectionRequestContentOkta implements ICreateConnecti
 
         _FinalStage metadata(Map<String, OptionalNullable<String>> metadata);
 
-        _FinalStage crossAppAccessRequestingApp(Optional<CrossAppAccessRequestingApp> crossAppAccessRequestingApp);
-
-        _FinalStage crossAppAccessRequestingApp(CrossAppAccessRequestingApp crossAppAccessRequestingApp);
-
         _FinalStage options(Optional<ConnectionOptionsOkta> options);
 
         _FinalStage options(ConnectionOptionsOkta options);
@@ -216,16 +186,12 @@ public final class CreateConnectionRequestContentOkta implements ICreateConnecti
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements NameStage, StrategyStage, _FinalStage {
+    public static final class Builder implements NameStage, _FinalStage {
         private String name;
-
-        private CreateConnectionRequestContentOktaStrategy strategy;
 
         private Optional<Boolean> showAsButton = Optional.empty();
 
         private Optional<ConnectionOptionsOkta> options = Optional.empty();
-
-        private Optional<CrossAppAccessRequestingApp> crossAppAccessRequestingApp = Optional.empty();
 
         private Optional<Map<String, OptionalNullable<String>>> metadata = Optional.empty();
 
@@ -247,8 +213,6 @@ public final class CreateConnectionRequestContentOkta implements ICreateConnecti
             displayName(other.getDisplayName());
             isDomainConnection(other.getIsDomainConnection());
             metadata(other.getMetadata());
-            strategy(other.getStrategy());
-            crossAppAccessRequestingApp(other.getCrossAppAccessRequestingApp());
             options(other.getOptions());
             showAsButton(other.getShowAsButton());
             return this;
@@ -256,15 +220,8 @@ public final class CreateConnectionRequestContentOkta implements ICreateConnecti
 
         @java.lang.Override
         @JsonSetter("name")
-        public StrategyStage name(@NotNull String name) {
+        public _FinalStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("strategy")
-        public _FinalStage strategy(@NotNull CreateConnectionRequestContentOktaStrategy strategy) {
-            this.strategy = Objects.requireNonNull(strategy, "strategy must not be null");
             return this;
         }
 
@@ -291,20 +248,6 @@ public final class CreateConnectionRequestContentOkta implements ICreateConnecti
         @JsonSetter(value = "options", nulls = Nulls.SKIP)
         public _FinalStage options(Optional<ConnectionOptionsOkta> options) {
             this.options = options;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage crossAppAccessRequestingApp(CrossAppAccessRequestingApp crossAppAccessRequestingApp) {
-            this.crossAppAccessRequestingApp = Optional.ofNullable(crossAppAccessRequestingApp);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "cross_app_access_requesting_app", nulls = Nulls.SKIP)
-        public _FinalStage crossAppAccessRequestingApp(
-                Optional<CrossAppAccessRequestingApp> crossAppAccessRequestingApp) {
-            this.crossAppAccessRequestingApp = crossAppAccessRequestingApp;
             return this;
         }
 
@@ -375,8 +318,6 @@ public final class CreateConnectionRequestContentOkta implements ICreateConnecti
                     displayName,
                     isDomainConnection,
                     metadata,
-                    strategy,
-                    crossAppAccessRequestingApp,
                     options,
                     showAsButton,
                     additionalProperties);

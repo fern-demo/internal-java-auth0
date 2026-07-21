@@ -112,23 +112,27 @@ public class RawTemplatesClient {
 
     /**
      * Update the Universal Login branding template.
-     * <p>When <code>content-type</code> header is set to <code>application/json</code>:</p>
-     * <pre><code class="language-json">{
-     *   &quot;template&quot;: &quot;&lt;!DOCTYPE html&gt;{% assign resolved_dir = dir | default: \&quot;auto\&quot; %}&lt;html lang=\&quot;{{locale}}\&quot; dir=\&quot;{{resolved_dir}}\&quot;&gt;&lt;head&gt;{%- auth0:head -%}&lt;/head&gt;&lt;body class=\&quot;_widget-auto-layout\&quot;&gt;{%- auth0:widget -%}&lt;/body&gt;&lt;/html&gt;&quot;
+     * <p><p>When <code>content-type</code> header is set to <code>application/json</code>:</p>
+     * <pre>
+     * {
+     *   &quot;template&quot;: &quot;&amp;lt;!DOCTYPE html&amp;gt;{% assign resolved_dir = dir | default: &quot;auto&quot; %}&amp;lt;html lang=&quot;{{locale}}&quot; dir=&quot;{{resolved_dir}}&quot;&amp;gt;&amp;lt;head&amp;gt;{%- auth0:head -%}&amp;lt;/head&amp;gt;&amp;lt;body class=&quot;_widget-auto-layout&quot;&amp;gt;{%- auth0:widget -%}&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&quot;
      * }
-     * </code></pre>
-     * <p>When <code>content-type</code> header is set to <code>text/html</code>:</p>
-     * <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+     * </pre></p>
+     * <p><p>
+     *   When <code>content-type</code> header is set to <code>text/html</code>:
+     * </p>
+     * <pre>
+     * &amp;lt!DOCTYPE html&amp;gt;
      * {% assign resolved_dir = dir | default: &quot;auto&quot; %}
-     * &lt;html lang=&quot;{{locale}}&quot; dir=&quot;{{resolved_dir}}&quot;&gt;
-     *   &lt;head&gt;
+     * &amp;lt;html lang=&quot;{{locale}}&quot; dir=&quot;{{resolved_dir}}&quot;&amp;gt;
+     *   &amp;lt;head&amp;gt;
      *     {%- auth0:head -%}
-     *   &lt;/head&gt;
-     *   &lt;body class=&quot;_widget-auto-layout&quot;&gt;
+     *   &amp;lt;/head&amp;gt;
+     *   &amp;lt;body class=&quot;_widget-auto-layout&quot;&amp;gt;
      *     {%- auth0:widget -%}
-     *   &lt;/body&gt;
-     * &lt;/html&gt;
-     * </code></pre>
+     *   &amp;lt;/body&amp;gt;
+     * &amp;lt;/html&amp;gt;
+     * </pre></p>
      */
     public ManagementApiHttpResponse<Void> updateUniversalLogin(UpdateUniversalLoginTemplateRequestContent request) {
         return updateUniversalLogin(request, null);
@@ -136,23 +140,27 @@ public class RawTemplatesClient {
 
     /**
      * Update the Universal Login branding template.
-     * <p>When <code>content-type</code> header is set to <code>application/json</code>:</p>
-     * <pre><code class="language-json">{
-     *   &quot;template&quot;: &quot;&lt;!DOCTYPE html&gt;{% assign resolved_dir = dir | default: \&quot;auto\&quot; %}&lt;html lang=\&quot;{{locale}}\&quot; dir=\&quot;{{resolved_dir}}\&quot;&gt;&lt;head&gt;{%- auth0:head -%}&lt;/head&gt;&lt;body class=\&quot;_widget-auto-layout\&quot;&gt;{%- auth0:widget -%}&lt;/body&gt;&lt;/html&gt;&quot;
+     * <p><p>When <code>content-type</code> header is set to <code>application/json</code>:</p>
+     * <pre>
+     * {
+     *   &quot;template&quot;: &quot;&amp;lt;!DOCTYPE html&amp;gt;{% assign resolved_dir = dir | default: &quot;auto&quot; %}&amp;lt;html lang=&quot;{{locale}}&quot; dir=&quot;{{resolved_dir}}&quot;&amp;gt;&amp;lt;head&amp;gt;{%- auth0:head -%}&amp;lt;/head&amp;gt;&amp;lt;body class=&quot;_widget-auto-layout&quot;&amp;gt;{%- auth0:widget -%}&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&quot;
      * }
-     * </code></pre>
-     * <p>When <code>content-type</code> header is set to <code>text/html</code>:</p>
-     * <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+     * </pre></p>
+     * <p><p>
+     *   When <code>content-type</code> header is set to <code>text/html</code>:
+     * </p>
+     * <pre>
+     * &amp;lt!DOCTYPE html&amp;gt;
      * {% assign resolved_dir = dir | default: &quot;auto&quot; %}
-     * &lt;html lang=&quot;{{locale}}&quot; dir=&quot;{{resolved_dir}}&quot;&gt;
-     *   &lt;head&gt;
+     * &amp;lt;html lang=&quot;{{locale}}&quot; dir=&quot;{{resolved_dir}}&quot;&amp;gt;
+     *   &amp;lt;head&amp;gt;
      *     {%- auth0:head -%}
-     *   &lt;/head&gt;
-     *   &lt;body class=&quot;_widget-auto-layout&quot;&gt;
+     *   &amp;lt;/head&amp;gt;
+     *   &amp;lt;body class=&quot;_widget-auto-layout&quot;&amp;gt;
      *     {%- auth0:widget -%}
-     *   &lt;/body&gt;
-     * &lt;/html&gt;
-     * </code></pre>
+     *   &amp;lt;/body&amp;gt;
+     * &amp;lt;/html&amp;gt;
+     * </pre></p>
      */
     public ManagementApiHttpResponse<Void> updateUniversalLogin(
             UpdateUniversalLoginTemplateRequestContent request, RequestOptions requestOptions) {

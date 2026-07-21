@@ -194,7 +194,7 @@ public class AsyncRawUserAttributeProfilesClient {
     }
 
     /**
-     * Create a User Attribute Profile.
+     * Create a User Attribute Profile
      */
     public CompletableFuture<ManagementApiHttpResponse<CreateUserAttributeProfileResponseContent>> create(
             CreateUserAttributeProfileRequestContent request) {
@@ -202,7 +202,7 @@ public class AsyncRawUserAttributeProfilesClient {
     }
 
     /**
-     * Create a User Attribute Profile.
+     * Create a User Attribute Profile
      */
     public CompletableFuture<ManagementApiHttpResponse<CreateUserAttributeProfileResponseContent>> create(
             CreateUserAttributeProfileRequestContent request, RequestOptions requestOptions) {
@@ -784,11 +784,6 @@ public class AsyncRawUserAttributeProfilesClient {
                                 return;
                             case 403:
                                 future.completeExceptionally(new ForbiddenError(
-                                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                                        response));
-                                return;
-                            case 404:
-                                future.completeExceptionally(new NotFoundError(
                                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
                                         response));
                                 return;

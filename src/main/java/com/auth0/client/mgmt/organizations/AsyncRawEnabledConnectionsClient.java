@@ -15,7 +15,6 @@ import com.auth0.client.mgmt.core.RetryInterceptor;
 import com.auth0.client.mgmt.core.SyncPagingIterable;
 import com.auth0.client.mgmt.errors.BadRequestError;
 import com.auth0.client.mgmt.errors.ForbiddenError;
-import com.auth0.client.mgmt.errors.NotFoundError;
 import com.auth0.client.mgmt.errors.TooManyRequestsError;
 import com.auth0.client.mgmt.errors.UnauthorizedError;
 import com.auth0.client.mgmt.organizations.types.AddOrganizationConnectionRequestContent;
@@ -164,11 +163,6 @@ public class AsyncRawEnabledConnectionsClient {
                                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
                                         response));
                                 return;
-                            case 404:
-                                future.completeExceptionally(new NotFoundError(
-                                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                                        response));
-                                return;
                             case 429:
                                 future.completeExceptionally(new TooManyRequestsError(
                                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
@@ -281,11 +275,6 @@ public class AsyncRawEnabledConnectionsClient {
                                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
                                         response));
                                 return;
-                            case 404:
-                                future.completeExceptionally(new NotFoundError(
-                                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                                        response));
-                                return;
                             case 429:
                                 future.completeExceptionally(new TooManyRequestsError(
                                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
@@ -384,11 +373,6 @@ public class AsyncRawEnabledConnectionsClient {
                                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
                                         response));
                                 return;
-                            case 404:
-                                future.completeExceptionally(new NotFoundError(
-                                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                                        response));
-                                return;
                             case 429:
                                 future.completeExceptionally(new TooManyRequestsError(
                                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
@@ -420,7 +404,7 @@ public class AsyncRawEnabledConnectionsClient {
 
     /**
      * Disable a specific connection for an Organization. Once disabled, Organization members can no longer use that connection to authenticate.
-     * <p><strong>Note</strong>: This action does not remove the connection from your tenant.</p>
+     * <p><b>Note</b>: This action does not remove the connection from your tenant.</p>
      */
     public CompletableFuture<ManagementApiHttpResponse<Void>> delete(String id, String connectionId) {
         return delete(id, connectionId, null);
@@ -428,7 +412,7 @@ public class AsyncRawEnabledConnectionsClient {
 
     /**
      * Disable a specific connection for an Organization. Once disabled, Organization members can no longer use that connection to authenticate.
-     * <p><strong>Note</strong>: This action does not remove the connection from your tenant.</p>
+     * <p><b>Note</b>: This action does not remove the connection from your tenant.</p>
      */
     public CompletableFuture<ManagementApiHttpResponse<Void>> delete(
             String id, String connectionId, RequestOptions requestOptions) {
@@ -486,11 +470,6 @@ public class AsyncRawEnabledConnectionsClient {
                                 return;
                             case 403:
                                 future.completeExceptionally(new ForbiddenError(
-                                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                                        response));
-                                return;
-                            case 404:
-                                future.completeExceptionally(new NotFoundError(
                                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
                                         response));
                                 return;
@@ -628,11 +607,6 @@ public class AsyncRawEnabledConnectionsClient {
                                 return;
                             case 403:
                                 future.completeExceptionally(new ForbiddenError(
-                                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                                        response));
-                                return;
-                            case 404:
-                                future.completeExceptionally(new NotFoundError(
                                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
                                         response));
                                 return;

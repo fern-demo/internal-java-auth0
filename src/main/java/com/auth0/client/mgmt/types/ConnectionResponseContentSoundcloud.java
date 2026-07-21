@@ -42,8 +42,6 @@ public final class ConnectionResponseContentSoundcloud
 
     private final Optional<Map<String, OptionalNullable<String>>> metadata;
 
-    private final ConnectionResponseContentSoundcloudStrategy strategy;
-
     private final Optional<ConnectionOptionsSoundcloud> options;
 
     private final Map<String, Object> additionalProperties;
@@ -58,7 +56,6 @@ public final class ConnectionResponseContentSoundcloud
             Optional<String> displayName,
             Optional<Boolean> isDomainConnection,
             Optional<Map<String, OptionalNullable<String>>> metadata,
-            ConnectionResponseContentSoundcloudStrategy strategy,
             Optional<ConnectionOptionsSoundcloud> options,
             Map<String, Object> additionalProperties) {
         this.authentication = authentication;
@@ -70,7 +67,6 @@ public final class ConnectionResponseContentSoundcloud
         this.displayName = displayName;
         this.isDomainConnection = isDomainConnection;
         this.metadata = metadata;
-        this.strategy = strategy;
         this.options = options;
         this.additionalProperties = additionalProperties;
     }
@@ -132,11 +128,6 @@ public final class ConnectionResponseContentSoundcloud
         return metadata;
     }
 
-    @JsonProperty("strategy")
-    public ConnectionResponseContentSoundcloudStrategy getStrategy() {
-        return strategy;
-    }
-
     @JsonProperty("options")
     public Optional<ConnectionOptionsSoundcloud> getOptions() {
         return options;
@@ -164,7 +155,6 @@ public final class ConnectionResponseContentSoundcloud
                 && displayName.equals(other.displayName)
                 && isDomainConnection.equals(other.isDomainConnection)
                 && metadata.equals(other.metadata)
-                && strategy.equals(other.strategy)
                 && options.equals(other.options);
     }
 
@@ -180,7 +170,6 @@ public final class ConnectionResponseContentSoundcloud
                 this.displayName,
                 this.isDomainConnection,
                 this.metadata,
-                this.strategy,
                 this.options);
     }
 
@@ -200,11 +189,7 @@ public final class ConnectionResponseContentSoundcloud
     }
 
     public interface NameStage {
-        StrategyStage name(@NotNull String name);
-    }
-
-    public interface StrategyStage {
-        _FinalStage strategy(@NotNull ConnectionResponseContentSoundcloudStrategy strategy);
+        _FinalStage name(@NotNull String name);
     }
 
     public interface _FinalStage {
@@ -251,12 +236,10 @@ public final class ConnectionResponseContentSoundcloud
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IdStage, NameStage, StrategyStage, _FinalStage {
+    public static final class Builder implements IdStage, NameStage, _FinalStage {
         private String id;
 
         private String name;
-
-        private ConnectionResponseContentSoundcloudStrategy strategy;
 
         private Optional<ConnectionOptionsSoundcloud> options = Optional.empty();
 
@@ -290,7 +273,6 @@ public final class ConnectionResponseContentSoundcloud
             displayName(other.getDisplayName());
             isDomainConnection(other.getIsDomainConnection());
             metadata(other.getMetadata());
-            strategy(other.getStrategy());
             options(other.getOptions());
             return this;
         }
@@ -304,15 +286,8 @@ public final class ConnectionResponseContentSoundcloud
 
         @java.lang.Override
         @JsonSetter("name")
-        public StrategyStage name(@NotNull String name) {
+        public _FinalStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("strategy")
-        public _FinalStage strategy(@NotNull ConnectionResponseContentSoundcloudStrategy strategy) {
-            this.strategy = Objects.requireNonNull(strategy, "strategy must not be null");
             return this;
         }
 
@@ -439,7 +414,6 @@ public final class ConnectionResponseContentSoundcloud
                     displayName,
                     isDomainConnection,
                     metadata,
-                    strategy,
                     options,
                     additionalProperties);
         }

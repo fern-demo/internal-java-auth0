@@ -23,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 public final class DeleteUserIdentityResponseContentItem {
     private final String connection;
 
-    private final UserId userId;
+    private final String userId;
 
     private final String provider;
 
@@ -41,7 +41,7 @@ public final class DeleteUserIdentityResponseContentItem {
 
     private DeleteUserIdentityResponseContentItem(
             String connection,
-            UserId userId,
+            String userId,
             String provider,
             Optional<Boolean> isSocial,
             Optional<String> accessToken,
@@ -72,7 +72,7 @@ public final class DeleteUserIdentityResponseContentItem {
      * @return The unique identifier for the user for the identity.
      */
     @JsonProperty("user_id")
-    public UserId getUserId() {
+    public String getUserId() {
         return userId;
     }
 
@@ -179,7 +179,7 @@ public final class DeleteUserIdentityResponseContentItem {
         /**
          * <p>The unique identifier for the user for the identity.</p>
          */
-        ProviderStage userId(@NotNull UserId userId);
+        ProviderStage userId(@NotNull String userId);
     }
 
     public interface ProviderStage {
@@ -233,7 +233,7 @@ public final class DeleteUserIdentityResponseContentItem {
     public static final class Builder implements ConnectionStage, UserIdStage, ProviderStage, _FinalStage {
         private String connection;
 
-        private UserId userId;
+        private String userId;
 
         private String provider;
 
@@ -282,7 +282,7 @@ public final class DeleteUserIdentityResponseContentItem {
          */
         @java.lang.Override
         @JsonSetter("user_id")
-        public ProviderStage userId(@NotNull UserId userId) {
+        public ProviderStage userId(@NotNull String userId) {
             this.userId = Objects.requireNonNull(userId, "userId must not be null");
             return this;
         }

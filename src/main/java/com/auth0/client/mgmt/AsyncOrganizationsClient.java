@@ -11,10 +11,8 @@ import com.auth0.client.mgmt.organizations.AsyncClientGrantsClient;
 import com.auth0.client.mgmt.organizations.AsyncConnectionsClient;
 import com.auth0.client.mgmt.organizations.AsyncDiscoveryDomainsClient;
 import com.auth0.client.mgmt.organizations.AsyncEnabledConnectionsClient;
-import com.auth0.client.mgmt.organizations.AsyncGroupsClient;
 import com.auth0.client.mgmt.organizations.AsyncInvitationsClient;
 import com.auth0.client.mgmt.organizations.AsyncMembersClient;
-import com.auth0.client.mgmt.organizations.roles.AsyncRolesClient;
 import com.auth0.client.mgmt.types.CreateOrganizationRequestContent;
 import com.auth0.client.mgmt.types.CreateOrganizationResponseContent;
 import com.auth0.client.mgmt.types.GetOrganizationByNameResponseContent;
@@ -43,10 +41,6 @@ public class AsyncOrganizationsClient {
 
     protected final Supplier<AsyncMembersClient> membersClient;
 
-    protected final Supplier<AsyncGroupsClient> groupsClient;
-
-    protected final Supplier<AsyncRolesClient> rolesClient;
-
     public AsyncOrganizationsClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.rawClient = new AsyncRawOrganizationsClient(clientOptions);
@@ -56,8 +50,6 @@ public class AsyncOrganizationsClient {
         this.enabledConnectionsClient = Suppliers.memoize(() -> new AsyncEnabledConnectionsClient(clientOptions));
         this.invitationsClient = Suppliers.memoize(() -> new AsyncInvitationsClient(clientOptions));
         this.membersClient = Suppliers.memoize(() -> new AsyncMembersClient(clientOptions));
-        this.groupsClient = Suppliers.memoize(() -> new AsyncGroupsClient(clientOptions));
-        this.rolesClient = Suppliers.memoize(() -> new AsyncRolesClient(clientOptions));
     }
 
     /**
@@ -70,18 +62,18 @@ public class AsyncOrganizationsClient {
     /**
      * Retrieve detailed list of all Organizations available in your tenant. For more information, see Auth0 Organizations.
      * <p>This endpoint supports two types of pagination:</p>
-     * <ul>
+     * <p><ul>
      * <li>Offset pagination</li>
      * <li>Checkpoint pagination</li>
-     * </ul>
+     * </ul></p>
      * <p>Checkpoint pagination must be used if you need to retrieve more than 1000 organizations.</p>
-     * <p><strong>Checkpoint Pagination</strong></p>
+     * <p><h2>Checkpoint Pagination</h2></p>
      * <p>To search by checkpoint, use the following parameters:</p>
-     * <ul>
+     * <p><ul>
      * <li><code>from</code>: Optional id from which to start selection.</li>
      * <li><code>take</code>: The total number of entries to retrieve when using the <code>from</code> parameter. Defaults to 50.</li>
-     * </ul>
-     * <p><strong>Note</strong>: The first time you call this endpoint using checkpoint pagination, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no pages are remaining.</p>
+     * </ul></p>
+     * <p><b>Note</b>: The first time you call this endpoint using checkpoint pagination, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no pages are remaining.</p>
      */
     public CompletableFuture<SyncPagingIterable<Organization>> list() {
         return this.rawClient.list().thenApply(response -> response.body());
@@ -90,18 +82,18 @@ public class AsyncOrganizationsClient {
     /**
      * Retrieve detailed list of all Organizations available in your tenant. For more information, see Auth0 Organizations.
      * <p>This endpoint supports two types of pagination:</p>
-     * <ul>
+     * <p><ul>
      * <li>Offset pagination</li>
      * <li>Checkpoint pagination</li>
-     * </ul>
+     * </ul></p>
      * <p>Checkpoint pagination must be used if you need to retrieve more than 1000 organizations.</p>
-     * <p><strong>Checkpoint Pagination</strong></p>
+     * <p><h2>Checkpoint Pagination</h2></p>
      * <p>To search by checkpoint, use the following parameters:</p>
-     * <ul>
+     * <p><ul>
      * <li><code>from</code>: Optional id from which to start selection.</li>
      * <li><code>take</code>: The total number of entries to retrieve when using the <code>from</code> parameter. Defaults to 50.</li>
-     * </ul>
-     * <p><strong>Note</strong>: The first time you call this endpoint using checkpoint pagination, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no pages are remaining.</p>
+     * </ul></p>
+     * <p><b>Note</b>: The first time you call this endpoint using checkpoint pagination, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no pages are remaining.</p>
      */
     public CompletableFuture<SyncPagingIterable<Organization>> list(RequestOptions requestOptions) {
         return this.rawClient.list(requestOptions).thenApply(response -> response.body());
@@ -110,18 +102,18 @@ public class AsyncOrganizationsClient {
     /**
      * Retrieve detailed list of all Organizations available in your tenant. For more information, see Auth0 Organizations.
      * <p>This endpoint supports two types of pagination:</p>
-     * <ul>
+     * <p><ul>
      * <li>Offset pagination</li>
      * <li>Checkpoint pagination</li>
-     * </ul>
+     * </ul></p>
      * <p>Checkpoint pagination must be used if you need to retrieve more than 1000 organizations.</p>
-     * <p><strong>Checkpoint Pagination</strong></p>
+     * <p><h2>Checkpoint Pagination</h2></p>
      * <p>To search by checkpoint, use the following parameters:</p>
-     * <ul>
+     * <p><ul>
      * <li><code>from</code>: Optional id from which to start selection.</li>
      * <li><code>take</code>: The total number of entries to retrieve when using the <code>from</code> parameter. Defaults to 50.</li>
-     * </ul>
-     * <p><strong>Note</strong>: The first time you call this endpoint using checkpoint pagination, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no pages are remaining.</p>
+     * </ul></p>
+     * <p><b>Note</b>: The first time you call this endpoint using checkpoint pagination, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no pages are remaining.</p>
      */
     public CompletableFuture<SyncPagingIterable<Organization>> list(ListOrganizationsRequestParameters request) {
         return this.rawClient.list(request).thenApply(response -> response.body());
@@ -130,18 +122,18 @@ public class AsyncOrganizationsClient {
     /**
      * Retrieve detailed list of all Organizations available in your tenant. For more information, see Auth0 Organizations.
      * <p>This endpoint supports two types of pagination:</p>
-     * <ul>
+     * <p><ul>
      * <li>Offset pagination</li>
      * <li>Checkpoint pagination</li>
-     * </ul>
+     * </ul></p>
      * <p>Checkpoint pagination must be used if you need to retrieve more than 1000 organizations.</p>
-     * <p><strong>Checkpoint Pagination</strong></p>
+     * <p><h2>Checkpoint Pagination</h2></p>
      * <p>To search by checkpoint, use the following parameters:</p>
-     * <ul>
+     * <p><ul>
      * <li><code>from</code>: Optional id from which to start selection.</li>
      * <li><code>take</code>: The total number of entries to retrieve when using the <code>from</code> parameter. Defaults to 50.</li>
-     * </ul>
-     * <p><strong>Note</strong>: The first time you call this endpoint using checkpoint pagination, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no pages are remaining.</p>
+     * </ul></p>
+     * <p><b>Note</b>: The first time you call this endpoint using checkpoint pagination, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no pages are remaining.</p>
      */
     public CompletableFuture<SyncPagingIterable<Organization>> list(
             ListOrganizationsRequestParameters request, RequestOptions requestOptions) {
@@ -194,7 +186,7 @@ public class AsyncOrganizationsClient {
 
     /**
      * Remove an Organization from your tenant.  This action cannot be undone.
-     * <p><strong>Note</strong>: Members are automatically disassociated from an Organization when it is deleted. However, this action does <strong>not</strong> delete these users from your tenant.</p>
+     * <p><b>Note</b>: Members are automatically disassociated from an Organization when it is deleted. However, this action does <b>not</b> delete these users from your tenant.</p>
      */
     public CompletableFuture<Void> delete(String id) {
         return this.rawClient.delete(id).thenApply(response -> response.body());
@@ -202,7 +194,7 @@ public class AsyncOrganizationsClient {
 
     /**
      * Remove an Organization from your tenant.  This action cannot be undone.
-     * <p><strong>Note</strong>: Members are automatically disassociated from an Organization when it is deleted. However, this action does <strong>not</strong> delete these users from your tenant.</p>
+     * <p><b>Note</b>: Members are automatically disassociated from an Organization when it is deleted. However, this action does <b>not</b> delete these users from your tenant.</p>
      */
     public CompletableFuture<Void> delete(String id, RequestOptions requestOptions) {
         return this.rawClient.delete(id, requestOptions).thenApply(response -> response.body());
@@ -260,13 +252,5 @@ public class AsyncOrganizationsClient {
 
     public AsyncMembersClient members() {
         return this.membersClient.get();
-    }
-
-    public AsyncGroupsClient groups() {
-        return this.groupsClient.get();
-    }
-
-    public AsyncRolesClient roles() {
-        return this.rolesClient.get();
     }
 }

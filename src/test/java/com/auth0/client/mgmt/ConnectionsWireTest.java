@@ -1,20 +1,23 @@
 package com.auth0.client.mgmt;
 
 import com.auth0.client.mgmt.core.ObjectMappers;
+import com.auth0.client.mgmt.core.OptionalNullable;
 import com.auth0.client.mgmt.core.SyncPagingIterable;
-import com.auth0.client.mgmt.types.ConnectionForList;
-import com.auth0.client.mgmt.types.ConnectionIdentityProviderEnum;
+import com.auth0.client.mgmt.types.ConnectionOptionsAd;
+import com.auth0.client.mgmt.types.ConnectionResponseContent;
+import com.auth0.client.mgmt.types.ConnectionSetUserRootAttributesEnum;
 import com.auth0.client.mgmt.types.ConnectionStrategyEnum;
 import com.auth0.client.mgmt.types.CreateConnectionRequestContent;
-import com.auth0.client.mgmt.types.CreateConnectionResponseContent;
+import com.auth0.client.mgmt.types.CreateConnectionRequestContentAd;
 import com.auth0.client.mgmt.types.GetConnectionRequestParameters;
-import com.auth0.client.mgmt.types.GetConnectionResponseContent;
 import com.auth0.client.mgmt.types.ListConnectionsQueryParameters;
 import com.auth0.client.mgmt.types.UpdateConnectionRequestContent;
-import com.auth0.client.mgmt.types.UpdateConnectionResponseContent;
+import com.auth0.client.mgmt.types.UpdateConnectionRequestContentAd;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Optional;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -49,8 +52,8 @@ public class ConnectionsWireTest {
                 new MockResponse()
                         .setResponseCode(200)
                         .setBody(
-                                "{\"next\":\"next\",\"connections\":[{\"name\":\"name\",\"display_name\":\"display_name\",\"options\":{\"key\":\"value\"},\"id\":\"id\",\"strategy\":\"strategy\",\"realms\":[\"realms\"],\"is_domain_connection\":true,\"show_as_button\":true,\"authentication\":{\"active\":true},\"connected_accounts\":{\"active\":true},\"cross_app_access_requesting_app\":{\"active\":true}}]}"));
-        SyncPagingIterable<ConnectionForList> response = client.connections()
+                                "{\"next\":\"next\",\"connections\":[{\"display_name\":\"connections\",\"enabled_clients\":[\"connections\"],\"is_domain_connection\":true,\"name\":\"connections\",\"id\":\"connections\",\"realms\":[\"connections\"],\"authentication\":{\"active\":true},\"connected_accounts\":{\"active\":true},\"provisioning_ticket_url\":\"provisioning_ticket_url\",\"strategy\":\"ad\"}]}"));
+        SyncPagingIterable<ConnectionResponseContent> response = client.connections()
                 .list(ListConnectionsQueryParameters.builder()
                         .from("from")
                         .take(1)
@@ -75,18 +78,63 @@ public class ConnectionsWireTest {
                 new MockResponse()
                         .setResponseCode(200)
                         .setBody(
-                                "{\"name\":\"name\",\"display_name\":\"display_name\",\"options\":{\"key\":\"value\"},\"id\":\"id\",\"strategy\":\"strategy\",\"realms\":[\"realms\"],\"enabled_clients\":[\"enabled_clients\"],\"is_domain_connection\":true,\"show_as_button\":true,\"metadata\":{\"key\":\"value\"},\"authentication\":{\"active\":true},\"connected_accounts\":{\"active\":true,\"cross_app_access\":true},\"cross_app_access_requesting_app\":{\"active\":true}}"));
-        CreateConnectionResponseContent response = client.connections()
-                .create(CreateConnectionRequestContent.builder()
-                        .name("name")
-                        .strategy(ConnectionIdentityProviderEnum.AD)
-                        .build());
+                                "{\"id\":\"con_a1B2c3D4e5F6g7H8\",\"strategy\":\"ad\",\"name\":\"corp-active-directory\",\"display_name\":\"Corporate Active Directory\",\"is_domain_connection\":true,\"enabled_clients\":[\"AaiyAPdpYdesoKnqjj8HJqRn4T5titww\"],\"realms\":[\"corp-active-directory\"],\"options\":{\"tenant_domain\":\"corp.example.com\",\"domain_aliases\":[\"example.com\",\"corp.example.com\"],\"kerberos\":true,\"brute_force_protection\":true,\"set_user_root_attributes\":\"on_each_login\"},\"metadata\":{\"environment\":\"production\",\"managed_by\":\"identity-team\"}}"));
+        ConnectionResponseContent response = client.connections()
+                .create(CreateConnectionRequestContent.ad(CreateConnectionRequestContentAd.builder()
+                        .name("corp-active-directory")
+                        .enabledClients(Optional.of(Arrays.asList("AaiyAPdpYdesoKnqjj8HJqRn4T5titww")))
+                        .displayName("Corporate Active Directory")
+                        .isDomainConnection(true)
+                        .metadata(new HashMap<String, OptionalNullable<String>>() {
+                            {
+                                put("environment", "production");
+                                put("managed_by", "identity-team");
+                            }
+                        })
+                        .options(ConnectionOptionsAd.builder()
+                                .nonPersistentAttrs(Arrays.asList("ethnicity", "gender"))
+                                .agentIp("10.0.0.42")
+                                .agentMode(false)
+                                .agentVersion("4.3.0")
+                                .bruteForceProtection(true)
+                                .disableCache(false)
+                                .domainAliases(Arrays.asList("example.com", "corp.example.com"))
+                                .ips(Arrays.asList("10.0.0.0/24"))
+                                .kerberos(true)
+                                .setUserRootAttributes(ConnectionSetUserRootAttributesEnum.ON_EACH_LOGIN)
+                                .tenantDomain("corp.example.com")
+                                .build())
+                        .build()));
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("POST", request.getMethod());
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
-        String expectedRequestBody = "" + "{\n" + "  \"name\": \"name\",\n" + "  \"strategy\": \"ad\"\n" + "}";
+        String expectedRequestBody = ""
+                + "{\n"
+                + "  \"strategy\": \"ad\",\n"
+                + "  \"options\": {\n"
+                + "    \"tenant_domain\": \"corp.example.com\",\n"
+                + "    \"domain_aliases\": [\n"
+                + "      \"example.com\",\n"
+                + "      \"corp.example.com\"\n"
+                + "    ],\n"
+                + "    \"agentIP\": \"10.0.0.42\",\n"
+                + "    \"agentVersion\": \"4.3.0\",\n"
+                + "    \"agentMode\": false,\n"
+                + "    \"kerberos\": true,\n"
+                + "    \"brute_force_protection\": true,\n"
+                + "    \"disable_cache\": false,\n"
+                + "    \"set_user_root_attributes\": \"on_each_login\",\n"
+                + "    \"ips\": [\n"
+                + "      \"10.0.0.0/24\"\n"
+                + "    ],\n"
+                + "    \"non_persistent_attrs\": [\n"
+                + "      \"ethnicity\",\n"
+                + "      \"gender\"\n"
+                + "    ]\n"
+                + "  }\n"
+                + "}";
         JsonNode actualJson = objectMapper.readTree(actualRequestBody);
         JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
         Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
@@ -119,33 +167,30 @@ public class ConnectionsWireTest {
         String actualResponseJson = objectMapper.writeValueAsString(response);
         String expectedResponseBody = ""
                 + "{\n"
-                + "  \"name\": \"name\",\n"
-                + "  \"display_name\": \"display_name\",\n"
-                + "  \"options\": {\n"
-                + "    \"key\": \"value\"\n"
-                + "  },\n"
-                + "  \"id\": \"id\",\n"
-                + "  \"strategy\": \"strategy\",\n"
-                + "  \"realms\": [\n"
-                + "    \"realms\"\n"
-                + "  ],\n"
-                + "  \"enabled_clients\": [\n"
-                + "    \"enabled_clients\"\n"
-                + "  ],\n"
+                + "  \"id\": \"con_a1B2c3D4e5F6g7H8\",\n"
+                + "  \"strategy\": \"ad\",\n"
+                + "  \"name\": \"corp-active-directory\",\n"
+                + "  \"display_name\": \"Corporate Active Directory\",\n"
                 + "  \"is_domain_connection\": true,\n"
-                + "  \"show_as_button\": true,\n"
+                + "  \"enabled_clients\": [\n"
+                + "    \"AaiyAPdpYdesoKnqjj8HJqRn4T5titww\"\n"
+                + "  ],\n"
+                + "  \"realms\": [\n"
+                + "    \"corp-active-directory\"\n"
+                + "  ],\n"
+                + "  \"options\": {\n"
+                + "    \"tenant_domain\": \"corp.example.com\",\n"
+                + "    \"domain_aliases\": [\n"
+                + "      \"example.com\",\n"
+                + "      \"corp.example.com\"\n"
+                + "    ],\n"
+                + "    \"kerberos\": true,\n"
+                + "    \"brute_force_protection\": true,\n"
+                + "    \"set_user_root_attributes\": \"on_each_login\"\n"
+                + "  },\n"
                 + "  \"metadata\": {\n"
-                + "    \"key\": \"value\"\n"
-                + "  },\n"
-                + "  \"authentication\": {\n"
-                + "    \"active\": true\n"
-                + "  },\n"
-                + "  \"connected_accounts\": {\n"
-                + "    \"active\": true,\n"
-                + "    \"cross_app_access\": true\n"
-                + "  },\n"
-                + "  \"cross_app_access_requesting_app\": {\n"
-                + "    \"active\": true\n"
+                + "    \"environment\": \"production\",\n"
+                + "    \"managed_by\": \"identity-team\"\n"
                 + "  }\n"
                 + "}";
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
@@ -181,12 +226,10 @@ public class ConnectionsWireTest {
 
     @Test
     public void testGet() throws Exception {
-        server.enqueue(
-                new MockResponse()
-                        .setResponseCode(200)
-                        .setBody(
-                                "{\"name\":\"name\",\"display_name\":\"display_name\",\"options\":{\"key\":\"value\"},\"id\":\"id\",\"strategy\":\"strategy\",\"realms\":[\"realms\"],\"enabled_clients\":[\"enabled_clients\"],\"is_domain_connection\":true,\"show_as_button\":true,\"metadata\":{\"key\":\"value\"},\"authentication\":{\"active\":true},\"connected_accounts\":{\"active\":true,\"cross_app_access\":true},\"cross_app_access_requesting_app\":{\"active\":true}}"));
-        GetConnectionResponseContent response = client.connections()
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody(TestResources.loadResource("/wire-tests/ConnectionsWireTest_testGet_response.json")));
+        ConnectionResponseContent response = client.connections()
                 .get(
                         "id",
                         GetConnectionRequestParameters.builder()
@@ -200,37 +243,8 @@ public class ConnectionsWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = ""
-                + "{\n"
-                + "  \"name\": \"name\",\n"
-                + "  \"display_name\": \"display_name\",\n"
-                + "  \"options\": {\n"
-                + "    \"key\": \"value\"\n"
-                + "  },\n"
-                + "  \"id\": \"id\",\n"
-                + "  \"strategy\": \"strategy\",\n"
-                + "  \"realms\": [\n"
-                + "    \"realms\"\n"
-                + "  ],\n"
-                + "  \"enabled_clients\": [\n"
-                + "    \"enabled_clients\"\n"
-                + "  ],\n"
-                + "  \"is_domain_connection\": true,\n"
-                + "  \"show_as_button\": true,\n"
-                + "  \"metadata\": {\n"
-                + "    \"key\": \"value\"\n"
-                + "  },\n"
-                + "  \"authentication\": {\n"
-                + "    \"active\": true\n"
-                + "  },\n"
-                + "  \"connected_accounts\": {\n"
-                + "    \"active\": true,\n"
-                + "    \"cross_app_access\": true\n"
-                + "  },\n"
-                + "  \"cross_app_access_requesting_app\": {\n"
-                + "    \"active\": true\n"
-                + "  }\n"
-                + "}";
+        String expectedResponseBody =
+                TestResources.loadResource("/wire-tests/ConnectionsWireTest_testGet_response.json");
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertTrue(
@@ -273,13 +287,14 @@ public class ConnectionsWireTest {
 
     @Test
     public void testUpdate() throws Exception {
-        server.enqueue(
-                new MockResponse()
-                        .setResponseCode(200)
-                        .setBody(
-                                "{\"name\":\"name\",\"display_name\":\"display_name\",\"options\":{\"key\":\"value\"},\"id\":\"id\",\"strategy\":\"strategy\",\"realms\":[\"realms\"],\"enabled_clients\":[\"enabled_clients\"],\"is_domain_connection\":true,\"show_as_button\":true,\"metadata\":{\"key\":\"value\"},\"authentication\":{\"active\":true},\"connected_accounts\":{\"active\":true,\"cross_app_access\":true},\"cross_app_access_requesting_app\":{\"active\":true}}"));
-        UpdateConnectionResponseContent response = client.connections()
-                .update("id", UpdateConnectionRequestContent.builder().build());
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody(TestResources.loadResource("/wire-tests/ConnectionsWireTest_testUpdate_response.json")));
+        ConnectionResponseContent response = client.connections()
+                .update(
+                        "id",
+                        UpdateConnectionRequestContent.of(
+                                UpdateConnectionRequestContentAd.builder().build()));
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("PATCH", request.getMethod());
@@ -316,37 +331,8 @@ public class ConnectionsWireTest {
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");
         String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = ""
-                + "{\n"
-                + "  \"name\": \"name\",\n"
-                + "  \"display_name\": \"display_name\",\n"
-                + "  \"options\": {\n"
-                + "    \"key\": \"value\"\n"
-                + "  },\n"
-                + "  \"id\": \"id\",\n"
-                + "  \"strategy\": \"strategy\",\n"
-                + "  \"realms\": [\n"
-                + "    \"realms\"\n"
-                + "  ],\n"
-                + "  \"enabled_clients\": [\n"
-                + "    \"enabled_clients\"\n"
-                + "  ],\n"
-                + "  \"is_domain_connection\": true,\n"
-                + "  \"show_as_button\": true,\n"
-                + "  \"metadata\": {\n"
-                + "    \"key\": \"value\"\n"
-                + "  },\n"
-                + "  \"authentication\": {\n"
-                + "    \"active\": true\n"
-                + "  },\n"
-                + "  \"connected_accounts\": {\n"
-                + "    \"active\": true,\n"
-                + "    \"cross_app_access\": true\n"
-                + "  },\n"
-                + "  \"cross_app_access_requesting_app\": {\n"
-                + "    \"active\": true\n"
-                + "  }\n"
-                + "}";
+        String expectedResponseBody =
+                TestResources.loadResource("/wire-tests/ConnectionsWireTest_testUpdate_response.json");
         JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
         JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
         Assertions.assertTrue(

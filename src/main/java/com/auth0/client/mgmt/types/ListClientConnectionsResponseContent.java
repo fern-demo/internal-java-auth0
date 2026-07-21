@@ -22,21 +22,23 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListClientConnectionsResponseContent.Builder.class)
 public final class ListClientConnectionsResponseContent {
-    private final List<ConnectionForList> connections;
+    private final List<ConnectionResponseContent> connections;
 
     private final Optional<String> next;
 
     private final Map<String, Object> additionalProperties;
 
     private ListClientConnectionsResponseContent(
-            List<ConnectionForList> connections, Optional<String> next, Map<String, Object> additionalProperties) {
+            List<ConnectionResponseContent> connections,
+            Optional<String> next,
+            Map<String, Object> additionalProperties) {
         this.connections = connections;
         this.next = next;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("connections")
-    public List<ConnectionForList> getConnections() {
+    public List<ConnectionResponseContent> getConnections() {
         return connections;
     }
 
@@ -80,7 +82,7 @@ public final class ListClientConnectionsResponseContent {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private List<ConnectionForList> connections = new ArrayList<>();
+        private List<ConnectionResponseContent> connections = new ArrayList<>();
 
         private Optional<String> next = Optional.empty();
 
@@ -96,7 +98,7 @@ public final class ListClientConnectionsResponseContent {
         }
 
         @JsonSetter(value = "connections", nulls = Nulls.SKIP)
-        public Builder connections(List<ConnectionForList> connections) {
+        public Builder connections(List<ConnectionResponseContent> connections) {
             this.connections.clear();
             if (connections != null) {
                 this.connections.addAll(connections);
@@ -104,12 +106,12 @@ public final class ListClientConnectionsResponseContent {
             return this;
         }
 
-        public Builder addConnections(ConnectionForList connections) {
+        public Builder addConnections(ConnectionResponseContent connections) {
             this.connections.add(connections);
             return this;
         }
 
-        public Builder addAllConnections(List<ConnectionForList> connections) {
+        public Builder addAllConnections(List<ConnectionResponseContent> connections) {
             if (connections != null) {
                 this.connections.addAll(connections);
             }

@@ -33,8 +33,6 @@ public final class CreateConnectionRequestContentPlanningCenter implements ICrea
 
     private final Optional<Map<String, OptionalNullable<String>>> metadata;
 
-    private final CreateConnectionRequestContentPlanningCenterStrategy strategy;
-
     private final Optional<ConnectionOptionsPlanningCenter> options;
 
     private final Map<String, Object> additionalProperties;
@@ -45,7 +43,6 @@ public final class CreateConnectionRequestContentPlanningCenter implements ICrea
             Optional<String> displayName,
             Optional<Boolean> isDomainConnection,
             Optional<Map<String, OptionalNullable<String>>> metadata,
-            CreateConnectionRequestContentPlanningCenterStrategy strategy,
             Optional<ConnectionOptionsPlanningCenter> options,
             Map<String, Object> additionalProperties) {
         this.name = name;
@@ -53,7 +50,6 @@ public final class CreateConnectionRequestContentPlanningCenter implements ICrea
         this.displayName = displayName;
         this.isDomainConnection = isDomainConnection;
         this.metadata = metadata;
-        this.strategy = strategy;
         this.options = options;
         this.additionalProperties = additionalProperties;
     }
@@ -91,11 +87,6 @@ public final class CreateConnectionRequestContentPlanningCenter implements ICrea
         return metadata;
     }
 
-    @JsonProperty("strategy")
-    public CreateConnectionRequestContentPlanningCenterStrategy getStrategy() {
-        return strategy;
-    }
-
     @JsonProperty("options")
     public Optional<ConnectionOptionsPlanningCenter> getOptions() {
         return options;
@@ -119,20 +110,13 @@ public final class CreateConnectionRequestContentPlanningCenter implements ICrea
                 && displayName.equals(other.displayName)
                 && isDomainConnection.equals(other.isDomainConnection)
                 && metadata.equals(other.metadata)
-                && strategy.equals(other.strategy)
                 && options.equals(other.options);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.name,
-                this.enabledClients,
-                this.displayName,
-                this.isDomainConnection,
-                this.metadata,
-                this.strategy,
-                this.options);
+                this.name, this.enabledClients, this.displayName, this.isDomainConnection, this.metadata, this.options);
     }
 
     @java.lang.Override
@@ -145,13 +129,9 @@ public final class CreateConnectionRequestContentPlanningCenter implements ICrea
     }
 
     public interface NameStage {
-        StrategyStage name(@NotNull String name);
+        _FinalStage name(@NotNull String name);
 
         Builder from(CreateConnectionRequestContentPlanningCenter other);
-    }
-
-    public interface StrategyStage {
-        _FinalStage strategy(@NotNull CreateConnectionRequestContentPlanningCenterStrategy strategy);
     }
 
     public interface _FinalStage {
@@ -186,10 +166,8 @@ public final class CreateConnectionRequestContentPlanningCenter implements ICrea
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements NameStage, StrategyStage, _FinalStage {
+    public static final class Builder implements NameStage, _FinalStage {
         private String name;
-
-        private CreateConnectionRequestContentPlanningCenterStrategy strategy;
 
         private Optional<ConnectionOptionsPlanningCenter> options = Optional.empty();
 
@@ -213,22 +191,14 @@ public final class CreateConnectionRequestContentPlanningCenter implements ICrea
             displayName(other.getDisplayName());
             isDomainConnection(other.getIsDomainConnection());
             metadata(other.getMetadata());
-            strategy(other.getStrategy());
             options(other.getOptions());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
-        public StrategyStage name(@NotNull String name) {
+        public _FinalStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("strategy")
-        public _FinalStage strategy(@NotNull CreateConnectionRequestContentPlanningCenterStrategy strategy) {
-            this.strategy = Objects.requireNonNull(strategy, "strategy must not be null");
             return this;
         }
 
@@ -307,14 +277,7 @@ public final class CreateConnectionRequestContentPlanningCenter implements ICrea
         @java.lang.Override
         public CreateConnectionRequestContentPlanningCenter build() {
             return new CreateConnectionRequestContentPlanningCenter(
-                    name,
-                    enabledClients,
-                    displayName,
-                    isDomainConnection,
-                    metadata,
-                    strategy,
-                    options,
-                    additionalProperties);
+                    name, enabledClients, displayName, isDomainConnection, metadata, options, additionalProperties);
         }
 
         @java.lang.Override

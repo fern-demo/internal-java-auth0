@@ -255,22 +255,6 @@
     }
   },
   "initiate_login_uri": "initiate_login_uri",
-  "native_social_login": {
-    "apple": {
-      "enabled": true
-    },
-    "facebook": {
-      "enabled": true
-    },
-    "google": {
-      "enabled": true
-    }
-  },
-  "fedcm_login": {
-    "google": {
-      "is_enabled": true
-    }
-  },
   "refresh_token": {
     "rotation_type": "rotating",
     "expiration_type": "expiring",
@@ -332,24 +316,6 @@
       }
     ]
   },
-  "token_vault_privileged_access": {
-    "credentials": [
-      {
-        "id": "id"
-      }
-    ],
-    "ip_allowlist": [
-      "ip_allowlist"
-    ],
-    "grants": [
-      {
-        "connection": "connection",
-        "scopes": [
-          "scopes"
-        ]
-      }
-    ]
-  },
   "compliance_level": "none",
   "skip_non_verifiable_callback_uri_confirmation_prompt": true,
   "token_exchange": {
@@ -386,8 +352,7 @@
     "allowed_strategies": [
       "pingfederate"
     ],
-    "connection_deletion_behavior": "allow",
-    "invitation_landing_client_id": "invitation_landing_client_id"
+    "connection_deletion_behavior": "allow"
   },
   "third_party_security_mode": "strict",
   "redirection_policy": "allow_always",

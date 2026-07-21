@@ -3,157 +3,146 @@
  */
 package com.auth0.client.mgmt.types;
 
-import com.auth0.client.mgmt.core.NullableNonemptyFilter;
 import com.auth0.client.mgmt.core.ObjectMappers;
-import com.auth0.client.mgmt.core.OptionalNullable;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import java.io.IOException;
 import java.util.Objects;
-import java.util.Optional;
-import org.jetbrains.annotations.Nullable;
 
-@JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = UpdateConnectionRequestContent.Builder.class)
+@JsonDeserialize(using = UpdateConnectionRequestContent.Deserializer.class)
 public final class UpdateConnectionRequestContent {
-    private final Optional<String> displayName;
+    private final Object value;
 
-    private final OptionalNullable<UpdateConnectionOptions> options;
+    private final int type;
 
-    private final OptionalNullable<List<String>> enabledClients;
-
-    private final Optional<Boolean> isDomainConnection;
-
-    private final Optional<Boolean> showAsButton;
-
-    private final Optional<List<String>> realms;
-
-    private final Optional<Map<String, OptionalNullable<String>>> metadata;
-
-    private final Optional<ConnectionAuthenticationPurpose> authentication;
-
-    private final Optional<ConnectionConnectedAccountsPurpose> connectedAccounts;
-
-    private final Optional<CrossAppAccessRequestingApp> crossAppAccessRequestingApp;
-
-    private final Map<String, Object> additionalProperties;
-
-    private UpdateConnectionRequestContent(
-            Optional<String> displayName,
-            OptionalNullable<UpdateConnectionOptions> options,
-            OptionalNullable<List<String>> enabledClients,
-            Optional<Boolean> isDomainConnection,
-            Optional<Boolean> showAsButton,
-            Optional<List<String>> realms,
-            Optional<Map<String, OptionalNullable<String>>> metadata,
-            Optional<ConnectionAuthenticationPurpose> authentication,
-            Optional<ConnectionConnectedAccountsPurpose> connectedAccounts,
-            Optional<CrossAppAccessRequestingApp> crossAppAccessRequestingApp,
-            Map<String, Object> additionalProperties) {
-        this.displayName = displayName;
-        this.options = options;
-        this.enabledClients = enabledClients;
-        this.isDomainConnection = isDomainConnection;
-        this.showAsButton = showAsButton;
-        this.realms = realms;
-        this.metadata = metadata;
-        this.authentication = authentication;
-        this.connectedAccounts = connectedAccounts;
-        this.crossAppAccessRequestingApp = crossAppAccessRequestingApp;
-        this.additionalProperties = additionalProperties;
+    private UpdateConnectionRequestContent(Object value, int type) {
+        this.value = value;
+        this.type = type;
     }
 
-    /**
-     * @return The connection name used in the new universal login experience. If display_name is not included in the request, the field will be overwritten with the name value.
-     */
-    @JsonProperty("display_name")
-    public Optional<String> getDisplayName() {
-        return displayName;
+    @JsonValue
+    public Object get() {
+        return this.value;
     }
 
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("options")
-    public OptionalNullable<UpdateConnectionOptions> getOptions() {
-        if (options == null) {
-            return OptionalNullable.absent();
+    @SuppressWarnings("unchecked")
+    public <T> T visit(Visitor<T> visitor) {
+        if (this.type == 0) {
+            return visitor.visit((UpdateConnectionRequestContentAd) this.value);
+        } else if (this.type == 1) {
+            return visitor.visit((UpdateConnectionRequestContentAdfs) this.value);
+        } else if (this.type == 2) {
+            return visitor.visit((UpdateConnectionRequestContentAmazon) this.value);
+        } else if (this.type == 3) {
+            return visitor.visit((UpdateConnectionRequestContentApple) this.value);
+        } else if (this.type == 4) {
+            return visitor.visit((UpdateConnectionRequestContentAuth0Oidc) this.value);
+        } else if (this.type == 5) {
+            return visitor.visit((UpdateConnectionRequestContentAuth0) this.value);
+        } else if (this.type == 6) {
+            return visitor.visit((UpdateConnectionRequestContentBaidu) this.value);
+        } else if (this.type == 7) {
+            return visitor.visit((UpdateConnectionRequestContentBitbucket) this.value);
+        } else if (this.type == 8) {
+            return visitor.visit((UpdateConnectionRequestContentBitly) this.value);
+        } else if (this.type == 9) {
+            return visitor.visit((UpdateConnectionRequestContentBox) this.value);
+        } else if (this.type == 10) {
+            return visitor.visit((UpdateConnectionRequestContentCustom) this.value);
+        } else if (this.type == 11) {
+            return visitor.visit((UpdateConnectionRequestContentDaccount) this.value);
+        } else if (this.type == 12) {
+            return visitor.visit((UpdateConnectionRequestContentDropbox) this.value);
+        } else if (this.type == 13) {
+            return visitor.visit((UpdateConnectionRequestContentDwolla) this.value);
+        } else if (this.type == 14) {
+            return visitor.visit((UpdateConnectionRequestContentEmail) this.value);
+        } else if (this.type == 15) {
+            return visitor.visit((UpdateConnectionRequestContentEvernoteSandbox) this.value);
+        } else if (this.type == 16) {
+            return visitor.visit((UpdateConnectionRequestContentEvernote) this.value);
+        } else if (this.type == 17) {
+            return visitor.visit((UpdateConnectionRequestContentExact) this.value);
+        } else if (this.type == 18) {
+            return visitor.visit((UpdateConnectionRequestContentFacebook) this.value);
+        } else if (this.type == 19) {
+            return visitor.visit((UpdateConnectionRequestContentFitbit) this.value);
+        } else if (this.type == 20) {
+            return visitor.visit((UpdateConnectionRequestContentGitHub) this.value);
+        } else if (this.type == 21) {
+            return visitor.visit((UpdateConnectionRequestContentGoogleApps) this.value);
+        } else if (this.type == 22) {
+            return visitor.visit((UpdateConnectionRequestContentGoogleOAuth2) this.value);
+        } else if (this.type == 23) {
+            return visitor.visit((UpdateConnectionRequestContentInstagram) this.value);
+        } else if (this.type == 24) {
+            return visitor.visit((UpdateConnectionRequestContentIp) this.value);
+        } else if (this.type == 25) {
+            return visitor.visit((UpdateConnectionRequestContentLine) this.value);
+        } else if (this.type == 26) {
+            return visitor.visit((UpdateConnectionRequestContentLinkedin) this.value);
+        } else if (this.type == 27) {
+            return visitor.visit((UpdateConnectionRequestContentOAuth1) this.value);
+        } else if (this.type == 28) {
+            return visitor.visit((UpdateConnectionRequestContentOAuth2) this.value);
+        } else if (this.type == 29) {
+            return visitor.visit((UpdateConnectionRequestContentOffice365) this.value);
+        } else if (this.type == 30) {
+            return visitor.visit((UpdateConnectionRequestContentOidc) this.value);
+        } else if (this.type == 31) {
+            return visitor.visit((UpdateConnectionRequestContentOkta) this.value);
+        } else if (this.type == 32) {
+            return visitor.visit((UpdateConnectionRequestContentPaypal) this.value);
+        } else if (this.type == 33) {
+            return visitor.visit((UpdateConnectionRequestContentPaypalSandbox) this.value);
+        } else if (this.type == 34) {
+            return visitor.visit((UpdateConnectionRequestContentPingFederate) this.value);
+        } else if (this.type == 35) {
+            return visitor.visit((UpdateConnectionRequestContentPlanningCenter) this.value);
+        } else if (this.type == 36) {
+            return visitor.visit((UpdateConnectionRequestContentSalesforceCommunity) this.value);
+        } else if (this.type == 37) {
+            return visitor.visit((UpdateConnectionRequestContentSalesforceSandbox) this.value);
+        } else if (this.type == 38) {
+            return visitor.visit((UpdateConnectionRequestContentSalesforce) this.value);
+        } else if (this.type == 39) {
+            return visitor.visit((UpdateConnectionRequestContentSaml) this.value);
+        } else if (this.type == 40) {
+            return visitor.visit((UpdateConnectionRequestContentSharepoint) this.value);
+        } else if (this.type == 41) {
+            return visitor.visit((UpdateConnectionRequestContentShopify) this.value);
+        } else if (this.type == 42) {
+            return visitor.visit((UpdateConnectionRequestContentShop) this.value);
+        } else if (this.type == 43) {
+            return visitor.visit((UpdateConnectionRequestContentSms) this.value);
+        } else if (this.type == 44) {
+            return visitor.visit((UpdateConnectionRequestContentSoundcloud) this.value);
+        } else if (this.type == 45) {
+            return visitor.visit((UpdateConnectionRequestContentThirtySevenSignals) this.value);
+        } else if (this.type == 46) {
+            return visitor.visit((UpdateConnectionRequestContentTwitter) this.value);
+        } else if (this.type == 47) {
+            return visitor.visit((UpdateConnectionRequestContentUntappd) this.value);
+        } else if (this.type == 48) {
+            return visitor.visit((UpdateConnectionRequestContentVkontakte) this.value);
+        } else if (this.type == 49) {
+            return visitor.visit((UpdateConnectionRequestContentAzureAd) this.value);
+        } else if (this.type == 50) {
+            return visitor.visit((UpdateConnectionRequestContentWeibo) this.value);
+        } else if (this.type == 51) {
+            return visitor.visit((UpdateConnectionRequestContentWindowsLive) this.value);
+        } else if (this.type == 52) {
+            return visitor.visit((UpdateConnectionRequestContentWordpress) this.value);
+        } else if (this.type == 53) {
+            return visitor.visit((UpdateConnectionRequestContentYahoo) this.value);
+        } else if (this.type == 54) {
+            return visitor.visit((UpdateConnectionRequestContentYandex) this.value);
         }
-        return options;
-    }
-
-    /**
-     * @return DEPRECATED property. Use the PATCH /v2/connections/{id}/clients endpoint to enable or disable the connection for any clients.
-     */
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("enabled_clients")
-    public OptionalNullable<List<String>> getEnabledClients() {
-        if (enabledClients == null) {
-            return OptionalNullable.absent();
-        }
-        return enabledClients;
-    }
-
-    /**
-     * @return <code>true</code> promotes to a domain-level connection so that third-party applications can use it. <code>false</code> does not promote the connection, so only first-party applications with the connection enabled can use it. (Defaults to <code>false</code>.)
-     */
-    @JsonProperty("is_domain_connection")
-    public Optional<Boolean> getIsDomainConnection() {
-        return isDomainConnection;
-    }
-
-    /**
-     * @return Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. (Defaults to <code>false</code>.)
-     */
-    @JsonProperty("show_as_button")
-    public Optional<Boolean> getShowAsButton() {
-        return showAsButton;
-    }
-
-    /**
-     * @return Defines the realms for which the connection will be used (ie: email domains). If the array is empty or the property is not specified, the connection name will be added as realm.
-     */
-    @JsonProperty("realms")
-    public Optional<List<String>> getRealms() {
-        return realms;
-    }
-
-    @JsonProperty("metadata")
-    public Optional<Map<String, OptionalNullable<String>>> getMetadata() {
-        return metadata;
-    }
-
-    @JsonProperty("authentication")
-    public Optional<ConnectionAuthenticationPurpose> getAuthentication() {
-        return authentication;
-    }
-
-    @JsonProperty("connected_accounts")
-    public Optional<ConnectionConnectedAccountsPurpose> getConnectedAccounts() {
-        return connectedAccounts;
-    }
-
-    @JsonProperty("cross_app_access_requesting_app")
-    public Optional<CrossAppAccessRequestingApp> getCrossAppAccessRequestingApp() {
-        return crossAppAccessRequestingApp;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("options")
-    private OptionalNullable<UpdateConnectionOptions> _getOptions() {
-        return options;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("enabled_clients")
-    private OptionalNullable<List<String>> _getEnabledClients() {
-        return enabledClients;
+        throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
 
     @java.lang.Override
@@ -162,277 +151,595 @@ public final class UpdateConnectionRequestContent {
         return other instanceof UpdateConnectionRequestContent && equalTo((UpdateConnectionRequestContent) other);
     }
 
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
     private boolean equalTo(UpdateConnectionRequestContent other) {
-        return displayName.equals(other.displayName)
-                && options.equals(other.options)
-                && enabledClients.equals(other.enabledClients)
-                && isDomainConnection.equals(other.isDomainConnection)
-                && showAsButton.equals(other.showAsButton)
-                && realms.equals(other.realms)
-                && metadata.equals(other.metadata)
-                && authentication.equals(other.authentication)
-                && connectedAccounts.equals(other.connectedAccounts)
-                && crossAppAccessRequestingApp.equals(other.crossAppAccessRequestingApp);
+        return value.equals(other.value);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(
-                this.displayName,
-                this.options,
-                this.enabledClients,
-                this.isDomainConnection,
-                this.showAsButton,
-                this.realms,
-                this.metadata,
-                this.authentication,
-                this.connectedAccounts,
-                this.crossAppAccessRequestingApp);
+        return Objects.hash(this.value);
     }
 
     @java.lang.Override
     public String toString() {
-        return ObjectMappers.stringify(this);
+        return this.value.toString();
     }
 
-    public static Builder builder() {
-        return new Builder();
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentAd value) {
+        return new UpdateConnectionRequestContent(value, 0);
     }
 
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder {
-        private Optional<String> displayName = Optional.empty();
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentAdfs value) {
+        return new UpdateConnectionRequestContent(value, 1);
+    }
 
-        private OptionalNullable<UpdateConnectionOptions> options = OptionalNullable.absent();
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentAmazon value) {
+        return new UpdateConnectionRequestContent(value, 2);
+    }
 
-        private OptionalNullable<List<String>> enabledClients = OptionalNullable.absent();
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentApple value) {
+        return new UpdateConnectionRequestContent(value, 3);
+    }
 
-        private Optional<Boolean> isDomainConnection = Optional.empty();
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentAuth0Oidc value) {
+        return new UpdateConnectionRequestContent(value, 4);
+    }
 
-        private Optional<Boolean> showAsButton = Optional.empty();
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentAuth0 value) {
+        return new UpdateConnectionRequestContent(value, 5);
+    }
 
-        private Optional<List<String>> realms = Optional.empty();
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentBaidu value) {
+        return new UpdateConnectionRequestContent(value, 6);
+    }
 
-        private Optional<Map<String, OptionalNullable<String>>> metadata = Optional.empty();
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentBitbucket value) {
+        return new UpdateConnectionRequestContent(value, 7);
+    }
 
-        private Optional<ConnectionAuthenticationPurpose> authentication = Optional.empty();
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentBitly value) {
+        return new UpdateConnectionRequestContent(value, 8);
+    }
 
-        private Optional<ConnectionConnectedAccountsPurpose> connectedAccounts = Optional.empty();
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentBox value) {
+        return new UpdateConnectionRequestContent(value, 9);
+    }
 
-        private Optional<CrossAppAccessRequestingApp> crossAppAccessRequestingApp = Optional.empty();
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentCustom value) {
+        return new UpdateConnectionRequestContent(value, 10);
+    }
 
-        @JsonAnySetter
-        private Map<String, Object> additionalProperties = new HashMap<>();
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentDaccount value) {
+        return new UpdateConnectionRequestContent(value, 11);
+    }
 
-        private Builder() {}
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentDropbox value) {
+        return new UpdateConnectionRequestContent(value, 12);
+    }
 
-        public Builder from(UpdateConnectionRequestContent other) {
-            displayName(other.getDisplayName());
-            options(other.getOptions());
-            enabledClients(other.getEnabledClients());
-            isDomainConnection(other.getIsDomainConnection());
-            showAsButton(other.getShowAsButton());
-            realms(other.getRealms());
-            metadata(other.getMetadata());
-            authentication(other.getAuthentication());
-            connectedAccounts(other.getConnectedAccounts());
-            crossAppAccessRequestingApp(other.getCrossAppAccessRequestingApp());
-            return this;
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentDwolla value) {
+        return new UpdateConnectionRequestContent(value, 13);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentEmail value) {
+        return new UpdateConnectionRequestContent(value, 14);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentEvernoteSandbox value) {
+        return new UpdateConnectionRequestContent(value, 15);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentEvernote value) {
+        return new UpdateConnectionRequestContent(value, 16);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentExact value) {
+        return new UpdateConnectionRequestContent(value, 17);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentFacebook value) {
+        return new UpdateConnectionRequestContent(value, 18);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentFitbit value) {
+        return new UpdateConnectionRequestContent(value, 19);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentGitHub value) {
+        return new UpdateConnectionRequestContent(value, 20);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentGoogleApps value) {
+        return new UpdateConnectionRequestContent(value, 21);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentGoogleOAuth2 value) {
+        return new UpdateConnectionRequestContent(value, 22);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentInstagram value) {
+        return new UpdateConnectionRequestContent(value, 23);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentIp value) {
+        return new UpdateConnectionRequestContent(value, 24);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentLine value) {
+        return new UpdateConnectionRequestContent(value, 25);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentLinkedin value) {
+        return new UpdateConnectionRequestContent(value, 26);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentOAuth1 value) {
+        return new UpdateConnectionRequestContent(value, 27);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentOAuth2 value) {
+        return new UpdateConnectionRequestContent(value, 28);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentOffice365 value) {
+        return new UpdateConnectionRequestContent(value, 29);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentOidc value) {
+        return new UpdateConnectionRequestContent(value, 30);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentOkta value) {
+        return new UpdateConnectionRequestContent(value, 31);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentPaypal value) {
+        return new UpdateConnectionRequestContent(value, 32);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentPaypalSandbox value) {
+        return new UpdateConnectionRequestContent(value, 33);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentPingFederate value) {
+        return new UpdateConnectionRequestContent(value, 34);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentPlanningCenter value) {
+        return new UpdateConnectionRequestContent(value, 35);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentSalesforceCommunity value) {
+        return new UpdateConnectionRequestContent(value, 36);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentSalesforceSandbox value) {
+        return new UpdateConnectionRequestContent(value, 37);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentSalesforce value) {
+        return new UpdateConnectionRequestContent(value, 38);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentSaml value) {
+        return new UpdateConnectionRequestContent(value, 39);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentSharepoint value) {
+        return new UpdateConnectionRequestContent(value, 40);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentShopify value) {
+        return new UpdateConnectionRequestContent(value, 41);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentShop value) {
+        return new UpdateConnectionRequestContent(value, 42);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentSms value) {
+        return new UpdateConnectionRequestContent(value, 43);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentSoundcloud value) {
+        return new UpdateConnectionRequestContent(value, 44);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentThirtySevenSignals value) {
+        return new UpdateConnectionRequestContent(value, 45);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentTwitter value) {
+        return new UpdateConnectionRequestContent(value, 46);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentUntappd value) {
+        return new UpdateConnectionRequestContent(value, 47);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentVkontakte value) {
+        return new UpdateConnectionRequestContent(value, 48);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentAzureAd value) {
+        return new UpdateConnectionRequestContent(value, 49);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentWeibo value) {
+        return new UpdateConnectionRequestContent(value, 50);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentWindowsLive value) {
+        return new UpdateConnectionRequestContent(value, 51);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentWordpress value) {
+        return new UpdateConnectionRequestContent(value, 52);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentYahoo value) {
+        return new UpdateConnectionRequestContent(value, 53);
+    }
+
+    public static UpdateConnectionRequestContent of(UpdateConnectionRequestContentYandex value) {
+        return new UpdateConnectionRequestContent(value, 54);
+    }
+
+    public interface Visitor<T> {
+        T visit(UpdateConnectionRequestContentAd value);
+
+        T visit(UpdateConnectionRequestContentAdfs value);
+
+        T visit(UpdateConnectionRequestContentAmazon value);
+
+        T visit(UpdateConnectionRequestContentApple value);
+
+        T visit(UpdateConnectionRequestContentAuth0Oidc value);
+
+        T visit(UpdateConnectionRequestContentAuth0 value);
+
+        T visit(UpdateConnectionRequestContentBaidu value);
+
+        T visit(UpdateConnectionRequestContentBitbucket value);
+
+        T visit(UpdateConnectionRequestContentBitly value);
+
+        T visit(UpdateConnectionRequestContentBox value);
+
+        T visit(UpdateConnectionRequestContentCustom value);
+
+        T visit(UpdateConnectionRequestContentDaccount value);
+
+        T visit(UpdateConnectionRequestContentDropbox value);
+
+        T visit(UpdateConnectionRequestContentDwolla value);
+
+        T visit(UpdateConnectionRequestContentEmail value);
+
+        T visit(UpdateConnectionRequestContentEvernoteSandbox value);
+
+        T visit(UpdateConnectionRequestContentEvernote value);
+
+        T visit(UpdateConnectionRequestContentExact value);
+
+        T visit(UpdateConnectionRequestContentFacebook value);
+
+        T visit(UpdateConnectionRequestContentFitbit value);
+
+        T visit(UpdateConnectionRequestContentGitHub value);
+
+        T visit(UpdateConnectionRequestContentGoogleApps value);
+
+        T visit(UpdateConnectionRequestContentGoogleOAuth2 value);
+
+        T visit(UpdateConnectionRequestContentInstagram value);
+
+        T visit(UpdateConnectionRequestContentIp value);
+
+        T visit(UpdateConnectionRequestContentLine value);
+
+        T visit(UpdateConnectionRequestContentLinkedin value);
+
+        T visit(UpdateConnectionRequestContentOAuth1 value);
+
+        T visit(UpdateConnectionRequestContentOAuth2 value);
+
+        T visit(UpdateConnectionRequestContentOffice365 value);
+
+        T visit(UpdateConnectionRequestContentOidc value);
+
+        T visit(UpdateConnectionRequestContentOkta value);
+
+        T visit(UpdateConnectionRequestContentPaypal value);
+
+        T visit(UpdateConnectionRequestContentPaypalSandbox value);
+
+        T visit(UpdateConnectionRequestContentPingFederate value);
+
+        T visit(UpdateConnectionRequestContentPlanningCenter value);
+
+        T visit(UpdateConnectionRequestContentSalesforceCommunity value);
+
+        T visit(UpdateConnectionRequestContentSalesforceSandbox value);
+
+        T visit(UpdateConnectionRequestContentSalesforce value);
+
+        T visit(UpdateConnectionRequestContentSaml value);
+
+        T visit(UpdateConnectionRequestContentSharepoint value);
+
+        T visit(UpdateConnectionRequestContentShopify value);
+
+        T visit(UpdateConnectionRequestContentShop value);
+
+        T visit(UpdateConnectionRequestContentSms value);
+
+        T visit(UpdateConnectionRequestContentSoundcloud value);
+
+        T visit(UpdateConnectionRequestContentThirtySevenSignals value);
+
+        T visit(UpdateConnectionRequestContentTwitter value);
+
+        T visit(UpdateConnectionRequestContentUntappd value);
+
+        T visit(UpdateConnectionRequestContentVkontakte value);
+
+        T visit(UpdateConnectionRequestContentAzureAd value);
+
+        T visit(UpdateConnectionRequestContentWeibo value);
+
+        T visit(UpdateConnectionRequestContentWindowsLive value);
+
+        T visit(UpdateConnectionRequestContentWordpress value);
+
+        T visit(UpdateConnectionRequestContentYahoo value);
+
+        T visit(UpdateConnectionRequestContentYandex value);
+    }
+
+    static final class Deserializer extends StdDeserializer<UpdateConnectionRequestContent> {
+        Deserializer() {
+            super(UpdateConnectionRequestContent.class);
         }
 
-        /**
-         * <p>The connection name used in the new universal login experience. If display_name is not included in the request, the field will be overwritten with the name value.</p>
-         */
-        @JsonSetter(value = "display_name", nulls = Nulls.SKIP)
-        public Builder displayName(Optional<String> displayName) {
-            this.displayName = displayName;
-            return this;
-        }
-
-        public Builder displayName(String displayName) {
-            this.displayName = Optional.ofNullable(displayName);
-            return this;
-        }
-
-        @JsonSetter(value = "options", nulls = Nulls.SKIP)
-        public Builder options(@Nullable OptionalNullable<UpdateConnectionOptions> options) {
-            this.options = options;
-            return this;
-        }
-
-        public Builder options(UpdateConnectionOptions options) {
-            this.options = OptionalNullable.of(options);
-            return this;
-        }
-
-        public Builder options(Optional<UpdateConnectionOptions> options) {
-            if (options.isPresent()) {
-                this.options = OptionalNullable.of(options.get());
-            } else {
-                this.options = OptionalNullable.absent();
+        @java.lang.Override
+        public UpdateConnectionRequestContent deserialize(JsonParser p, DeserializationContext context)
+                throws IOException {
+            Object value = p.readValueAs(Object.class);
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentAd.class));
+            } catch (RuntimeException e) {
             }
-            return this;
-        }
-
-        public Builder options(com.auth0.client.mgmt.core.Nullable<UpdateConnectionOptions> options) {
-            if (options.isNull()) {
-                this.options = OptionalNullable.ofNull();
-            } else if (options.isEmpty()) {
-                this.options = OptionalNullable.absent();
-            } else {
-                this.options = OptionalNullable.of(options.get());
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentAdfs.class));
+            } catch (RuntimeException e) {
             }
-            return this;
-        }
-
-        /**
-         * <p>DEPRECATED property. Use the PATCH /v2/connections/{id}/clients endpoint to enable or disable the connection for any clients.</p>
-         */
-        @JsonSetter(value = "enabled_clients", nulls = Nulls.SKIP)
-        public Builder enabledClients(@Nullable OptionalNullable<List<String>> enabledClients) {
-            this.enabledClients = enabledClients;
-            return this;
-        }
-
-        public Builder enabledClients(List<String> enabledClients) {
-            this.enabledClients = OptionalNullable.of(enabledClients);
-            return this;
-        }
-
-        public Builder enabledClients(Optional<List<String>> enabledClients) {
-            if (enabledClients.isPresent()) {
-                this.enabledClients = OptionalNullable.of(enabledClients.get());
-            } else {
-                this.enabledClients = OptionalNullable.absent();
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentAmazon.class));
+            } catch (RuntimeException e) {
             }
-            return this;
-        }
-
-        public Builder enabledClients(com.auth0.client.mgmt.core.Nullable<List<String>> enabledClients) {
-            if (enabledClients.isNull()) {
-                this.enabledClients = OptionalNullable.ofNull();
-            } else if (enabledClients.isEmpty()) {
-                this.enabledClients = OptionalNullable.absent();
-            } else {
-                this.enabledClients = OptionalNullable.of(enabledClients.get());
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentApple.class));
+            } catch (RuntimeException e) {
             }
-            return this;
-        }
-
-        /**
-         * <p><code>true</code> promotes to a domain-level connection so that third-party applications can use it. <code>false</code> does not promote the connection, so only first-party applications with the connection enabled can use it. (Defaults to <code>false</code>.)</p>
-         */
-        @JsonSetter(value = "is_domain_connection", nulls = Nulls.SKIP)
-        public Builder isDomainConnection(Optional<Boolean> isDomainConnection) {
-            this.isDomainConnection = isDomainConnection;
-            return this;
-        }
-
-        public Builder isDomainConnection(Boolean isDomainConnection) {
-            this.isDomainConnection = Optional.ofNullable(isDomainConnection);
-            return this;
-        }
-
-        /**
-         * <p>Enables showing a button for the connection in the login page (new experience only). If false, it will be usable only by HRD. (Defaults to <code>false</code>.)</p>
-         */
-        @JsonSetter(value = "show_as_button", nulls = Nulls.SKIP)
-        public Builder showAsButton(Optional<Boolean> showAsButton) {
-            this.showAsButton = showAsButton;
-            return this;
-        }
-
-        public Builder showAsButton(Boolean showAsButton) {
-            this.showAsButton = Optional.ofNullable(showAsButton);
-            return this;
-        }
-
-        /**
-         * <p>Defines the realms for which the connection will be used (ie: email domains). If the array is empty or the property is not specified, the connection name will be added as realm.</p>
-         */
-        @JsonSetter(value = "realms", nulls = Nulls.SKIP)
-        public Builder realms(Optional<List<String>> realms) {
-            this.realms = realms;
-            return this;
-        }
-
-        public Builder realms(List<String> realms) {
-            this.realms = Optional.ofNullable(realms);
-            return this;
-        }
-
-        @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
-        public Builder metadata(Optional<Map<String, OptionalNullable<String>>> metadata) {
-            this.metadata = metadata;
-            return this;
-        }
-
-        public Builder metadata(Map<String, OptionalNullable<String>> metadata) {
-            this.metadata = Optional.ofNullable(metadata);
-            return this;
-        }
-
-        @JsonSetter(value = "authentication", nulls = Nulls.SKIP)
-        public Builder authentication(Optional<ConnectionAuthenticationPurpose> authentication) {
-            this.authentication = authentication;
-            return this;
-        }
-
-        public Builder authentication(ConnectionAuthenticationPurpose authentication) {
-            this.authentication = Optional.ofNullable(authentication);
-            return this;
-        }
-
-        @JsonSetter(value = "connected_accounts", nulls = Nulls.SKIP)
-        public Builder connectedAccounts(Optional<ConnectionConnectedAccountsPurpose> connectedAccounts) {
-            this.connectedAccounts = connectedAccounts;
-            return this;
-        }
-
-        public Builder connectedAccounts(ConnectionConnectedAccountsPurpose connectedAccounts) {
-            this.connectedAccounts = Optional.ofNullable(connectedAccounts);
-            return this;
-        }
-
-        @JsonSetter(value = "cross_app_access_requesting_app", nulls = Nulls.SKIP)
-        public Builder crossAppAccessRequestingApp(Optional<CrossAppAccessRequestingApp> crossAppAccessRequestingApp) {
-            this.crossAppAccessRequestingApp = crossAppAccessRequestingApp;
-            return this;
-        }
-
-        public Builder crossAppAccessRequestingApp(CrossAppAccessRequestingApp crossAppAccessRequestingApp) {
-            this.crossAppAccessRequestingApp = Optional.ofNullable(crossAppAccessRequestingApp);
-            return this;
-        }
-
-        public UpdateConnectionRequestContent build() {
-            return new UpdateConnectionRequestContent(
-                    displayName,
-                    options,
-                    enabledClients,
-                    isDomainConnection,
-                    showAsButton,
-                    realms,
-                    metadata,
-                    authentication,
-                    connectedAccounts,
-                    crossAppAccessRequestingApp,
-                    additionalProperties);
-        }
-
-        public Builder additionalProperty(String key, Object value) {
-            this.additionalProperties.put(key, value);
-            return this;
-        }
-
-        public Builder additionalProperties(Map<String, Object> additionalProperties) {
-            this.additionalProperties.putAll(additionalProperties);
-            return this;
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentAuth0Oidc.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentAuth0.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentBaidu.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentBitbucket.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentBitly.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentBox.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentCustom.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentDaccount.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentDropbox.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentDwolla.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentEmail.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(
+                        value, UpdateConnectionRequestContentEvernoteSandbox.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentEvernote.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentExact.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentFacebook.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentFitbit.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentGitHub.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(
+                        ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentGoogleApps.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(
+                        value, UpdateConnectionRequestContentGoogleOAuth2.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentInstagram.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentIp.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentLine.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentLinkedin.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentOAuth1.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentOAuth2.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentOffice365.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentOidc.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentOkta.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentPaypal.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(
+                        value, UpdateConnectionRequestContentPaypalSandbox.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(
+                        value, UpdateConnectionRequestContentPingFederate.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(
+                        value, UpdateConnectionRequestContentPlanningCenter.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(
+                        value, UpdateConnectionRequestContentSalesforceCommunity.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(
+                        value, UpdateConnectionRequestContentSalesforceSandbox.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(
+                        ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentSalesforce.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentSaml.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(
+                        ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentSharepoint.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentShopify.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentShop.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentSms.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(
+                        ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentSoundcloud.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(
+                        value, UpdateConnectionRequestContentThirtySevenSignals.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentTwitter.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentUntappd.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentVkontakte.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentAzureAd.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentWeibo.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(
+                        ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentWindowsLive.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentWordpress.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentYahoo.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateConnectionRequestContentYandex.class));
+            } catch (RuntimeException e) {
+            }
+            throw new JsonParseException(p, "Failed to deserialize");
         }
     }
 }

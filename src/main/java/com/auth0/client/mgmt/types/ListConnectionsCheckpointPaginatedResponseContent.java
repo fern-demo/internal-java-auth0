@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,13 +24,13 @@ import java.util.Optional;
 public final class ListConnectionsCheckpointPaginatedResponseContent {
     private final Optional<String> next;
 
-    private final Optional<List<ConnectionForList>> connections;
+    private final List<ConnectionResponseContent> connections;
 
     private final Map<String, Object> additionalProperties;
 
     private ListConnectionsCheckpointPaginatedResponseContent(
             Optional<String> next,
-            Optional<List<ConnectionForList>> connections,
+            List<ConnectionResponseContent> connections,
             Map<String, Object> additionalProperties) {
         this.next = next;
         this.connections = connections;
@@ -45,7 +46,7 @@ public final class ListConnectionsCheckpointPaginatedResponseContent {
     }
 
     @JsonProperty("connections")
-    public Optional<List<ConnectionForList>> getConnections() {
+    public List<ConnectionResponseContent> getConnections() {
         return connections;
     }
 
@@ -83,7 +84,7 @@ public final class ListConnectionsCheckpointPaginatedResponseContent {
     public static final class Builder {
         private Optional<String> next = Optional.empty();
 
-        private Optional<List<ConnectionForList>> connections = Optional.empty();
+        private List<ConnectionResponseContent> connections = new ArrayList<>();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -111,13 +112,23 @@ public final class ListConnectionsCheckpointPaginatedResponseContent {
         }
 
         @JsonSetter(value = "connections", nulls = Nulls.SKIP)
-        public Builder connections(Optional<List<ConnectionForList>> connections) {
-            this.connections = connections;
+        public Builder connections(List<ConnectionResponseContent> connections) {
+            this.connections.clear();
+            if (connections != null) {
+                this.connections.addAll(connections);
+            }
             return this;
         }
 
-        public Builder connections(List<ConnectionForList> connections) {
-            this.connections = Optional.ofNullable(connections);
+        public Builder addConnections(ConnectionResponseContent connections) {
+            this.connections.add(connections);
+            return this;
+        }
+
+        public Builder addAllConnections(List<ConnectionResponseContent> connections) {
+            if (connections != null) {
+                this.connections.addAll(connections);
+            }
             return this;
         }
 

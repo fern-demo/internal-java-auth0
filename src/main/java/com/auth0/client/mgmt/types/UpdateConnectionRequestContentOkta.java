@@ -30,8 +30,6 @@ public final class UpdateConnectionRequestContentOkta implements IConnectionComm
 
     private final Optional<Map<String, OptionalNullable<String>>> metadata;
 
-    private final Optional<CrossAppAccessRequestingApp> crossAppAccessRequestingApp;
-
     private final Optional<ConnectionOptionsOkta> options;
 
     private final Optional<Boolean> showAsButton;
@@ -43,7 +41,6 @@ public final class UpdateConnectionRequestContentOkta implements IConnectionComm
             Optional<List<String>> enabledClients,
             Optional<Boolean> isDomainConnection,
             Optional<Map<String, OptionalNullable<String>>> metadata,
-            Optional<CrossAppAccessRequestingApp> crossAppAccessRequestingApp,
             Optional<ConnectionOptionsOkta> options,
             Optional<Boolean> showAsButton,
             Map<String, Object> additionalProperties) {
@@ -51,7 +48,6 @@ public final class UpdateConnectionRequestContentOkta implements IConnectionComm
         this.enabledClients = enabledClients;
         this.isDomainConnection = isDomainConnection;
         this.metadata = metadata;
-        this.crossAppAccessRequestingApp = crossAppAccessRequestingApp;
         this.options = options;
         this.showAsButton = showAsButton;
         this.additionalProperties = additionalProperties;
@@ -81,11 +77,6 @@ public final class UpdateConnectionRequestContentOkta implements IConnectionComm
         return metadata;
     }
 
-    @JsonProperty("cross_app_access_requesting_app")
-    public Optional<CrossAppAccessRequestingApp> getCrossAppAccessRequestingApp() {
-        return crossAppAccessRequestingApp;
-    }
-
     @JsonProperty("options")
     public Optional<ConnectionOptionsOkta> getOptions() {
         return options;
@@ -113,7 +104,6 @@ public final class UpdateConnectionRequestContentOkta implements IConnectionComm
                 && enabledClients.equals(other.enabledClients)
                 && isDomainConnection.equals(other.isDomainConnection)
                 && metadata.equals(other.metadata)
-                && crossAppAccessRequestingApp.equals(other.crossAppAccessRequestingApp)
                 && options.equals(other.options)
                 && showAsButton.equals(other.showAsButton);
     }
@@ -125,7 +115,6 @@ public final class UpdateConnectionRequestContentOkta implements IConnectionComm
                 this.enabledClients,
                 this.isDomainConnection,
                 this.metadata,
-                this.crossAppAccessRequestingApp,
                 this.options,
                 this.showAsButton);
     }
@@ -149,8 +138,6 @@ public final class UpdateConnectionRequestContentOkta implements IConnectionComm
 
         private Optional<Map<String, OptionalNullable<String>>> metadata = Optional.empty();
 
-        private Optional<CrossAppAccessRequestingApp> crossAppAccessRequestingApp = Optional.empty();
-
         private Optional<ConnectionOptionsOkta> options = Optional.empty();
 
         private Optional<Boolean> showAsButton = Optional.empty();
@@ -165,7 +152,6 @@ public final class UpdateConnectionRequestContentOkta implements IConnectionComm
             enabledClients(other.getEnabledClients());
             isDomainConnection(other.getIsDomainConnection());
             metadata(other.getMetadata());
-            crossAppAccessRequestingApp(other.getCrossAppAccessRequestingApp());
             options(other.getOptions());
             showAsButton(other.getShowAsButton());
             return this;
@@ -215,17 +201,6 @@ public final class UpdateConnectionRequestContentOkta implements IConnectionComm
             return this;
         }
 
-        @JsonSetter(value = "cross_app_access_requesting_app", nulls = Nulls.SKIP)
-        public Builder crossAppAccessRequestingApp(Optional<CrossAppAccessRequestingApp> crossAppAccessRequestingApp) {
-            this.crossAppAccessRequestingApp = crossAppAccessRequestingApp;
-            return this;
-        }
-
-        public Builder crossAppAccessRequestingApp(CrossAppAccessRequestingApp crossAppAccessRequestingApp) {
-            this.crossAppAccessRequestingApp = Optional.ofNullable(crossAppAccessRequestingApp);
-            return this;
-        }
-
         @JsonSetter(value = "options", nulls = Nulls.SKIP)
         public Builder options(Optional<ConnectionOptionsOkta> options) {
             this.options = options;
@@ -254,7 +229,6 @@ public final class UpdateConnectionRequestContentOkta implements IConnectionComm
                     enabledClients,
                     isDomainConnection,
                     metadata,
-                    crossAppAccessRequestingApp,
                     options,
                     showAsButton,
                     additionalProperties);

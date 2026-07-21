@@ -31,8 +31,6 @@ public final class ClientMyOrganizationResponseConfiguration {
 
     private final ClientMyOrganizationDeletionBehaviorEnum connectionDeletionBehavior;
 
-    private final Optional<String> invitationLandingClientId;
-
     private final Map<String, Object> additionalProperties;
 
     private ClientMyOrganizationResponseConfiguration(
@@ -40,13 +38,11 @@ public final class ClientMyOrganizationResponseConfiguration {
             Optional<String> userAttributeProfileId,
             List<ClientMyOrganizationConfigurationAllowedStrategiesEnum> allowedStrategies,
             ClientMyOrganizationDeletionBehaviorEnum connectionDeletionBehavior,
-            Optional<String> invitationLandingClientId,
             Map<String, Object> additionalProperties) {
         this.connectionProfileId = connectionProfileId;
         this.userAttributeProfileId = userAttributeProfileId;
         this.allowedStrategies = allowedStrategies;
         this.connectionDeletionBehavior = connectionDeletionBehavior;
-        this.invitationLandingClientId = invitationLandingClientId;
         this.additionalProperties = additionalProperties;
     }
 
@@ -79,14 +75,6 @@ public final class ClientMyOrganizationResponseConfiguration {
         return connectionDeletionBehavior;
     }
 
-    /**
-     * @return The client ID this client uses while creating invitations through My Organization API.
-     */
-    @JsonProperty("invitation_landing_client_id")
-    public Optional<String> getInvitationLandingClientId() {
-        return invitationLandingClientId;
-    }
-
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -103,8 +91,7 @@ public final class ClientMyOrganizationResponseConfiguration {
         return connectionProfileId.equals(other.connectionProfileId)
                 && userAttributeProfileId.equals(other.userAttributeProfileId)
                 && allowedStrategies.equals(other.allowedStrategies)
-                && connectionDeletionBehavior.equals(other.connectionDeletionBehavior)
-                && invitationLandingClientId.equals(other.invitationLandingClientId);
+                && connectionDeletionBehavior.equals(other.connectionDeletionBehavior);
     }
 
     @java.lang.Override
@@ -113,8 +100,7 @@ public final class ClientMyOrganizationResponseConfiguration {
                 this.connectionProfileId,
                 this.userAttributeProfileId,
                 this.allowedStrategies,
-                this.connectionDeletionBehavior,
-                this.invitationLandingClientId);
+                this.connectionDeletionBehavior);
     }
 
     @java.lang.Override
@@ -163,20 +149,11 @@ public final class ClientMyOrganizationResponseConfiguration {
 
         _FinalStage addAllAllowedStrategies(
                 List<ClientMyOrganizationConfigurationAllowedStrategiesEnum> allowedStrategies);
-
-        /**
-         * <p>The client ID this client uses while creating invitations through My Organization API.</p>
-         */
-        _FinalStage invitationLandingClientId(Optional<String> invitationLandingClientId);
-
-        _FinalStage invitationLandingClientId(String invitationLandingClientId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements ConnectionDeletionBehaviorStage, _FinalStage {
         private ClientMyOrganizationDeletionBehaviorEnum connectionDeletionBehavior;
-
-        private Optional<String> invitationLandingClientId = Optional.empty();
 
         private List<ClientMyOrganizationConfigurationAllowedStrategiesEnum> allowedStrategies = new ArrayList<>();
 
@@ -195,7 +172,6 @@ public final class ClientMyOrganizationResponseConfiguration {
             userAttributeProfileId(other.getUserAttributeProfileId());
             allowedStrategies(other.getAllowedStrategies());
             connectionDeletionBehavior(other.getConnectionDeletionBehavior());
-            invitationLandingClientId(other.getInvitationLandingClientId());
             return this;
         }
 
@@ -205,26 +181,6 @@ public final class ClientMyOrganizationResponseConfiguration {
                 @NotNull ClientMyOrganizationDeletionBehaviorEnum connectionDeletionBehavior) {
             this.connectionDeletionBehavior =
                     Objects.requireNonNull(connectionDeletionBehavior, "connectionDeletionBehavior must not be null");
-            return this;
-        }
-
-        /**
-         * <p>The client ID this client uses while creating invitations through My Organization API.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage invitationLandingClientId(String invitationLandingClientId) {
-            this.invitationLandingClientId = Optional.ofNullable(invitationLandingClientId);
-            return this;
-        }
-
-        /**
-         * <p>The client ID this client uses while creating invitations through My Organization API.</p>
-         */
-        @java.lang.Override
-        @JsonSetter(value = "invitation_landing_client_id", nulls = Nulls.SKIP)
-        public _FinalStage invitationLandingClientId(Optional<String> invitationLandingClientId) {
-            this.invitationLandingClientId = invitationLandingClientId;
             return this;
         }
 
@@ -313,7 +269,6 @@ public final class ClientMyOrganizationResponseConfiguration {
                     userAttributeProfileId,
                     allowedStrategies,
                     connectionDeletionBehavior,
-                    invitationLandingClientId,
                     additionalProperties);
         }
 

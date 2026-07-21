@@ -42,10 +42,6 @@ public final class ConnectionResponseContentOkta
 
     private final Optional<Map<String, OptionalNullable<String>>> metadata;
 
-    private final ConnectionResponseContentOktaStrategy strategy;
-
-    private final Optional<CrossAppAccessRequestingApp> crossAppAccessRequestingApp;
-
     private final Optional<ConnectionOptionsOkta> options;
 
     private final Optional<Boolean> showAsButton;
@@ -62,8 +58,6 @@ public final class ConnectionResponseContentOkta
             Optional<String> displayName,
             Optional<Boolean> isDomainConnection,
             Optional<Map<String, OptionalNullable<String>>> metadata,
-            ConnectionResponseContentOktaStrategy strategy,
-            Optional<CrossAppAccessRequestingApp> crossAppAccessRequestingApp,
             Optional<ConnectionOptionsOkta> options,
             Optional<Boolean> showAsButton,
             Map<String, Object> additionalProperties) {
@@ -76,8 +70,6 @@ public final class ConnectionResponseContentOkta
         this.displayName = displayName;
         this.isDomainConnection = isDomainConnection;
         this.metadata = metadata;
-        this.strategy = strategy;
-        this.crossAppAccessRequestingApp = crossAppAccessRequestingApp;
         this.options = options;
         this.showAsButton = showAsButton;
         this.additionalProperties = additionalProperties;
@@ -140,16 +132,6 @@ public final class ConnectionResponseContentOkta
         return metadata;
     }
 
-    @JsonProperty("strategy")
-    public ConnectionResponseContentOktaStrategy getStrategy() {
-        return strategy;
-    }
-
-    @JsonProperty("cross_app_access_requesting_app")
-    public Optional<CrossAppAccessRequestingApp> getCrossAppAccessRequestingApp() {
-        return crossAppAccessRequestingApp;
-    }
-
     @JsonProperty("options")
     public Optional<ConnectionOptionsOkta> getOptions() {
         return options;
@@ -181,8 +163,6 @@ public final class ConnectionResponseContentOkta
                 && displayName.equals(other.displayName)
                 && isDomainConnection.equals(other.isDomainConnection)
                 && metadata.equals(other.metadata)
-                && strategy.equals(other.strategy)
-                && crossAppAccessRequestingApp.equals(other.crossAppAccessRequestingApp)
                 && options.equals(other.options)
                 && showAsButton.equals(other.showAsButton);
     }
@@ -199,8 +179,6 @@ public final class ConnectionResponseContentOkta
                 this.displayName,
                 this.isDomainConnection,
                 this.metadata,
-                this.strategy,
-                this.crossAppAccessRequestingApp,
                 this.options,
                 this.showAsButton);
     }
@@ -221,11 +199,7 @@ public final class ConnectionResponseContentOkta
     }
 
     public interface NameStage {
-        StrategyStage name(@NotNull String name);
-    }
-
-    public interface StrategyStage {
-        _FinalStage strategy(@NotNull ConnectionResponseContentOktaStrategy strategy);
+        _FinalStage name(@NotNull String name);
     }
 
     public interface _FinalStage {
@@ -266,10 +240,6 @@ public final class ConnectionResponseContentOkta
 
         _FinalStage metadata(Map<String, OptionalNullable<String>> metadata);
 
-        _FinalStage crossAppAccessRequestingApp(Optional<CrossAppAccessRequestingApp> crossAppAccessRequestingApp);
-
-        _FinalStage crossAppAccessRequestingApp(CrossAppAccessRequestingApp crossAppAccessRequestingApp);
-
         _FinalStage options(Optional<ConnectionOptionsOkta> options);
 
         _FinalStage options(ConnectionOptionsOkta options);
@@ -280,18 +250,14 @@ public final class ConnectionResponseContentOkta
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IdStage, NameStage, StrategyStage, _FinalStage {
+    public static final class Builder implements IdStage, NameStage, _FinalStage {
         private String id;
 
         private String name;
 
-        private ConnectionResponseContentOktaStrategy strategy;
-
         private Optional<Boolean> showAsButton = Optional.empty();
 
         private Optional<ConnectionOptionsOkta> options = Optional.empty();
-
-        private Optional<CrossAppAccessRequestingApp> crossAppAccessRequestingApp = Optional.empty();
 
         private Optional<Map<String, OptionalNullable<String>>> metadata = Optional.empty();
 
@@ -323,8 +289,6 @@ public final class ConnectionResponseContentOkta
             displayName(other.getDisplayName());
             isDomainConnection(other.getIsDomainConnection());
             metadata(other.getMetadata());
-            strategy(other.getStrategy());
-            crossAppAccessRequestingApp(other.getCrossAppAccessRequestingApp());
             options(other.getOptions());
             showAsButton(other.getShowAsButton());
             return this;
@@ -339,15 +303,8 @@ public final class ConnectionResponseContentOkta
 
         @java.lang.Override
         @JsonSetter("name")
-        public StrategyStage name(@NotNull String name) {
+        public _FinalStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("strategy")
-        public _FinalStage strategy(@NotNull ConnectionResponseContentOktaStrategy strategy) {
-            this.strategy = Objects.requireNonNull(strategy, "strategy must not be null");
             return this;
         }
 
@@ -374,20 +331,6 @@ public final class ConnectionResponseContentOkta
         @JsonSetter(value = "options", nulls = Nulls.SKIP)
         public _FinalStage options(Optional<ConnectionOptionsOkta> options) {
             this.options = options;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage crossAppAccessRequestingApp(CrossAppAccessRequestingApp crossAppAccessRequestingApp) {
-            this.crossAppAccessRequestingApp = Optional.ofNullable(crossAppAccessRequestingApp);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "cross_app_access_requesting_app", nulls = Nulls.SKIP)
-        public _FinalStage crossAppAccessRequestingApp(
-                Optional<CrossAppAccessRequestingApp> crossAppAccessRequestingApp) {
-            this.crossAppAccessRequestingApp = crossAppAccessRequestingApp;
             return this;
         }
 
@@ -501,8 +444,6 @@ public final class ConnectionResponseContentOkta
                     displayName,
                     isDomainConnection,
                     metadata,
-                    strategy,
-                    crossAppAccessRequestingApp,
                     options,
                     showAsButton,
                     additionalProperties);

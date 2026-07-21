@@ -16,21 +16,18 @@ import com.auth0.client.mgmt.core.SyncPagingIterable;
 import com.auth0.client.mgmt.errors.BadRequestError;
 import com.auth0.client.mgmt.errors.ConflictError;
 import com.auth0.client.mgmt.errors.ForbiddenError;
+import com.auth0.client.mgmt.errors.InternalServerError;
 import com.auth0.client.mgmt.errors.NotFoundError;
 import com.auth0.client.mgmt.errors.TooManyRequestsError;
 import com.auth0.client.mgmt.errors.UnauthorizedError;
-import com.auth0.client.mgmt.types.ConnectionForList;
+import com.auth0.client.mgmt.types.ConnectionResponseContent;
 import com.auth0.client.mgmt.types.CreateConnectionRequestContent;
-import com.auth0.client.mgmt.types.CreateConnectionResponseContent;
 import com.auth0.client.mgmt.types.GetConnectionRequestParameters;
-import com.auth0.client.mgmt.types.GetConnectionResponseContent;
 import com.auth0.client.mgmt.types.ListConnectionsCheckpointPaginatedResponseContent;
 import com.auth0.client.mgmt.types.ListConnectionsQueryParameters;
 import com.auth0.client.mgmt.types.UpdateConnectionRequestContent;
-import com.auth0.client.mgmt.types.UpdateConnectionResponseContent;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -56,40 +53,40 @@ public class AsyncRawConnectionsClient {
     /**
      * Retrieves detailed list of all <a href="https://auth0.com/docs/authenticate/identity-providers">connections</a> that match the specified strategy. If no strategy is provided, all connections within your tenant are retrieved. This action can accept a list of fields to include or exclude from the resulting list of connections.
      * <p>This endpoint supports two types of pagination:</p>
-     * <ul>
+     * <p><ul>
      * <li>Offset pagination</li>
      * <li>Checkpoint pagination</li>
-     * </ul>
+     * </ul></p>
      * <p>Checkpoint pagination must be used if you need to retrieve more than 1000 connections.</p>
-     * <p><strong>Checkpoint Pagination</strong></p>
+     * <p><h2>Checkpoint Pagination</h2></p>
      * <p>To search by checkpoint, use the following parameters:</p>
-     * <ul>
+     * <p><ul>
      * <li><code>from</code>: Optional id from which to start selection.</li>
      * <li><code>take</code>: The total amount of entries to retrieve when using the from parameter. Defaults to 50.</li>
-     * </ul>
-     * <p><strong>Note</strong>: The first time you call this endpoint using checkpoint pagination, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no pages are remaining.</p>
+     * </ul></p>
+     * <p><b>Note</b>: The first time you call this endpoint using checkpoint pagination, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no pages are remaining.</p>
      */
-    public CompletableFuture<ManagementApiHttpResponse<SyncPagingIterable<ConnectionForList>>> list() {
+    public CompletableFuture<ManagementApiHttpResponse<SyncPagingIterable<ConnectionResponseContent>>> list() {
         return list(ListConnectionsQueryParameters.builder().build());
     }
 
     /**
      * Retrieves detailed list of all <a href="https://auth0.com/docs/authenticate/identity-providers">connections</a> that match the specified strategy. If no strategy is provided, all connections within your tenant are retrieved. This action can accept a list of fields to include or exclude from the resulting list of connections.
      * <p>This endpoint supports two types of pagination:</p>
-     * <ul>
+     * <p><ul>
      * <li>Offset pagination</li>
      * <li>Checkpoint pagination</li>
-     * </ul>
+     * </ul></p>
      * <p>Checkpoint pagination must be used if you need to retrieve more than 1000 connections.</p>
-     * <p><strong>Checkpoint Pagination</strong></p>
+     * <p><h2>Checkpoint Pagination</h2></p>
      * <p>To search by checkpoint, use the following parameters:</p>
-     * <ul>
+     * <p><ul>
      * <li><code>from</code>: Optional id from which to start selection.</li>
      * <li><code>take</code>: The total amount of entries to retrieve when using the from parameter. Defaults to 50.</li>
-     * </ul>
-     * <p><strong>Note</strong>: The first time you call this endpoint using checkpoint pagination, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no pages are remaining.</p>
+     * </ul></p>
+     * <p><b>Note</b>: The first time you call this endpoint using checkpoint pagination, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no pages are remaining.</p>
      */
-    public CompletableFuture<ManagementApiHttpResponse<SyncPagingIterable<ConnectionForList>>> list(
+    public CompletableFuture<ManagementApiHttpResponse<SyncPagingIterable<ConnectionResponseContent>>> list(
             RequestOptions requestOptions) {
         return list(ListConnectionsQueryParameters.builder().build(), requestOptions);
     }
@@ -97,20 +94,20 @@ public class AsyncRawConnectionsClient {
     /**
      * Retrieves detailed list of all <a href="https://auth0.com/docs/authenticate/identity-providers">connections</a> that match the specified strategy. If no strategy is provided, all connections within your tenant are retrieved. This action can accept a list of fields to include or exclude from the resulting list of connections.
      * <p>This endpoint supports two types of pagination:</p>
-     * <ul>
+     * <p><ul>
      * <li>Offset pagination</li>
      * <li>Checkpoint pagination</li>
-     * </ul>
+     * </ul></p>
      * <p>Checkpoint pagination must be used if you need to retrieve more than 1000 connections.</p>
-     * <p><strong>Checkpoint Pagination</strong></p>
+     * <p><h2>Checkpoint Pagination</h2></p>
      * <p>To search by checkpoint, use the following parameters:</p>
-     * <ul>
+     * <p><ul>
      * <li><code>from</code>: Optional id from which to start selection.</li>
      * <li><code>take</code>: The total amount of entries to retrieve when using the from parameter. Defaults to 50.</li>
-     * </ul>
-     * <p><strong>Note</strong>: The first time you call this endpoint using checkpoint pagination, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no pages are remaining.</p>
+     * </ul></p>
+     * <p><b>Note</b>: The first time you call this endpoint using checkpoint pagination, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no pages are remaining.</p>
      */
-    public CompletableFuture<ManagementApiHttpResponse<SyncPagingIterable<ConnectionForList>>> list(
+    public CompletableFuture<ManagementApiHttpResponse<SyncPagingIterable<ConnectionResponseContent>>> list(
             ListConnectionsQueryParameters request) {
         return list(request, null);
     }
@@ -118,20 +115,20 @@ public class AsyncRawConnectionsClient {
     /**
      * Retrieves detailed list of all <a href="https://auth0.com/docs/authenticate/identity-providers">connections</a> that match the specified strategy. If no strategy is provided, all connections within your tenant are retrieved. This action can accept a list of fields to include or exclude from the resulting list of connections.
      * <p>This endpoint supports two types of pagination:</p>
-     * <ul>
+     * <p><ul>
      * <li>Offset pagination</li>
      * <li>Checkpoint pagination</li>
-     * </ul>
+     * </ul></p>
      * <p>Checkpoint pagination must be used if you need to retrieve more than 1000 connections.</p>
-     * <p><strong>Checkpoint Pagination</strong></p>
+     * <p><h2>Checkpoint Pagination</h2></p>
      * <p>To search by checkpoint, use the following parameters:</p>
-     * <ul>
+     * <p><ul>
      * <li><code>from</code>: Optional id from which to start selection.</li>
      * <li><code>take</code>: The total amount of entries to retrieve when using the from parameter. Defaults to 50.</li>
-     * </ul>
-     * <p><strong>Note</strong>: The first time you call this endpoint using checkpoint pagination, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no pages are remaining.</p>
+     * </ul></p>
+     * <p><b>Note</b>: The first time you call this endpoint using checkpoint pagination, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no pages are remaining.</p>
      */
-    public CompletableFuture<ManagementApiHttpResponse<SyncPagingIterable<ConnectionForList>>> list(
+    public CompletableFuture<ManagementApiHttpResponse<SyncPagingIterable<ConnectionResponseContent>>> list(
             ListConnectionsQueryParameters request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -149,10 +146,8 @@ public class AsyncRawConnectionsClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "fields", request.getFields().orElse(null), false);
         }
-        if (!request.getIncludeFields().isAbsent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "include_fields", request.getIncludeFields().orElse(null), false);
-        }
+        QueryStringMapper.addQueryParameter(
+                httpUrl, "include_fields", request.getIncludeFields().orElse(true), false);
         if (request.getStrategy().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "strategy", request.getStrategy().get(), true);
@@ -181,7 +176,7 @@ public class AsyncRawConnectionsClient {
                                     requestOptions.getMaxRetries().get()))
                     .build();
         }
-        CompletableFuture<ManagementApiHttpResponse<SyncPagingIterable<ConnectionForList>>> future =
+        CompletableFuture<ManagementApiHttpResponse<SyncPagingIterable<ConnectionResponseContent>>> future =
                 new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
@@ -197,10 +192,9 @@ public class AsyncRawConnectionsClient {
                                 .from(request)
                                 .from(startingAfter)
                                 .build();
-                        List<ConnectionForList> result =
-                                parsedResponse.getConnections().orElse(Collections.emptyList());
+                        List<ConnectionResponseContent> result = parsedResponse.getConnections();
                         future.complete(new ManagementApiHttpResponse<>(
-                                new SyncPagingIterable<ConnectionForList>(
+                                new SyncPagingIterable<ConnectionResponseContent>(
                                         startingAfter.isPresent(), result, parsedResponse, () -> {
                                             try {
                                                 return list(nextRequest, requestOptions)
@@ -235,6 +229,11 @@ public class AsyncRawConnectionsClient {
                                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
                                         response));
                                 return;
+                            case 500:
+                                future.completeExceptionally(new InternalServerError(
+                                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                                        response));
+                                return;
                         }
                     } catch (JsonProcessingException ignored) {
                         // unable to map error response, throwing generic error
@@ -260,19 +259,17 @@ public class AsyncRawConnectionsClient {
     }
 
     /**
-     * Creates a new connection according to the JSON object received in <code>body</code>.
-     * <p><strong>Note:</strong> If a connection with the same name was recently deleted and had a large number of associated users, the deletion may still be processing. Creating a new connection with that name before the deletion completes may fail or produce unexpected results.</p>
+     * Creates a new connection according to the JSON object received in <code>body</code>.<br/>
      */
-    public CompletableFuture<ManagementApiHttpResponse<CreateConnectionResponseContent>> create(
+    public CompletableFuture<ManagementApiHttpResponse<ConnectionResponseContent>> create(
             CreateConnectionRequestContent request) {
         return create(request, null);
     }
 
     /**
-     * Creates a new connection according to the JSON object received in <code>body</code>.
-     * <p><strong>Note:</strong> If a connection with the same name was recently deleted and had a large number of associated users, the deletion may still be processing. Creating a new connection with that name before the deletion completes may fail or produce unexpected results.</p>
+     * Creates a new connection according to the JSON object received in <code>body</code>.<br/>
      */
-    public CompletableFuture<ManagementApiHttpResponse<CreateConnectionResponseContent>> create(
+    public CompletableFuture<ManagementApiHttpResponse<ConnectionResponseContent>> create(
             CreateConnectionRequestContent request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -309,8 +306,7 @@ public class AsyncRawConnectionsClient {
                                     requestOptions.getMaxRetries().get()))
                     .build();
         }
-        CompletableFuture<ManagementApiHttpResponse<CreateConnectionResponseContent>> future =
-                new CompletableFuture<>();
+        CompletableFuture<ManagementApiHttpResponse<ConnectionResponseContent>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -319,7 +315,7 @@ public class AsyncRawConnectionsClient {
                     if (response.isSuccessful()) {
                         future.complete(new ManagementApiHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBodyString, CreateConnectionResponseContent.class),
+                                        responseBodyString, ConnectionResponseContent.class),
                                 response));
                         return;
                     }
@@ -350,6 +346,11 @@ public class AsyncRawConnectionsClient {
                                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
                                         response));
                                 return;
+                            case 500:
+                                future.completeExceptionally(new InternalServerError(
+                                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                                        response));
+                                return;
                         }
                     } catch (JsonProcessingException ignored) {
                         // unable to map error response, throwing generic error
@@ -377,14 +378,14 @@ public class AsyncRawConnectionsClient {
     /**
      * Retrieve details for a specified <a href="https://auth0.com/docs/authenticate/identity-providers">connection</a> along with options that can be used for identity provider configuration.
      */
-    public CompletableFuture<ManagementApiHttpResponse<GetConnectionResponseContent>> get(String id) {
+    public CompletableFuture<ManagementApiHttpResponse<ConnectionResponseContent>> get(String id) {
         return get(id, GetConnectionRequestParameters.builder().build());
     }
 
     /**
      * Retrieve details for a specified <a href="https://auth0.com/docs/authenticate/identity-providers">connection</a> along with options that can be used for identity provider configuration.
      */
-    public CompletableFuture<ManagementApiHttpResponse<GetConnectionResponseContent>> get(
+    public CompletableFuture<ManagementApiHttpResponse<ConnectionResponseContent>> get(
             String id, RequestOptions requestOptions) {
         return get(id, GetConnectionRequestParameters.builder().build(), requestOptions);
     }
@@ -392,7 +393,7 @@ public class AsyncRawConnectionsClient {
     /**
      * Retrieve details for a specified <a href="https://auth0.com/docs/authenticate/identity-providers">connection</a> along with options that can be used for identity provider configuration.
      */
-    public CompletableFuture<ManagementApiHttpResponse<GetConnectionResponseContent>> get(
+    public CompletableFuture<ManagementApiHttpResponse<ConnectionResponseContent>> get(
             String id, GetConnectionRequestParameters request) {
         return get(id, request, null);
     }
@@ -400,7 +401,7 @@ public class AsyncRawConnectionsClient {
     /**
      * Retrieve details for a specified <a href="https://auth0.com/docs/authenticate/identity-providers">connection</a> along with options that can be used for identity provider configuration.
      */
-    public CompletableFuture<ManagementApiHttpResponse<GetConnectionResponseContent>> get(
+    public CompletableFuture<ManagementApiHttpResponse<ConnectionResponseContent>> get(
             String id, GetConnectionRequestParameters request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -410,10 +411,8 @@ public class AsyncRawConnectionsClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "fields", request.getFields().orElse(null), false);
         }
-        if (!request.getIncludeFields().isAbsent()) {
-            QueryStringMapper.addQueryParameter(
-                    httpUrl, "include_fields", request.getIncludeFields().orElse(null), false);
-        }
+        QueryStringMapper.addQueryParameter(
+                httpUrl, "include_fields", request.getIncludeFields().orElse(true), false);
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -438,7 +437,7 @@ public class AsyncRawConnectionsClient {
                                     requestOptions.getMaxRetries().get()))
                     .build();
         }
-        CompletableFuture<ManagementApiHttpResponse<GetConnectionResponseContent>> future = new CompletableFuture<>();
+        CompletableFuture<ManagementApiHttpResponse<ConnectionResponseContent>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -447,7 +446,7 @@ public class AsyncRawConnectionsClient {
                     if (response.isSuccessful()) {
                         future.complete(new ManagementApiHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBodyString, GetConnectionResponseContent.class),
+                                        responseBodyString, ConnectionResponseContent.class),
                                 response));
                         return;
                     }
@@ -478,6 +477,11 @@ public class AsyncRawConnectionsClient {
                                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
                                         response));
                                 return;
+                            case 500:
+                                future.completeExceptionally(new InternalServerError(
+                                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                                        response));
+                                return;
                         }
                     } catch (JsonProcessingException ignored) {
                         // unable to map error response, throwing generic error
@@ -504,7 +508,6 @@ public class AsyncRawConnectionsClient {
 
     /**
      * Removes a specific <a href="https://auth0.com/docs/authenticate/identity-providers">connection</a> from your tenant. This action cannot be undone. Once removed, users can no longer use this connection to authenticate.
-     * <p><strong>Note:</strong> If your connection has a large amount of users associated with it, please be aware that this operation can be long running after the response is returned and may impact concurrent <a href="https://auth0.com/docs/api/management/v2/connections/post-connections">create connection</a> requests, if they use an identical connection name.</p>
      */
     public CompletableFuture<ManagementApiHttpResponse<Void>> delete(String id) {
         return delete(id, null);
@@ -512,7 +515,6 @@ public class AsyncRawConnectionsClient {
 
     /**
      * Removes a specific <a href="https://auth0.com/docs/authenticate/identity-providers">connection</a> from your tenant. This action cannot be undone. Once removed, users can no longer use this connection to authenticate.
-     * <p><strong>Note:</strong> If your connection has a large amount of users associated with it, please be aware that this operation can be long running after the response is returned and may impact concurrent <a href="https://auth0.com/docs/api/management/v2/connections/post-connections">create connection</a> requests, if they use an identical connection name.</p>
      */
     public CompletableFuture<ManagementApiHttpResponse<Void>> delete(String id, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -575,6 +577,11 @@ public class AsyncRawConnectionsClient {
                                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
                                         response));
                                 return;
+                            case 500:
+                                future.completeExceptionally(new InternalServerError(
+                                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                                        response));
+                                return;
                         }
                     } catch (JsonProcessingException ignored) {
                         // unable to map error response, throwing generic error
@@ -601,35 +608,18 @@ public class AsyncRawConnectionsClient {
 
     /**
      * Update details for a specific <a href="https://auth0.com/docs/authenticate/identity-providers">connection</a>, including option properties for identity provider configuration.
-     * <p><strong>Note</strong>: If you use the <code>options</code> parameter, the entire <code>options</code> object is overridden. To avoid partial data or other issues, ensure all parameters are present when using this option.</p>
+     * <p><b>Note</b>: If you use the <code>options</code> parameter, the entire <code>options</code> object is overriden. To avoid partial data or other issues, ensure all parameters are present when using this option.</p>
      */
-    public CompletableFuture<ManagementApiHttpResponse<UpdateConnectionResponseContent>> update(String id) {
-        return update(id, UpdateConnectionRequestContent.builder().build());
-    }
-
-    /**
-     * Update details for a specific <a href="https://auth0.com/docs/authenticate/identity-providers">connection</a>, including option properties for identity provider configuration.
-     * <p><strong>Note</strong>: If you use the <code>options</code> parameter, the entire <code>options</code> object is overridden. To avoid partial data or other issues, ensure all parameters are present when using this option.</p>
-     */
-    public CompletableFuture<ManagementApiHttpResponse<UpdateConnectionResponseContent>> update(
-            String id, RequestOptions requestOptions) {
-        return update(id, UpdateConnectionRequestContent.builder().build(), requestOptions);
-    }
-
-    /**
-     * Update details for a specific <a href="https://auth0.com/docs/authenticate/identity-providers">connection</a>, including option properties for identity provider configuration.
-     * <p><strong>Note</strong>: If you use the <code>options</code> parameter, the entire <code>options</code> object is overridden. To avoid partial data or other issues, ensure all parameters are present when using this option.</p>
-     */
-    public CompletableFuture<ManagementApiHttpResponse<UpdateConnectionResponseContent>> update(
+    public CompletableFuture<ManagementApiHttpResponse<ConnectionResponseContent>> update(
             String id, UpdateConnectionRequestContent request) {
         return update(id, request, null);
     }
 
     /**
      * Update details for a specific <a href="https://auth0.com/docs/authenticate/identity-providers">connection</a>, including option properties for identity provider configuration.
-     * <p><strong>Note</strong>: If you use the <code>options</code> parameter, the entire <code>options</code> object is overridden. To avoid partial data or other issues, ensure all parameters are present when using this option.</p>
+     * <p><b>Note</b>: If you use the <code>options</code> parameter, the entire <code>options</code> object is overriden. To avoid partial data or other issues, ensure all parameters are present when using this option.</p>
      */
-    public CompletableFuture<ManagementApiHttpResponse<UpdateConnectionResponseContent>> update(
+    public CompletableFuture<ManagementApiHttpResponse<ConnectionResponseContent>> update(
             String id, UpdateConnectionRequestContent request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -667,8 +657,7 @@ public class AsyncRawConnectionsClient {
                                     requestOptions.getMaxRetries().get()))
                     .build();
         }
-        CompletableFuture<ManagementApiHttpResponse<UpdateConnectionResponseContent>> future =
-                new CompletableFuture<>();
+        CompletableFuture<ManagementApiHttpResponse<ConnectionResponseContent>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -677,7 +666,7 @@ public class AsyncRawConnectionsClient {
                     if (response.isSuccessful()) {
                         future.complete(new ManagementApiHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBodyString, UpdateConnectionResponseContent.class),
+                                        responseBodyString, ConnectionResponseContent.class),
                                 response));
                         return;
                     }
@@ -710,6 +699,11 @@ public class AsyncRawConnectionsClient {
                                 return;
                             case 429:
                                 future.completeExceptionally(new TooManyRequestsError(
+                                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                                        response));
+                                return;
+                            case 500:
+                                future.completeExceptionally(new InternalServerError(
                                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
                                         response));
                                 return;

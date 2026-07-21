@@ -42,8 +42,6 @@ public final class ConnectionResponseContentApple
 
     private final Optional<Map<String, OptionalNullable<String>>> metadata;
 
-    private final ConnectionResponseContentAppleStrategy strategy;
-
     private final Optional<ConnectionOptionsApple> options;
 
     private final Map<String, Object> additionalProperties;
@@ -58,7 +56,6 @@ public final class ConnectionResponseContentApple
             Optional<String> displayName,
             Optional<Boolean> isDomainConnection,
             Optional<Map<String, OptionalNullable<String>>> metadata,
-            ConnectionResponseContentAppleStrategy strategy,
             Optional<ConnectionOptionsApple> options,
             Map<String, Object> additionalProperties) {
         this.authentication = authentication;
@@ -70,7 +67,6 @@ public final class ConnectionResponseContentApple
         this.displayName = displayName;
         this.isDomainConnection = isDomainConnection;
         this.metadata = metadata;
-        this.strategy = strategy;
         this.options = options;
         this.additionalProperties = additionalProperties;
     }
@@ -132,11 +128,6 @@ public final class ConnectionResponseContentApple
         return metadata;
     }
 
-    @JsonProperty("strategy")
-    public ConnectionResponseContentAppleStrategy getStrategy() {
-        return strategy;
-    }
-
     @JsonProperty("options")
     public Optional<ConnectionOptionsApple> getOptions() {
         return options;
@@ -163,7 +154,6 @@ public final class ConnectionResponseContentApple
                 && displayName.equals(other.displayName)
                 && isDomainConnection.equals(other.isDomainConnection)
                 && metadata.equals(other.metadata)
-                && strategy.equals(other.strategy)
                 && options.equals(other.options);
     }
 
@@ -179,7 +169,6 @@ public final class ConnectionResponseContentApple
                 this.displayName,
                 this.isDomainConnection,
                 this.metadata,
-                this.strategy,
                 this.options);
     }
 
@@ -199,11 +188,7 @@ public final class ConnectionResponseContentApple
     }
 
     public interface NameStage {
-        StrategyStage name(@NotNull String name);
-    }
-
-    public interface StrategyStage {
-        _FinalStage strategy(@NotNull ConnectionResponseContentAppleStrategy strategy);
+        _FinalStage name(@NotNull String name);
     }
 
     public interface _FinalStage {
@@ -250,12 +235,10 @@ public final class ConnectionResponseContentApple
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IdStage, NameStage, StrategyStage, _FinalStage {
+    public static final class Builder implements IdStage, NameStage, _FinalStage {
         private String id;
 
         private String name;
-
-        private ConnectionResponseContentAppleStrategy strategy;
 
         private Optional<ConnectionOptionsApple> options = Optional.empty();
 
@@ -289,7 +272,6 @@ public final class ConnectionResponseContentApple
             displayName(other.getDisplayName());
             isDomainConnection(other.getIsDomainConnection());
             metadata(other.getMetadata());
-            strategy(other.getStrategy());
             options(other.getOptions());
             return this;
         }
@@ -303,15 +285,8 @@ public final class ConnectionResponseContentApple
 
         @java.lang.Override
         @JsonSetter("name")
-        public StrategyStage name(@NotNull String name) {
+        public _FinalStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("strategy")
-        public _FinalStage strategy(@NotNull ConnectionResponseContentAppleStrategy strategy) {
-            this.strategy = Objects.requireNonNull(strategy, "strategy must not be null");
             return this;
         }
 
@@ -438,7 +413,6 @@ public final class ConnectionResponseContentApple
                     displayName,
                     isDomainConnection,
                     metadata,
-                    strategy,
                     options,
                     additionalProperties);
         }

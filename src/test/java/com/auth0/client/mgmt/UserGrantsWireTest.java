@@ -41,7 +41,7 @@ public class UserGrantsWireTest {
                 new MockResponse()
                         .setResponseCode(200)
                         .setBody(
-                                "{\"start\":1.1,\"limit\":1.1,\"total\":1.1,\"grants\":[{\"id\":\"id\",\"clientID\":\"clientID\",\"user_id\":\"user_id\",\"audience\":\"audience\",\"scope\":[\"scope\"],\"organization_id\":\"organization_id\"}]}"));
+                                "{\"start\":1.1,\"limit\":1.1,\"total\":1.1,\"grants\":[{\"id\":\"id\",\"clientID\":\"clientID\",\"user_id\":\"user_id\",\"audience\":\"audience\",\"scope\":[\"scope\"]}]}"));
         SyncPagingIterable<UserGrant> response = client.userGrants()
                 .list(ListUserGrantsRequestParameters.builder()
                         .perPage(1)

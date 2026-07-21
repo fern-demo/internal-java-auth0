@@ -673,11 +673,6 @@ public class AsyncRawCustomDomainsClient {
                                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
                                         response));
                                 return;
-                            case 409:
-                                future.completeExceptionally(new ConflictError(
-                                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                                        response));
-                                return;
                             case 429:
                                 future.completeExceptionally(new TooManyRequestsError(
                                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
@@ -714,15 +709,11 @@ public class AsyncRawCustomDomainsClient {
      * <li>custom_client_ip_header</li>
      * <li>tls_policy</li>
      * </ul>
-     * <p><strong>Updating CUSTOM_CLIENT_IP_HEADER for a custom domain</strong></p>
-     * <p>To update the <code>custom_client_ip_header</code> for a domain, the body to
-     * send should be:</p>
-     * <pre><code class="language-json">{ &quot;custom_client_ip_header&quot;: &quot;cf-connecting-ip&quot; }
-     * </code></pre>
-     * <p><strong>Updating TLS_POLICY for a custom domain</strong></p>
-     * <p>To update the <code>tls_policy</code> for a domain, the body to send should be:</p>
-     * <pre><code class="language-json">{ &quot;tls_policy&quot;: &quot;recommended&quot; }
-     * </code></pre>
+     * <p><h5>Updating CUSTOM_CLIENT_IP_HEADER for a custom domain</h5>To update the <code>custom_client_ip_header</code> for a domain, the body to
+     * send should be:
+     * <pre><code>{ &quot;custom_client_ip_header&quot;: &quot;cf-connecting-ip&quot; }</code></pre></p>
+     * <p><h5>Updating TLS_POLICY for a custom domain</h5>To update the <code>tls_policy</code> for a domain, the body to send should be:
+     * <pre><code>{ &quot;tls_policy&quot;: &quot;recommended&quot; }</code></pre></p>
      * <p>TLS Policies:</p>
      * <ul>
      * <li>recommended - for modern usage this includes TLS 1.2 only</li>
@@ -744,15 +735,11 @@ public class AsyncRawCustomDomainsClient {
      * <li>custom_client_ip_header</li>
      * <li>tls_policy</li>
      * </ul>
-     * <p><strong>Updating CUSTOM_CLIENT_IP_HEADER for a custom domain</strong></p>
-     * <p>To update the <code>custom_client_ip_header</code> for a domain, the body to
-     * send should be:</p>
-     * <pre><code class="language-json">{ &quot;custom_client_ip_header&quot;: &quot;cf-connecting-ip&quot; }
-     * </code></pre>
-     * <p><strong>Updating TLS_POLICY for a custom domain</strong></p>
-     * <p>To update the <code>tls_policy</code> for a domain, the body to send should be:</p>
-     * <pre><code class="language-json">{ &quot;tls_policy&quot;: &quot;recommended&quot; }
-     * </code></pre>
+     * <p><h5>Updating CUSTOM_CLIENT_IP_HEADER for a custom domain</h5>To update the <code>custom_client_ip_header</code> for a domain, the body to
+     * send should be:
+     * <pre><code>{ &quot;custom_client_ip_header&quot;: &quot;cf-connecting-ip&quot; }</code></pre></p>
+     * <p><h5>Updating TLS_POLICY for a custom domain</h5>To update the <code>tls_policy</code> for a domain, the body to send should be:
+     * <pre><code>{ &quot;tls_policy&quot;: &quot;recommended&quot; }</code></pre></p>
      * <p>TLS Policies:</p>
      * <ul>
      * <li>recommended - for modern usage this includes TLS 1.2 only</li>
@@ -775,15 +762,11 @@ public class AsyncRawCustomDomainsClient {
      * <li>custom_client_ip_header</li>
      * <li>tls_policy</li>
      * </ul>
-     * <p><strong>Updating CUSTOM_CLIENT_IP_HEADER for a custom domain</strong></p>
-     * <p>To update the <code>custom_client_ip_header</code> for a domain, the body to
-     * send should be:</p>
-     * <pre><code class="language-json">{ &quot;custom_client_ip_header&quot;: &quot;cf-connecting-ip&quot; }
-     * </code></pre>
-     * <p><strong>Updating TLS_POLICY for a custom domain</strong></p>
-     * <p>To update the <code>tls_policy</code> for a domain, the body to send should be:</p>
-     * <pre><code class="language-json">{ &quot;tls_policy&quot;: &quot;recommended&quot; }
-     * </code></pre>
+     * <p><h5>Updating CUSTOM_CLIENT_IP_HEADER for a custom domain</h5>To update the <code>custom_client_ip_header</code> for a domain, the body to
+     * send should be:
+     * <pre><code>{ &quot;custom_client_ip_header&quot;: &quot;cf-connecting-ip&quot; }</code></pre></p>
+     * <p><h5>Updating TLS_POLICY for a custom domain</h5>To update the <code>tls_policy</code> for a domain, the body to send should be:
+     * <pre><code>{ &quot;tls_policy&quot;: &quot;recommended&quot; }</code></pre></p>
      * <p>TLS Policies:</p>
      * <ul>
      * <li>recommended - for modern usage this includes TLS 1.2 only</li>
@@ -806,15 +789,11 @@ public class AsyncRawCustomDomainsClient {
      * <li>custom_client_ip_header</li>
      * <li>tls_policy</li>
      * </ul>
-     * <p><strong>Updating CUSTOM_CLIENT_IP_HEADER for a custom domain</strong></p>
-     * <p>To update the <code>custom_client_ip_header</code> for a domain, the body to
-     * send should be:</p>
-     * <pre><code class="language-json">{ &quot;custom_client_ip_header&quot;: &quot;cf-connecting-ip&quot; }
-     * </code></pre>
-     * <p><strong>Updating TLS_POLICY for a custom domain</strong></p>
-     * <p>To update the <code>tls_policy</code> for a domain, the body to send should be:</p>
-     * <pre><code class="language-json">{ &quot;tls_policy&quot;: &quot;recommended&quot; }
-     * </code></pre>
+     * <p><h5>Updating CUSTOM_CLIENT_IP_HEADER for a custom domain</h5>To update the <code>custom_client_ip_header</code> for a domain, the body to
+     * send should be:
+     * <pre><code>{ &quot;custom_client_ip_header&quot;: &quot;cf-connecting-ip&quot; }</code></pre></p>
+     * <p><h5>Updating TLS_POLICY for a custom domain</h5>To update the <code>tls_policy</code> for a domain, the body to send should be:
+     * <pre><code>{ &quot;tls_policy&quot;: &quot;recommended&quot; }</code></pre></p>
      * <p>TLS Policies:</p>
      * <ul>
      * <li>recommended - for modern usage this includes TLS 1.2 only</li>

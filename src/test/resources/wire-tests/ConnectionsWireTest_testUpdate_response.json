@@ -1,0 +1,56 @@
+{
+  "display_name": "string",
+  "enabled_clients": [
+    "string"
+  ],
+  "is_domain_connection": true,
+  "metadata": {
+    "key": "value"
+  },
+  "name": "string",
+  "id": "string",
+  "realms": [
+    "string"
+  ],
+  "authentication": {
+    "active": true
+  },
+  "connected_accounts": {
+    "active": true,
+    "cross_app_access": true
+  },
+  "options": {
+    "non_persistent_attrs": [
+      "non_persistent_attrs"
+    ],
+    "agentIP": "agentIP",
+    "agentMode": true,
+    "agentVersion": "agentVersion",
+    "brute_force_protection": true,
+    "certAuth": true,
+    "certs": [
+      "certs"
+    ],
+    "disable_cache": true,
+    "disable_self_service_change_password": true,
+    "domain_aliases": [
+      "domain_aliases"
+    ],
+    "icon_url": "icon_url",
+    "ips": [
+      "ips"
+    ],
+    "kerberos": true,
+    "set_user_root_attributes": "on_each_login",
+    "signInEndpoint": "signInEndpoint",
+    "tenant_domain": "tenant_domain",
+    "thumbprints": [
+      "thumbprints"
+    ],
+    "upstream_params": {
+      "key": {}
+    }
+  },
+  "provisioning_ticket_url": "provisioning_ticket_url",
+  "strategy": "ad"
+}

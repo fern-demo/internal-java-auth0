@@ -37,8 +37,6 @@ public final class CreateConnectionRequestContentGoogleOAuth2 implements IConnec
 
     private final Optional<Map<String, OptionalNullable<String>>> metadata;
 
-    private final CreateConnectionRequestContentGoogleOAuth2Strategy strategy;
-
     private final Optional<ConnectionOptionsGoogleOAuth2> options;
 
     private final Map<String, Object> additionalProperties;
@@ -51,7 +49,6 @@ public final class CreateConnectionRequestContentGoogleOAuth2 implements IConnec
             Optional<String> displayName,
             Optional<Boolean> isDomainConnection,
             Optional<Map<String, OptionalNullable<String>>> metadata,
-            CreateConnectionRequestContentGoogleOAuth2Strategy strategy,
             Optional<ConnectionOptionsGoogleOAuth2> options,
             Map<String, Object> additionalProperties) {
         this.authentication = authentication;
@@ -61,7 +58,6 @@ public final class CreateConnectionRequestContentGoogleOAuth2 implements IConnec
         this.displayName = displayName;
         this.isDomainConnection = isDomainConnection;
         this.metadata = metadata;
-        this.strategy = strategy;
         this.options = options;
         this.additionalProperties = additionalProperties;
     }
@@ -111,11 +107,6 @@ public final class CreateConnectionRequestContentGoogleOAuth2 implements IConnec
         return metadata;
     }
 
-    @JsonProperty("strategy")
-    public CreateConnectionRequestContentGoogleOAuth2Strategy getStrategy() {
-        return strategy;
-    }
-
     @JsonProperty("options")
     public Optional<ConnectionOptionsGoogleOAuth2> getOptions() {
         return options;
@@ -141,7 +132,6 @@ public final class CreateConnectionRequestContentGoogleOAuth2 implements IConnec
                 && displayName.equals(other.displayName)
                 && isDomainConnection.equals(other.isDomainConnection)
                 && metadata.equals(other.metadata)
-                && strategy.equals(other.strategy)
                 && options.equals(other.options);
     }
 
@@ -155,7 +145,6 @@ public final class CreateConnectionRequestContentGoogleOAuth2 implements IConnec
                 this.displayName,
                 this.isDomainConnection,
                 this.metadata,
-                this.strategy,
                 this.options);
     }
 
@@ -169,13 +158,9 @@ public final class CreateConnectionRequestContentGoogleOAuth2 implements IConnec
     }
 
     public interface NameStage {
-        StrategyStage name(@NotNull String name);
+        _FinalStage name(@NotNull String name);
 
         Builder from(CreateConnectionRequestContentGoogleOAuth2 other);
-    }
-
-    public interface StrategyStage {
-        _FinalStage strategy(@NotNull CreateConnectionRequestContentGoogleOAuth2Strategy strategy);
     }
 
     public interface _FinalStage {
@@ -218,10 +203,8 @@ public final class CreateConnectionRequestContentGoogleOAuth2 implements IConnec
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements NameStage, StrategyStage, _FinalStage {
+    public static final class Builder implements NameStage, _FinalStage {
         private String name;
-
-        private CreateConnectionRequestContentGoogleOAuth2Strategy strategy;
 
         private Optional<ConnectionOptionsGoogleOAuth2> options = Optional.empty();
 
@@ -251,22 +234,14 @@ public final class CreateConnectionRequestContentGoogleOAuth2 implements IConnec
             displayName(other.getDisplayName());
             isDomainConnection(other.getIsDomainConnection());
             metadata(other.getMetadata());
-            strategy(other.getStrategy());
             options(other.getOptions());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
-        public StrategyStage name(@NotNull String name) {
+        public _FinalStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("strategy")
-        public _FinalStage strategy(@NotNull CreateConnectionRequestContentGoogleOAuth2Strategy strategy) {
-            this.strategy = Objects.requireNonNull(strategy, "strategy must not be null");
             return this;
         }
 
@@ -378,7 +353,6 @@ public final class CreateConnectionRequestContentGoogleOAuth2 implements IConnec
                     displayName,
                     isDomainConnection,
                     metadata,
-                    strategy,
                     options,
                     additionalProperties);
         }

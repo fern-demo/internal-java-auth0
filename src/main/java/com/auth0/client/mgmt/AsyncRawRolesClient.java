@@ -53,7 +53,7 @@ public class AsyncRawRolesClient {
 
     /**
      * Retrieve detailed list of user roles created in your tenant.
-     * <p><strong>Note</strong>: The returned list does not include standard roles available for tenant members, such as Admin or Support Access.</p>
+     * <p><b>Note</b>: The returned list does not include standard roles available for tenant members, such as Admin or Support Access.</p>
      */
     public CompletableFuture<ManagementApiHttpResponse<SyncPagingIterable<Role>>> list() {
         return list(ListRolesRequestParameters.builder().build());
@@ -61,7 +61,7 @@ public class AsyncRawRolesClient {
 
     /**
      * Retrieve detailed list of user roles created in your tenant.
-     * <p><strong>Note</strong>: The returned list does not include standard roles available for tenant members, such as Admin or Support Access.</p>
+     * <p><b>Note</b>: The returned list does not include standard roles available for tenant members, such as Admin or Support Access.</p>
      */
     public CompletableFuture<ManagementApiHttpResponse<SyncPagingIterable<Role>>> list(RequestOptions requestOptions) {
         return list(ListRolesRequestParameters.builder().build(), requestOptions);
@@ -69,7 +69,7 @@ public class AsyncRawRolesClient {
 
     /**
      * Retrieve detailed list of user roles created in your tenant.
-     * <p><strong>Note</strong>: The returned list does not include standard roles available for tenant members, such as Admin or Support Access.</p>
+     * <p><b>Note</b>: The returned list does not include standard roles available for tenant members, such as Admin or Support Access.</p>
      */
     public CompletableFuture<ManagementApiHttpResponse<SyncPagingIterable<Role>>> list(
             ListRolesRequestParameters request) {
@@ -78,7 +78,7 @@ public class AsyncRawRolesClient {
 
     /**
      * Retrieve detailed list of user roles created in your tenant.
-     * <p><strong>Note</strong>: The returned list does not include standard roles available for tenant members, such as Admin or Support Access.</p>
+     * <p><b>Note</b>: The returned list does not include standard roles available for tenant members, such as Admin or Support Access.</p>
      */
     public CompletableFuture<ManagementApiHttpResponse<SyncPagingIterable<Role>>> list(
             ListRolesRequestParameters request, RequestOptions requestOptions) {
@@ -196,7 +196,7 @@ public class AsyncRawRolesClient {
 
     /**
      * Create a user role for <a href="https://auth0.com/docs/manage-users/access-control/rbac">Role-Based Access Control</a>.
-     * <p><strong>Note</strong>: New roles are not associated with any permissions by default. To assign existing permissions to your role, review Associate Permissions with a Role. To create new permissions, review Add API Permissions.</p>
+     * <p><b>Note</b>: New roles are not associated with any permissions by default. To assign existing permissions to your role, review Associate Permissions with a Role. To create new permissions, review Add API Permissions.</p>
      */
     public CompletableFuture<ManagementApiHttpResponse<CreateRoleResponseContent>> create(
             CreateRoleRequestContent request) {
@@ -205,7 +205,7 @@ public class AsyncRawRolesClient {
 
     /**
      * Create a user role for <a href="https://auth0.com/docs/manage-users/access-control/rbac">Role-Based Access Control</a>.
-     * <p><strong>Note</strong>: New roles are not associated with any permissions by default. To assign existing permissions to your role, review Associate Permissions with a Role. To create new permissions, review Add API Permissions.</p>
+     * <p><b>Note</b>: New roles are not associated with any permissions by default. To assign existing permissions to your role, review Associate Permissions with a Role. To create new permissions, review Add API Permissions.</p>
      */
     public CompletableFuture<ManagementApiHttpResponse<CreateRoleResponseContent>> create(
             CreateRoleRequestContent request, RequestOptions requestOptions) {

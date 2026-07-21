@@ -68,8 +68,6 @@ public final class GetTenantSettingsResponseContent {
 
     private final Optional<List<SupportedLocales>> enabledLocales;
 
-    private final OptionalNullable<TenantSettingsNullableSecurityHeaders> securityHeaders;
-
     private final OptionalNullable<SessionCookieSchema> sessionCookie;
 
     private final OptionalNullable<TenantSettingsSessions> sessions;
@@ -98,11 +96,7 @@ public final class GetTenantSettingsResponseContent {
 
     private final Optional<Boolean> enableAiGuide;
 
-    private final Optional<Boolean> includeSessionMetadataInTenantLogs;
-
     private final Optional<TenantSettingsDynamicClientRegistrationSecurityMode> dynamicClientRegistrationSecurityMode;
-
-    private final Optional<TenantSettingsCountryCodesResponse> countryCodes;
 
     private final Map<String, Object> additionalProperties;
 
@@ -129,7 +123,6 @@ public final class GetTenantSettingsResponseContent {
             Optional<List<String>> sandboxVersionsAvailable,
             Optional<String> defaultRedirectionUri,
             Optional<List<SupportedLocales>> enabledLocales,
-            OptionalNullable<TenantSettingsNullableSecurityHeaders> securityHeaders,
             OptionalNullable<SessionCookieSchema> sessionCookie,
             OptionalNullable<TenantSettingsSessions> sessions,
             Optional<TenantOidcLogoutSettings> oidcLogout,
@@ -144,9 +137,7 @@ public final class GetTenantSettingsResponseContent {
             Optional<Boolean> clientIdMetadataDocumentSupported,
             Optional<Boolean> phoneConsolidatedExperience,
             Optional<Boolean> enableAiGuide,
-            Optional<Boolean> includeSessionMetadataInTenantLogs,
             Optional<TenantSettingsDynamicClientRegistrationSecurityMode> dynamicClientRegistrationSecurityMode,
-            Optional<TenantSettingsCountryCodesResponse> countryCodes,
             Map<String, Object> additionalProperties) {
         this.changePassword = changePassword;
         this.guardianMfaPage = guardianMfaPage;
@@ -170,7 +161,6 @@ public final class GetTenantSettingsResponseContent {
         this.sandboxVersionsAvailable = sandboxVersionsAvailable;
         this.defaultRedirectionUri = defaultRedirectionUri;
         this.enabledLocales = enabledLocales;
-        this.securityHeaders = securityHeaders;
         this.sessionCookie = sessionCookie;
         this.sessions = sessions;
         this.oidcLogout = oidcLogout;
@@ -185,9 +175,7 @@ public final class GetTenantSettingsResponseContent {
         this.clientIdMetadataDocumentSupported = clientIdMetadataDocumentSupported;
         this.phoneConsolidatedExperience = phoneConsolidatedExperience;
         this.enableAiGuide = enableAiGuide;
-        this.includeSessionMetadataInTenantLogs = includeSessionMetadataInTenantLogs;
         this.dynamicClientRegistrationSecurityMode = dynamicClientRegistrationSecurityMode;
-        this.countryCodes = countryCodes;
         this.additionalProperties = additionalProperties;
     }
 
@@ -370,15 +358,6 @@ public final class GetTenantSettingsResponseContent {
     }
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("security_headers")
-    public OptionalNullable<TenantSettingsNullableSecurityHeaders> getSecurityHeaders() {
-        if (securityHeaders == null) {
-            return OptionalNullable.absent();
-        }
-        return securityHeaders;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("session_cookie")
     public OptionalNullable<SessionCookieSchema> getSessionCookie() {
         if (sessionCookie == null) {
@@ -501,22 +480,9 @@ public final class GetTenantSettingsResponseContent {
         return enableAiGuide;
     }
 
-    /**
-     * @return Whether session metadata is included in specific tenant logs (slo, oidc_backchannel_logout_failed, oidc_backchannel_logout_succeeded).
-     */
-    @JsonProperty("include_session_metadata_in_tenant_logs")
-    public Optional<Boolean> getIncludeSessionMetadataInTenantLogs() {
-        return includeSessionMetadataInTenantLogs;
-    }
-
     @JsonProperty("dynamic_client_registration_security_mode")
     public Optional<TenantSettingsDynamicClientRegistrationSecurityMode> getDynamicClientRegistrationSecurityMode() {
         return dynamicClientRegistrationSecurityMode;
-    }
-
-    @JsonProperty("country_codes")
-    public Optional<TenantSettingsCountryCodesResponse> getCountryCodes() {
-        return countryCodes;
     }
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
@@ -547,12 +513,6 @@ public final class GetTenantSettingsResponseContent {
     @JsonProperty("default_token_quota")
     private OptionalNullable<DefaultTokenQuota> _getDefaultTokenQuota() {
         return defaultTokenQuota;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("security_headers")
-    private OptionalNullable<TenantSettingsNullableSecurityHeaders> _getSecurityHeaders() {
-        return securityHeaders;
     }
 
     @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
@@ -625,7 +585,6 @@ public final class GetTenantSettingsResponseContent {
                 && sandboxVersionsAvailable.equals(other.sandboxVersionsAvailable)
                 && defaultRedirectionUri.equals(other.defaultRedirectionUri)
                 && enabledLocales.equals(other.enabledLocales)
-                && securityHeaders.equals(other.securityHeaders)
                 && sessionCookie.equals(other.sessionCookie)
                 && sessions.equals(other.sessions)
                 && oidcLogout.equals(other.oidcLogout)
@@ -641,9 +600,7 @@ public final class GetTenantSettingsResponseContent {
                 && clientIdMetadataDocumentSupported.equals(other.clientIdMetadataDocumentSupported)
                 && phoneConsolidatedExperience.equals(other.phoneConsolidatedExperience)
                 && enableAiGuide.equals(other.enableAiGuide)
-                && includeSessionMetadataInTenantLogs.equals(other.includeSessionMetadataInTenantLogs)
-                && dynamicClientRegistrationSecurityMode.equals(other.dynamicClientRegistrationSecurityMode)
-                && countryCodes.equals(other.countryCodes);
+                && dynamicClientRegistrationSecurityMode.equals(other.dynamicClientRegistrationSecurityMode);
     }
 
     @java.lang.Override
@@ -671,7 +628,6 @@ public final class GetTenantSettingsResponseContent {
                 this.sandboxVersionsAvailable,
                 this.defaultRedirectionUri,
                 this.enabledLocales,
-                this.securityHeaders,
                 this.sessionCookie,
                 this.sessions,
                 this.oidcLogout,
@@ -686,9 +642,7 @@ public final class GetTenantSettingsResponseContent {
                 this.clientIdMetadataDocumentSupported,
                 this.phoneConsolidatedExperience,
                 this.enableAiGuide,
-                this.includeSessionMetadataInTenantLogs,
-                this.dynamicClientRegistrationSecurityMode,
-                this.countryCodes);
+                this.dynamicClientRegistrationSecurityMode);
     }
 
     @java.lang.Override
@@ -746,8 +700,6 @@ public final class GetTenantSettingsResponseContent {
 
         private Optional<List<SupportedLocales>> enabledLocales = Optional.empty();
 
-        private OptionalNullable<TenantSettingsNullableSecurityHeaders> securityHeaders = OptionalNullable.absent();
-
         private OptionalNullable<SessionCookieSchema> sessionCookie = OptionalNullable.absent();
 
         private OptionalNullable<TenantSettingsSessions> sessions = OptionalNullable.absent();
@@ -776,12 +728,8 @@ public final class GetTenantSettingsResponseContent {
 
         private Optional<Boolean> enableAiGuide = Optional.empty();
 
-        private Optional<Boolean> includeSessionMetadataInTenantLogs = Optional.empty();
-
         private Optional<TenantSettingsDynamicClientRegistrationSecurityMode> dynamicClientRegistrationSecurityMode =
                 Optional.empty();
-
-        private Optional<TenantSettingsCountryCodesResponse> countryCodes = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -811,7 +759,6 @@ public final class GetTenantSettingsResponseContent {
             sandboxVersionsAvailable(other.getSandboxVersionsAvailable());
             defaultRedirectionUri(other.getDefaultRedirectionUri());
             enabledLocales(other.getEnabledLocales());
-            securityHeaders(other.getSecurityHeaders());
             sessionCookie(other.getSessionCookie());
             sessions(other.getSessions());
             oidcLogout(other.getOidcLogout());
@@ -826,9 +773,7 @@ public final class GetTenantSettingsResponseContent {
             clientIdMetadataDocumentSupported(other.getClientIdMetadataDocumentSupported());
             phoneConsolidatedExperience(other.getPhoneConsolidatedExperience());
             enableAiGuide(other.getEnableAiGuide());
-            includeSessionMetadataInTenantLogs(other.getIncludeSessionMetadataInTenantLogs());
             dynamicClientRegistrationSecurityMode(other.getDynamicClientRegistrationSecurityMode());
-            countryCodes(other.getCountryCodes());
             return this;
         }
 
@@ -1223,39 +1168,6 @@ public final class GetTenantSettingsResponseContent {
             return this;
         }
 
-        @JsonSetter(value = "security_headers", nulls = Nulls.SKIP)
-        public Builder securityHeaders(
-                @Nullable OptionalNullable<TenantSettingsNullableSecurityHeaders> securityHeaders) {
-            this.securityHeaders = securityHeaders;
-            return this;
-        }
-
-        public Builder securityHeaders(TenantSettingsNullableSecurityHeaders securityHeaders) {
-            this.securityHeaders = OptionalNullable.of(securityHeaders);
-            return this;
-        }
-
-        public Builder securityHeaders(Optional<TenantSettingsNullableSecurityHeaders> securityHeaders) {
-            if (securityHeaders.isPresent()) {
-                this.securityHeaders = OptionalNullable.of(securityHeaders.get());
-            } else {
-                this.securityHeaders = OptionalNullable.absent();
-            }
-            return this;
-        }
-
-        public Builder securityHeaders(
-                com.auth0.client.mgmt.core.Nullable<TenantSettingsNullableSecurityHeaders> securityHeaders) {
-            if (securityHeaders.isNull()) {
-                this.securityHeaders = OptionalNullable.ofNull();
-            } else if (securityHeaders.isEmpty()) {
-                this.securityHeaders = OptionalNullable.absent();
-            } else {
-                this.securityHeaders = OptionalNullable.of(securityHeaders.get());
-            }
-            return this;
-        }
-
         @JsonSetter(value = "session_cookie", nulls = Nulls.SKIP)
         public Builder sessionCookie(@Nullable OptionalNullable<SessionCookieSchema> sessionCookie) {
             this.sessionCookie = sessionCookie;
@@ -1575,20 +1487,6 @@ public final class GetTenantSettingsResponseContent {
             return this;
         }
 
-        /**
-         * <p>Whether session metadata is included in specific tenant logs (slo, oidc_backchannel_logout_failed, oidc_backchannel_logout_succeeded).</p>
-         */
-        @JsonSetter(value = "include_session_metadata_in_tenant_logs", nulls = Nulls.SKIP)
-        public Builder includeSessionMetadataInTenantLogs(Optional<Boolean> includeSessionMetadataInTenantLogs) {
-            this.includeSessionMetadataInTenantLogs = includeSessionMetadataInTenantLogs;
-            return this;
-        }
-
-        public Builder includeSessionMetadataInTenantLogs(Boolean includeSessionMetadataInTenantLogs) {
-            this.includeSessionMetadataInTenantLogs = Optional.ofNullable(includeSessionMetadataInTenantLogs);
-            return this;
-        }
-
         @JsonSetter(value = "dynamic_client_registration_security_mode", nulls = Nulls.SKIP)
         public Builder dynamicClientRegistrationSecurityMode(
                 Optional<TenantSettingsDynamicClientRegistrationSecurityMode> dynamicClientRegistrationSecurityMode) {
@@ -1599,17 +1497,6 @@ public final class GetTenantSettingsResponseContent {
         public Builder dynamicClientRegistrationSecurityMode(
                 TenantSettingsDynamicClientRegistrationSecurityMode dynamicClientRegistrationSecurityMode) {
             this.dynamicClientRegistrationSecurityMode = Optional.ofNullable(dynamicClientRegistrationSecurityMode);
-            return this;
-        }
-
-        @JsonSetter(value = "country_codes", nulls = Nulls.SKIP)
-        public Builder countryCodes(Optional<TenantSettingsCountryCodesResponse> countryCodes) {
-            this.countryCodes = countryCodes;
-            return this;
-        }
-
-        public Builder countryCodes(TenantSettingsCountryCodesResponse countryCodes) {
-            this.countryCodes = Optional.ofNullable(countryCodes);
             return this;
         }
 
@@ -1637,7 +1524,6 @@ public final class GetTenantSettingsResponseContent {
                     sandboxVersionsAvailable,
                     defaultRedirectionUri,
                     enabledLocales,
-                    securityHeaders,
                     sessionCookie,
                     sessions,
                     oidcLogout,
@@ -1652,9 +1538,7 @@ public final class GetTenantSettingsResponseContent {
                     clientIdMetadataDocumentSupported,
                     phoneConsolidatedExperience,
                     enableAiGuide,
-                    includeSessionMetadataInTenantLogs,
                     dynamicClientRegistrationSecurityMode,
-                    countryCodes,
                     additionalProperties);
         }
 

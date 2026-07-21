@@ -61,9 +61,6 @@ public final class LinkUserIdentityRequestContent {
         return connectionId;
     }
 
-    /**
-     * @return user_id of the secondary user account being linked.
-     */
     @JsonProperty("user_id")
     public Optional<UserId> getUserId() {
         return userId;
@@ -160,9 +157,6 @@ public final class LinkUserIdentityRequestContent {
             return this;
         }
 
-        /**
-         * <p>user_id of the secondary user account being linked.</p>
-         */
         @JsonSetter(value = "user_id", nulls = Nulls.SKIP)
         public Builder userId(Optional<UserId> userId) {
             this.userId = userId;

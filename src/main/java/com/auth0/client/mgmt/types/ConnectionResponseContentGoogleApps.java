@@ -42,8 +42,6 @@ public final class ConnectionResponseContentGoogleApps
 
     private final Optional<Map<String, OptionalNullable<String>>> metadata;
 
-    private final ConnectionResponseContentGoogleAppsStrategy strategy;
-
     private final Optional<ConnectionOptionsGoogleApps> options;
 
     private final Optional<String> provisioningTicketUrl;
@@ -62,7 +60,6 @@ public final class ConnectionResponseContentGoogleApps
             Optional<String> displayName,
             Optional<Boolean> isDomainConnection,
             Optional<Map<String, OptionalNullable<String>>> metadata,
-            ConnectionResponseContentGoogleAppsStrategy strategy,
             Optional<ConnectionOptionsGoogleApps> options,
             Optional<String> provisioningTicketUrl,
             Optional<Boolean> showAsButton,
@@ -76,7 +73,6 @@ public final class ConnectionResponseContentGoogleApps
         this.displayName = displayName;
         this.isDomainConnection = isDomainConnection;
         this.metadata = metadata;
-        this.strategy = strategy;
         this.options = options;
         this.provisioningTicketUrl = provisioningTicketUrl;
         this.showAsButton = showAsButton;
@@ -140,11 +136,6 @@ public final class ConnectionResponseContentGoogleApps
         return metadata;
     }
 
-    @JsonProperty("strategy")
-    public ConnectionResponseContentGoogleAppsStrategy getStrategy() {
-        return strategy;
-    }
-
     @JsonProperty("options")
     public Optional<ConnectionOptionsGoogleApps> getOptions() {
         return options;
@@ -182,7 +173,6 @@ public final class ConnectionResponseContentGoogleApps
                 && displayName.equals(other.displayName)
                 && isDomainConnection.equals(other.isDomainConnection)
                 && metadata.equals(other.metadata)
-                && strategy.equals(other.strategy)
                 && options.equals(other.options)
                 && provisioningTicketUrl.equals(other.provisioningTicketUrl)
                 && showAsButton.equals(other.showAsButton);
@@ -200,7 +190,6 @@ public final class ConnectionResponseContentGoogleApps
                 this.displayName,
                 this.isDomainConnection,
                 this.metadata,
-                this.strategy,
                 this.options,
                 this.provisioningTicketUrl,
                 this.showAsButton);
@@ -222,11 +211,7 @@ public final class ConnectionResponseContentGoogleApps
     }
 
     public interface NameStage {
-        StrategyStage name(@NotNull String name);
-    }
-
-    public interface StrategyStage {
-        _FinalStage strategy(@NotNull ConnectionResponseContentGoogleAppsStrategy strategy);
+        _FinalStage name(@NotNull String name);
     }
 
     public interface _FinalStage {
@@ -281,12 +266,10 @@ public final class ConnectionResponseContentGoogleApps
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IdStage, NameStage, StrategyStage, _FinalStage {
+    public static final class Builder implements IdStage, NameStage, _FinalStage {
         private String id;
 
         private String name;
-
-        private ConnectionResponseContentGoogleAppsStrategy strategy;
 
         private Optional<Boolean> showAsButton = Optional.empty();
 
@@ -324,7 +307,6 @@ public final class ConnectionResponseContentGoogleApps
             displayName(other.getDisplayName());
             isDomainConnection(other.getIsDomainConnection());
             metadata(other.getMetadata());
-            strategy(other.getStrategy());
             options(other.getOptions());
             provisioningTicketUrl(other.getProvisioningTicketUrl());
             showAsButton(other.getShowAsButton());
@@ -340,15 +322,8 @@ public final class ConnectionResponseContentGoogleApps
 
         @java.lang.Override
         @JsonSetter("name")
-        public StrategyStage name(@NotNull String name) {
+        public _FinalStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("strategy")
-        public _FinalStage strategy(@NotNull ConnectionResponseContentGoogleAppsStrategy strategy) {
-            this.strategy = Objects.requireNonNull(strategy, "strategy must not be null");
             return this;
         }
 
@@ -501,7 +476,6 @@ public final class ConnectionResponseContentGoogleApps
                     displayName,
                     isDomainConnection,
                     metadata,
-                    strategy,
                     options,
                     provisioningTicketUrl,
                     showAsButton,

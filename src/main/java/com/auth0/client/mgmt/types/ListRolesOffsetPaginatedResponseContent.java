@@ -21,20 +21,20 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListRolesOffsetPaginatedResponseContent.Builder.class)
 public final class ListRolesOffsetPaginatedResponseContent {
-    private final double start;
+    private final Optional<Double> start;
 
-    private final double limit;
+    private final Optional<Double> limit;
 
-    private final double total;
+    private final Optional<Double> total;
 
     private final Optional<List<Role>> roles;
 
     private final Map<String, Object> additionalProperties;
 
     private ListRolesOffsetPaginatedResponseContent(
-            double start,
-            double limit,
-            double total,
+            Optional<Double> start,
+            Optional<Double> limit,
+            Optional<Double> total,
             Optional<List<Role>> roles,
             Map<String, Object> additionalProperties) {
         this.start = start;
@@ -45,17 +45,17 @@ public final class ListRolesOffsetPaginatedResponseContent {
     }
 
     @JsonProperty("start")
-    public double getStart() {
+    public Optional<Double> getStart() {
         return start;
     }
 
     @JsonProperty("limit")
-    public double getLimit() {
+    public Optional<Double> getLimit() {
         return limit;
     }
 
     @JsonProperty("total")
-    public double getTotal() {
+    public Optional<Double> getTotal() {
         return total;
     }
 
@@ -77,7 +77,10 @@ public final class ListRolesOffsetPaginatedResponseContent {
     }
 
     private boolean equalTo(ListRolesOffsetPaginatedResponseContent other) {
-        return start == other.start && limit == other.limit && total == other.total && roles.equals(other.roles);
+        return start.equals(other.start)
+                && limit.equals(other.limit)
+                && total.equals(other.total)
+                && roles.equals(other.roles);
     }
 
     @java.lang.Override
@@ -90,43 +93,17 @@ public final class ListRolesOffsetPaginatedResponseContent {
         return ObjectMappers.stringify(this);
     }
 
-    public static StartStage builder() {
+    public static Builder builder() {
         return new Builder();
     }
 
-    public interface StartStage {
-        LimitStage start(double start);
-
-        Builder from(ListRolesOffsetPaginatedResponseContent other);
-    }
-
-    public interface LimitStage {
-        TotalStage limit(double limit);
-    }
-
-    public interface TotalStage {
-        _FinalStage total(double total);
-    }
-
-    public interface _FinalStage {
-        ListRolesOffsetPaginatedResponseContent build();
-
-        _FinalStage additionalProperty(String key, Object value);
-
-        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
-
-        _FinalStage roles(Optional<List<Role>> roles);
-
-        _FinalStage roles(List<Role> roles);
-    }
-
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements StartStage, LimitStage, TotalStage, _FinalStage {
-        private double start;
+    public static final class Builder {
+        private Optional<Double> start = Optional.empty();
 
-        private double limit;
+        private Optional<Double> limit = Optional.empty();
 
-        private double total;
+        private Optional<Double> total = Optional.empty();
 
         private Optional<List<Role>> roles = Optional.empty();
 
@@ -135,7 +112,6 @@ public final class ListRolesOffsetPaginatedResponseContent {
 
         private Builder() {}
 
-        @java.lang.Override
         public Builder from(ListRolesOffsetPaginatedResponseContent other) {
             start(other.getStart());
             limit(other.getLimit());
@@ -144,52 +120,59 @@ public final class ListRolesOffsetPaginatedResponseContent {
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter("start")
-        public LimitStage start(double start) {
+        @JsonSetter(value = "start", nulls = Nulls.SKIP)
+        public Builder start(Optional<Double> start) {
             this.start = start;
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter("limit")
-        public TotalStage limit(double limit) {
+        public Builder start(Double start) {
+            this.start = Optional.ofNullable(start);
+            return this;
+        }
+
+        @JsonSetter(value = "limit", nulls = Nulls.SKIP)
+        public Builder limit(Optional<Double> limit) {
             this.limit = limit;
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter("total")
-        public _FinalStage total(double total) {
+        public Builder limit(Double limit) {
+            this.limit = Optional.ofNullable(limit);
+            return this;
+        }
+
+        @JsonSetter(value = "total", nulls = Nulls.SKIP)
+        public Builder total(Optional<Double> total) {
             this.total = total;
             return this;
         }
 
-        @java.lang.Override
-        public _FinalStage roles(List<Role> roles) {
-            this.roles = Optional.ofNullable(roles);
+        public Builder total(Double total) {
+            this.total = Optional.ofNullable(total);
             return this;
         }
 
-        @java.lang.Override
         @JsonSetter(value = "roles", nulls = Nulls.SKIP)
-        public _FinalStage roles(Optional<List<Role>> roles) {
+        public Builder roles(Optional<List<Role>> roles) {
             this.roles = roles;
             return this;
         }
 
-        @java.lang.Override
+        public Builder roles(List<Role> roles) {
+            this.roles = Optional.ofNullable(roles);
+            return this;
+        }
+
         public ListRolesOffsetPaginatedResponseContent build() {
             return new ListRolesOffsetPaginatedResponseContent(start, limit, total, roles, additionalProperties);
         }
 
-        @java.lang.Override
         public Builder additionalProperty(String key, Object value) {
             this.additionalProperties.put(key, value);
             return this;
         }
 
-        @java.lang.Override
         public Builder additionalProperties(Map<String, Object> additionalProperties) {
             this.additionalProperties.putAll(additionalProperties);
             return this;

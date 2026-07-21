@@ -33,8 +33,6 @@ public final class CreateConnectionRequestContentSalesforceSandbox implements IC
 
     private final Optional<Map<String, OptionalNullable<String>>> metadata;
 
-    private final CreateConnectionRequestContentSalesforceSandboxStrategy strategy;
-
     private final Optional<ConnectionOptionsSalesforce> options;
 
     private final Map<String, Object> additionalProperties;
@@ -45,7 +43,6 @@ public final class CreateConnectionRequestContentSalesforceSandbox implements IC
             Optional<String> displayName,
             Optional<Boolean> isDomainConnection,
             Optional<Map<String, OptionalNullable<String>>> metadata,
-            CreateConnectionRequestContentSalesforceSandboxStrategy strategy,
             Optional<ConnectionOptionsSalesforce> options,
             Map<String, Object> additionalProperties) {
         this.name = name;
@@ -53,7 +50,6 @@ public final class CreateConnectionRequestContentSalesforceSandbox implements IC
         this.displayName = displayName;
         this.isDomainConnection = isDomainConnection;
         this.metadata = metadata;
-        this.strategy = strategy;
         this.options = options;
         this.additionalProperties = additionalProperties;
     }
@@ -91,11 +87,6 @@ public final class CreateConnectionRequestContentSalesforceSandbox implements IC
         return metadata;
     }
 
-    @JsonProperty("strategy")
-    public CreateConnectionRequestContentSalesforceSandboxStrategy getStrategy() {
-        return strategy;
-    }
-
     @JsonProperty("options")
     public Optional<ConnectionOptionsSalesforce> getOptions() {
         return options;
@@ -119,20 +110,13 @@ public final class CreateConnectionRequestContentSalesforceSandbox implements IC
                 && displayName.equals(other.displayName)
                 && isDomainConnection.equals(other.isDomainConnection)
                 && metadata.equals(other.metadata)
-                && strategy.equals(other.strategy)
                 && options.equals(other.options);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.name,
-                this.enabledClients,
-                this.displayName,
-                this.isDomainConnection,
-                this.metadata,
-                this.strategy,
-                this.options);
+                this.name, this.enabledClients, this.displayName, this.isDomainConnection, this.metadata, this.options);
     }
 
     @java.lang.Override
@@ -145,13 +129,9 @@ public final class CreateConnectionRequestContentSalesforceSandbox implements IC
     }
 
     public interface NameStage {
-        StrategyStage name(@NotNull String name);
+        _FinalStage name(@NotNull String name);
 
         Builder from(CreateConnectionRequestContentSalesforceSandbox other);
-    }
-
-    public interface StrategyStage {
-        _FinalStage strategy(@NotNull CreateConnectionRequestContentSalesforceSandboxStrategy strategy);
     }
 
     public interface _FinalStage {
@@ -186,10 +166,8 @@ public final class CreateConnectionRequestContentSalesforceSandbox implements IC
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements NameStage, StrategyStage, _FinalStage {
+    public static final class Builder implements NameStage, _FinalStage {
         private String name;
-
-        private CreateConnectionRequestContentSalesforceSandboxStrategy strategy;
 
         private Optional<ConnectionOptionsSalesforce> options = Optional.empty();
 
@@ -213,22 +191,14 @@ public final class CreateConnectionRequestContentSalesforceSandbox implements IC
             displayName(other.getDisplayName());
             isDomainConnection(other.getIsDomainConnection());
             metadata(other.getMetadata());
-            strategy(other.getStrategy());
             options(other.getOptions());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
-        public StrategyStage name(@NotNull String name) {
+        public _FinalStage name(@NotNull String name) {
             this.name = Objects.requireNonNull(name, "name must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("strategy")
-        public _FinalStage strategy(@NotNull CreateConnectionRequestContentSalesforceSandboxStrategy strategy) {
-            this.strategy = Objects.requireNonNull(strategy, "strategy must not be null");
             return this;
         }
 
@@ -307,14 +277,7 @@ public final class CreateConnectionRequestContentSalesforceSandbox implements IC
         @java.lang.Override
         public CreateConnectionRequestContentSalesforceSandbox build() {
             return new CreateConnectionRequestContentSalesforceSandbox(
-                    name,
-                    enabledClients,
-                    displayName,
-                    isDomainConnection,
-                    metadata,
-                    strategy,
-                    options,
-                    additionalProperties);
+                    name, enabledClients, displayName, isDomainConnection, metadata, options, additionalProperties);
         }
 
         @java.lang.Override

@@ -38,8 +38,6 @@ public final class UpdateResourceServerRequestContent {
 
     private final Optional<Boolean> allowOnlineAccess;
 
-    private final Optional<Boolean> allowOnlineAccessWithEphemeralSessions;
-
     private final Optional<Integer> tokenLifetime;
 
     private final Optional<ResourceServerTokenDialectSchemaEnum> tokenDialect;
@@ -68,7 +66,6 @@ public final class UpdateResourceServerRequestContent {
             Optional<Boolean> skipConsentForVerifiableFirstPartyClients,
             Optional<Boolean> allowOfflineAccess,
             Optional<Boolean> allowOnlineAccess,
-            Optional<Boolean> allowOnlineAccessWithEphemeralSessions,
             Optional<Integer> tokenLifetime,
             Optional<ResourceServerTokenDialectSchemaEnum> tokenDialect,
             Optional<Boolean> enforcePolicies,
@@ -86,7 +83,6 @@ public final class UpdateResourceServerRequestContent {
         this.skipConsentForVerifiableFirstPartyClients = skipConsentForVerifiableFirstPartyClients;
         this.allowOfflineAccess = allowOfflineAccess;
         this.allowOnlineAccess = allowOnlineAccess;
-        this.allowOnlineAccessWithEphemeralSessions = allowOnlineAccessWithEphemeralSessions;
         this.tokenLifetime = tokenLifetime;
         this.tokenDialect = tokenDialect;
         this.enforcePolicies = enforcePolicies;
@@ -150,14 +146,6 @@ public final class UpdateResourceServerRequestContent {
     @JsonProperty("allow_online_access")
     public Optional<Boolean> getAllowOnlineAccess() {
         return allowOnlineAccess;
-    }
-
-    /**
-     * @return Whether Online Refresh Tokens can be issued even when sessions are configured as ephemeral (true) or not (false).
-     */
-    @JsonProperty("allow_online_access_with_ephemeral_sessions")
-    public Optional<Boolean> getAllowOnlineAccessWithEphemeralSessions() {
-        return allowOnlineAccessWithEphemeralSessions;
     }
 
     /**
@@ -281,7 +269,6 @@ public final class UpdateResourceServerRequestContent {
                 && skipConsentForVerifiableFirstPartyClients.equals(other.skipConsentForVerifiableFirstPartyClients)
                 && allowOfflineAccess.equals(other.allowOfflineAccess)
                 && allowOnlineAccess.equals(other.allowOnlineAccess)
-                && allowOnlineAccessWithEphemeralSessions.equals(other.allowOnlineAccessWithEphemeralSessions)
                 && tokenLifetime.equals(other.tokenLifetime)
                 && tokenDialect.equals(other.tokenDialect)
                 && enforcePolicies.equals(other.enforcePolicies)
@@ -303,7 +290,6 @@ public final class UpdateResourceServerRequestContent {
                 this.skipConsentForVerifiableFirstPartyClients,
                 this.allowOfflineAccess,
                 this.allowOnlineAccess,
-                this.allowOnlineAccessWithEphemeralSessions,
                 this.tokenLifetime,
                 this.tokenDialect,
                 this.enforcePolicies,
@@ -340,8 +326,6 @@ public final class UpdateResourceServerRequestContent {
 
         private Optional<Boolean> allowOnlineAccess = Optional.empty();
 
-        private Optional<Boolean> allowOnlineAccessWithEphemeralSessions = Optional.empty();
-
         private Optional<Integer> tokenLifetime = Optional.empty();
 
         private Optional<ResourceServerTokenDialectSchemaEnum> tokenDialect = Optional.empty();
@@ -373,7 +357,6 @@ public final class UpdateResourceServerRequestContent {
             skipConsentForVerifiableFirstPartyClients(other.getSkipConsentForVerifiableFirstPartyClients());
             allowOfflineAccess(other.getAllowOfflineAccess());
             allowOnlineAccess(other.getAllowOnlineAccess());
-            allowOnlineAccessWithEphemeralSessions(other.getAllowOnlineAccessWithEphemeralSessions());
             tokenLifetime(other.getTokenLifetime());
             tokenDialect(other.getTokenDialect());
             enforcePolicies(other.getEnforcePolicies());
@@ -480,21 +463,6 @@ public final class UpdateResourceServerRequestContent {
 
         public Builder allowOnlineAccess(Boolean allowOnlineAccess) {
             this.allowOnlineAccess = Optional.ofNullable(allowOnlineAccess);
-            return this;
-        }
-
-        /**
-         * <p>Whether Online Refresh Tokens can be issued even when sessions are configured as ephemeral (true) or not (false).</p>
-         */
-        @JsonSetter(value = "allow_online_access_with_ephemeral_sessions", nulls = Nulls.SKIP)
-        public Builder allowOnlineAccessWithEphemeralSessions(
-                Optional<Boolean> allowOnlineAccessWithEphemeralSessions) {
-            this.allowOnlineAccessWithEphemeralSessions = allowOnlineAccessWithEphemeralSessions;
-            return this;
-        }
-
-        public Builder allowOnlineAccessWithEphemeralSessions(Boolean allowOnlineAccessWithEphemeralSessions) {
-            this.allowOnlineAccessWithEphemeralSessions = Optional.ofNullable(allowOnlineAccessWithEphemeralSessions);
             return this;
         }
 
@@ -719,7 +687,6 @@ public final class UpdateResourceServerRequestContent {
                     skipConsentForVerifiableFirstPartyClients,
                     allowOfflineAccess,
                     allowOnlineAccess,
-                    allowOnlineAccessWithEphemeralSessions,
                     tokenLifetime,
                     tokenDialect,
                     enforcePolicies,

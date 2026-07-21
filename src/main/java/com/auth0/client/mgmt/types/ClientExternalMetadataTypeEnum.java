@@ -7,8 +7,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class ClientExternalMetadataTypeEnum {
-    public static final ClientExternalMetadataTypeEnum DCR = new ClientExternalMetadataTypeEnum(Value.DCR, "dcr");
-
     public static final ClientExternalMetadataTypeEnum CIMD = new ClientExternalMetadataTypeEnum(Value.CIMD, "cimd");
 
     private final Value value;
@@ -44,8 +42,6 @@ public final class ClientExternalMetadataTypeEnum {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
-            case DCR:
-                return visitor.visitDcr();
             case CIMD:
                 return visitor.visitCimd();
             case UNKNOWN:
@@ -57,8 +53,6 @@ public final class ClientExternalMetadataTypeEnum {
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static ClientExternalMetadataTypeEnum valueOf(String value) {
         switch (value) {
-            case "dcr":
-                return DCR;
             case "cimd":
                 return CIMD;
             default:
@@ -69,15 +63,11 @@ public final class ClientExternalMetadataTypeEnum {
     public enum Value {
         CIMD,
 
-        DCR,
-
         UNKNOWN
     }
 
     public interface Visitor<T> {
         T visitCimd();
-
-        T visitDcr();
 
         T visitUnknown(String unknownType);
     }

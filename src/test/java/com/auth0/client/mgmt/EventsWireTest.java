@@ -42,7 +42,7 @@ public class EventsWireTest {
                 .subscribe(SubscribeEventsRequestParameters.builder()
                         .from("from")
                         .fromTimestamp("from_timestamp")
-                        .eventType(Arrays.asList(EventStreamSubscribeEventsEventTypeEnum.CONNECTION_CREATED))
+                        .eventType(Arrays.asList(EventStreamSubscribeEventsEventTypeEnum.GROUP_CREATED))
                         .build());
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);

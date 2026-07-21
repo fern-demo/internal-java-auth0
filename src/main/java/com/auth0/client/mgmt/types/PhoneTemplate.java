@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = PhoneTemplate.Builder.class)
 public final class PhoneTemplate {
-    private final Optional<String> id;
+    private final String id;
 
     private final Optional<String> channel;
 
@@ -38,7 +38,7 @@ public final class PhoneTemplate {
     private final Map<String, Object> additionalProperties;
 
     private PhoneTemplate(
-            Optional<String> id,
+            String id,
             Optional<String> channel,
             Optional<Boolean> customizable,
             Optional<String> tenant,
@@ -57,7 +57,7 @@ public final class PhoneTemplate {
     }
 
     @JsonProperty("id")
-    public Optional<String> getId() {
+    public String getId() {
         return id;
     }
 
@@ -126,14 +126,18 @@ public final class PhoneTemplate {
         return ObjectMappers.stringify(this);
     }
 
-    public static ContentStage builder() {
+    public static IdStage builder() {
         return new Builder();
+    }
+
+    public interface IdStage {
+        ContentStage id(@NotNull String id);
+
+        Builder from(PhoneTemplate other);
     }
 
     public interface ContentStage {
         TypeStage content(@NotNull PhoneTemplateContent content);
-
-        Builder from(PhoneTemplate other);
     }
 
     public interface TypeStage {
@@ -154,10 +158,6 @@ public final class PhoneTemplate {
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
-        _FinalStage id(Optional<String> id);
-
-        _FinalStage id(String id);
-
         _FinalStage channel(Optional<String> channel);
 
         _FinalStage channel(String channel);
@@ -172,7 +172,9 @@ public final class PhoneTemplate {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements ContentStage, TypeStage, DisabledStage, _FinalStage {
+    public static final class Builder implements IdStage, ContentStage, TypeStage, DisabledStage, _FinalStage {
+        private String id;
+
         private PhoneTemplateContent content;
 
         private PhoneTemplateNotificationTypeEnum type;
@@ -184,8 +186,6 @@ public final class PhoneTemplate {
         private Optional<Boolean> customizable = Optional.empty();
 
         private Optional<String> channel = Optional.empty();
-
-        private Optional<String> id = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -201,6 +201,13 @@ public final class PhoneTemplate {
             content(other.getContent());
             type(other.getType());
             disabled(other.getDisabled());
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("id")
+        public ContentStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
@@ -265,19 +272,6 @@ public final class PhoneTemplate {
         @JsonSetter(value = "channel", nulls = Nulls.SKIP)
         public _FinalStage channel(Optional<String> channel) {
             this.channel = channel;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage id(String id) {
-            this.id = Optional.ofNullable(id);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "id", nulls = Nulls.SKIP)
-        public _FinalStage id(Optional<String> id) {
-            this.id = id;
             return this;
         }
 

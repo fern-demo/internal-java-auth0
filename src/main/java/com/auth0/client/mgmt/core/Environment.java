@@ -4,7 +4,7 @@
 package com.auth0.client.mgmt.core;
 
 public final class Environment {
-    public static final Environment DEFAULT = new Environment("https://%7BTENANT%7D.auth0.com/api/v2");
+    public static final Environment DEFAULT = new Environment("https://undefined/api/v2");
 
     private final String url;
 

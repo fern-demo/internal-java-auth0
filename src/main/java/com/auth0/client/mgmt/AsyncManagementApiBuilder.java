@@ -149,7 +149,7 @@ public class AsyncManagementApiBuilder {
      */
     protected void setEnvironment(ClientOptions.Builder builder) {
         if (this.tenantDomain != null) {
-            String _tenantDomain = this.tenantDomain != null ? this.tenantDomain : "{TENANT}.auth0.com";
+            String _tenantDomain = this.tenantDomain != null ? this.tenantDomain : "";
             this.environment =
                     Environment.custom("https://{tenantDomain}/api/v2".replace("{tenantDomain}", _tenantDomain));
         }

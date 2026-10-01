@@ -19,8 +19,10 @@ on:
       github-token:
         required: true
 
-### TODO: Replace instances of './.github/actions/' w/ `auth0/dx-sdk-actions/` and append `@latest` after the common `dx-sdk-actions` repo is made public.
-### TODO: Also remove `get-prerelease`, `get-version`, `release-create`, `tag-create` and `tag-exists` actions from this repo's .github/actions folder once the repo is public.
+### TODO: Replace instances of './.github/actions/' w/ `auth0/dx-sdk-actions/` and append `@latest` after the
+### common `dx-sdk-actions` repo is made public.
+### TODO: Also remove `get-prerelease`, `get-version`, `release-create`, `tag-create` and `tag-exists` actions from
+### this repo's .github/actions folder once the repo is public.
 
 jobs:
   release:
@@ -30,7 +32,7 @@ jobs:
 
     steps:
       # Checkout the code
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -64,12 +66,6 @@ jobs:
       - if: steps.tag_exists.outputs.exists == 'true'
         run: exit 1
 
-      # Set JAVA_HOME here and pass it to subsequent steps
-      - name: Set JAVA_HOME for Gradle
-        run: echo "JAVA_HOME=/home/runner/.sdkman/candidates/java/current" >> $GITHUB_ENV  # This ensures JAVA_HOME is set globally
-        env:
-          SDKMAN_DIR: /home/runner/.sdkman
-
       # Publish the release to Maven
       - uses: ./.github/actions/maven-publish
         with:
@@ -78,8 +74,6 @@ jobs:
           ossr-token: ${{ secrets.ossr-token }}
           signing-key: ${{ secrets.signing-key }}
           signing-password: ${{ secrets.signing-password }}
-        env:
-          JAVA_HOME: ${{ env.JAVA_HOME }}
 
       # Create a release for the tag
       - uses: ./.github/actions/release-create

@@ -16,29 +16,26 @@ on:
         required: true
       SIGNAL_HANDLER_TOKEN:
         required: true
-      SIGNAL_HANDLER_DOMAIN:
-        required: true
       PRODSEC_TOOLS_USER:
         required: true
       PRODSEC_TOOLS_TOKEN:
         required: true
       PRODSEC_TOOLS_ARN:
         required: true
-      PRODSEC_PYTHON_TOOLS_REPO:
-        required: true
+
 jobs:
   checkout-build-scan-only:
     if: github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.merged && startsWith(github.event.pull_request.head.ref, 'release/'))
     runs-on: ubuntu-latest
     outputs:
-      scan-status: ${{ steps.rl-scan-conclusion.outputs.scan-status }}
+      scan-status: ${{ steps.rl-scan-conclusion.outcome }}
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7
 
       - name: Set up Java
-        uses: actions/setup-java@dd06d9cba3e5552c54d9f8ea23572deb30010f7c # v6.0.0
+        uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: ${{ inputs.java-version }}
@@ -53,26 +50,22 @@ jobs:
         uses: ./.github/actions/get-version
 
       - name: Create tgz build artifact
-        env:
-          ARTIFACT_NAME: ${{ inputs.artifact-name }}
         run: |
-          tar -czvf "$ARTIFACT_NAME" *
+          tar -czvf ${{ inputs.artifact-name }} *
 
       - name: Run RL Scanner
         id: rl-scan-conclusion
-        uses: auth0/devsecops-tooling/.github/actions/rl-scan@main
+        uses: ./.github/actions/rl-scanner
         with:
-          artifact-name: ${{ github.event.repository.name }}
-          artifact-path: "${{ github.workspace }}/${{ inputs.artifact-name }}"
-          version: ${{ steps.get_version.outputs.version }}
+          artifact-path: "$(pwd)/${{ inputs.artifact-name }}"
+          version: "${{ steps.get_version.outputs.version }}"
+        env:
           RLSECURE_LICENSE: ${{ secrets.RLSECURE_LICENSE }}
           RLSECURE_SITE_KEY: ${{ secrets.RLSECURE_SITE_KEY }}
           SIGNAL_HANDLER_TOKEN: ${{ secrets.SIGNAL_HANDLER_TOKEN }}
-          SIGNAL_HANDLER_DOMAIN: ${{ secrets.SIGNAL_HANDLER_DOMAIN }}
-          PRODSEC_TOOLS_ARN: ${{ secrets.PRODSEC_TOOLS_ARN }}
           PRODSEC_TOOLS_USER: ${{ secrets.PRODSEC_TOOLS_USER }}
           PRODSEC_TOOLS_TOKEN: ${{ secrets.PRODSEC_TOOLS_TOKEN }}
-          PRODSEC_PYTHON_TOOLS_REPO: ${{ secrets.PRODSEC_PYTHON_TOOLS_REPO }}
+          PRODSEC_TOOLS_ARN: ${{ secrets.PRODSEC_TOOLS_ARN }}
 
       - name: Output scan result
-        run: echo "scan-status=${{ steps.rl-scan-conclusion.outputs.scan-status }}" >> $GITHUB_ENV
+        run: echo "scan-status=${{ steps.rl-scan-conclusion.outcome }}" >> $GITHUB_ENV

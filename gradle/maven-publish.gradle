@@ -10,6 +10,7 @@ task('javadocJar', type: Jar, dependsOn: javadoc) {
   archiveClassifier = 'javadoc'
   from javadoc.getDestinationDir()
 }
+
 tasks.withType(Javadoc).configureEach {
   javadocTool = javaToolchains.javadocToolFor {
     // Use latest JDK for javadoc generation
@@ -21,6 +22,7 @@ javadoc {
   // Specify the Java version that the project will use
   options.addStringOption('-release', "8")
 }
+
 artifacts {
   archives sourcesJar, javadocJar
 }
@@ -97,5 +99,3 @@ javadoc {
 tasks.named('publish').configure {
   dependsOn tasks.named('assemble')
 }
-
-

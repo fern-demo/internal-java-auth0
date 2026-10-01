@@ -1,11 +1,5 @@
 name: Return a boolean indicating if a tag already exists for the repository
 
-#
-# Returns a simple true/false boolean indicating whether the tag exists or not.
-#
-# TODO: Remove once the common repo is public.
-#
-
 inputs:
   token:
     required: true
@@ -14,7 +8,7 @@ inputs:
 
 outputs:
   exists:
-    description: 'Whether the tag exists or not'
+    description: "Whether the tag exists or not"
     value: ${{ steps.tag-exists.outputs.EXISTS }}
 
 runs:

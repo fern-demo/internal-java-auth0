@@ -1,15 +1,15 @@
 plugins {
-  id 'java-library'
-  id 'maven-publish'
-  id 'com.diffplug.spotless' version '6.11.0'
-  id 'io.github.gradle-nexus.publish-plugin' version '2.0.0'
+    id 'java-library'
+    id 'maven-publish'
+    id 'com.diffplug.spotless' version '6.11.0'
+    id 'io.github.gradle-nexus.publish-plugin' version '2.0.0'
 }
 
 repositories {
-  mavenCentral()
-  maven {
-    url 'https://s01.oss.sonatype.org/content/repositories/releases/'
-  }
+    mavenCentral()
+    maven {
+        url 'https://s01.oss.sonatype.org/content/repositories/releases/'
+    }
 }
 
 apply from: rootProject.file('gradle/versioning.gradle')
@@ -19,73 +19,49 @@ group = GROUP
 
 logger.lifecycle("Using version ${version} for ${name} group $group")
 
+
 dependencies {
-  // Core dependencies
-  api 'com.squareup.okhttp3:okhttp:5.2.1'
-  api 'com.fasterxml.jackson.core:jackson-databind:2.21.7'
-  api 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.21.7'
-  api 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.21.7'
+    api 'com.squareup.okhttp3:okhttp:5.5.0'
+    api 'com.fasterxml.jackson.core:jackson-databind:2.22.2'
+    api 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.22.2'
+    api 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.22.2'
+    implementation 'com.auth0:java-jwt:4.6.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.14.4'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.14.4'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.14.4'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.14.4'
+    testImplementation 'com.squareup.okhttp3:mockwebserver:5.5.0'
+}
 
-  // Dependencies for legacy management code from auth0-real
-  implementation 'com.squareup.okhttp3:logging-interceptor:5.2.1'
-  implementation 'com.auth0:java-jwt:4.4.0'
-  implementation 'com.auth0:jwks-rsa:0.22.1'
-  implementation 'net.jodah:failsafe:2.4.4'
-
-  // Test dependencies
-  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
-  testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
-  testImplementation 'org.mockito:mockito-core:4.11.0'
-  testImplementation 'com.squareup.okhttp3:mockwebserver:5.2.1'
-  testImplementation 'org.hamcrest:hamcrest:2.2'
+processResources {
+    from('.version')
 }
 
 java {
-  toolchain {
-    languageVersion = JavaLanguageVersion.of(8)
-  }
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
 }
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-// The Management API client is Fern-generated (~4000 types). javac's type
-// inference over that tree exhausts the compiler's default heap. Because the
-// Java 8 toolchain differs from the JDK running Gradle, javac is forked into a
-// separate process, so org.gradle.jvmargs (the daemon heap) does not apply —
-// the heap must be set on the forked compiler here.
-tasks.withType(JavaCompile).configureEach {
-  options.fork = true
-  options.forkOptions.memoryMaximumSize = '2g'
-}
-
-jar {
-  manifest {
-    attributes 'Automatic-Module-Name': 'com.auth0.java'
-  }
-}
-
 tasks.withType(Javadoc) {
-  failOnError false
-  options.addStringOption('Xdoclint:none', '-quiet')
-  // Fern-generated POJO types are documented via reference.md; excluding them
-  // keeps the javadoc JAR within Maven Central's monthly size quota.
-  exclude 'com/auth0/client/mgmt/**/types/**'
+    failOnError false
+    options.addStringOption('Xdoclint:none', '-quiet')
 }
 
 spotless {
-  java {
-    palantirJavaFormat()
-  }
+    java {
+        palantirJavaFormat()
+    }
 }
-
 
 test {
-  useJUnitPlatform()
-  testLogging {
-    showStandardStreams = true
-  }
+    useJUnitPlatform()
+    testLogging {
+        showStandardStreams = true
+    }
 }
-
 
 apply from: rootProject.file('gradle/maven-publish.gradle')

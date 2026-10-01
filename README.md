@@ -1,115 +1,324 @@
-> **Note**
-> As part of our ongoing commitment to best security practices, we have rotated the signing keys used to sign previous releases of this SDK. As a result, new patch builds have been released using the new signing key. Please upgrade at your earliest convenience.
->
-> While this change won't affect most developers, if you have implemented a dependency signature validation step in your build process, you may notice a warning that past releases can't be verified. This is expected, and a result of the key rotation process. Updating to the latest version will resolve this for you.
-> 
-> We are improving our API specs which introduces minor breaking changes. Expect major releases more frequently than usual while this work continues. Each one ships with a migration guide, and breaking changes are kept small and mechanical.
+![Java SDK for Auth0 MyOrganization](https://cdn.auth0.com/website/sdks/banners/myorganization-java-banner.png)
 
-![A Java client library for the Auth0 Authentication and Management APIs.](https://cdn.auth0.com/website/sdks/banners/auth0-java-banner.png)
+<div align="center">
 
-![Build Status](https://img.shields.io/github/checks-status/auth0/auth0-java/master)
-[![Coverage Status](https://codecov.io/gh/auth0/auth0-java/branch/master/graph/badge.svg?style=flat-square)](https://codecov.io/github/auth0/auth0-java)
-[![License](http://img.shields.io/:license-mit-blue.svg?style=flat)](https://doge.mit-license.org/)
-[![Maven Central](https://img.shields.io/maven-central/v/com.auth0/auth0.svg?style=flat-square)](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.auth0%22%20AND%20a%3A%22auth0%22)
-[![javadoc](https://javadoc.io/badge2/com.auth0/auth0/javadoc.svg)](https://javadoc.io/doc/com.auth0/auth0)
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/auth0/auth0-java)
-[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Fauth0%2Fauth0-java)
+[![Maven Central](https://img.shields.io/maven-central/v/com.auth0/myorganization-java.svg?style=flat-square)](https://search.maven.org/artifact/com.auth0/myorganization-java)
+[![License](https://img.shields.io/github/license/auth0/myorganization-java.svg?style=flat-square)](https://github.com/auth0/myorganization-java/blob/main/LICENSE)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/auth0/myorganization-java/release.yml?branch=main&style=flat-square)](https://github.com/auth0/myorganization-java/actions?query=branch%3Amain)
 
-:books: [Documentation](#documentation) - :rocket: [Getting Started](#getting-started) - :computer: [API Reference](#api-reference) :speech_balloon: [Feedback](#feedback)
+:books: [Documentation](#documentation) · :rocket: [Getting Started](#getting-started) · :speech_balloon: [Feedback](#feedback)
+
+</div>
+
+---
 
 ## Documentation
-- [Reference](./reference.md) - code samples for Management APIs.
-- [Examples](./EXAMPLES.md) - code samples for common auth0-java scenarios.
-- [v5 Migration Guide](./v5_MIGRATION_GUIDE.md) - guidance for updating your application from version 4 to version 5 of auth0-java.
-- [v4 Migration Guide](./v4_MIGRATION_GUIDE.md) - guidance for updating your application from version 3 to version 4 of auth0-java.
-- [Docs site](https://www.auth0.com/docs) - explore our docs site and learn more about Auth0.
+
+- [API Reference](./reference.md) - Complete API reference documentation.
+- [Docs site](https://www.auth0.com/docs) — explore our docs site and learn more about Auth0.
 
 ## Getting Started
 
 ### Requirements
 
-Java 8 or above.
-
-> `auth0-java` is intended for server-side JVM applications. Android applications should use the [Auth0.Android SDK](https://github.com/auth0/auth0.android).
+- Java 8+
 
 ### Installation
 
-Add the dependency via Maven:
+#### Gradle
+
+```groovy
+implementation 'com.auth0:myorganization-java:2.0.0'
+```
+
+#### Maven
 
 ```xml
 <dependency>
-  <groupId>com.auth0</groupId>
-  <artifactId>auth0</artifactId>
-  <version>5.4.0</version>
+    <groupId>com.auth0</groupId>
+    <artifactId>myorganization-java</artifactId>
+    <version>2.0.0</version>
 </dependency>
 ```
 
-or Gradle:
+### Usage
 
-```gradle
-implementation 'com.auth0:auth0:5.4.0'
-```
+The primary entry point is `MyOrganizationClient`, which wraps the Fern-generated client with automatic token management, token caching with auto-refresh, Auth0 telemetry headers, and domain-based URL derivation.
 
-### Configure the SDK
+#### Client Credentials (M2M)
 
-#### Authentication API Client
-
-The Authentication API client is based on the [Auth0 Authentication API](https://auth0.com/docs/api/authentication).
-
-Create an `AuthAPI` instance by providing the Application details from the [dashboard](https://manage.auth0.com/#/applications).
+Use `.clientCredentials()` for machine-to-machine authentication via the OAuth2 client credentials grant. The SDK automatically fetches, caches, and refreshes access tokens.
 
 ```java
-AuthAPI auth = AuthAPI.newBuilder("{YOUR_DOMAIN}", "{YOUR_CLIENT_ID}", "{YOUR_CLIENT_SECRET}").build();
+import com.auth0.client.myorganization.auth.MyOrganizationClient;
+
+MyOrganizationClient client = MyOrganizationClient.builder()
+    .domain("acme.auth0.com")
+    .clientCredentials("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET")
+    .organization("org_abc123")
+    .build();
+
+client.organization().domains().create(...);
 ```
 
-#### Management API Client
+> **Note**
+> The domain is sanitized automatically (`https://` prefix and trailing slashes are stripped).
 
-The Management API client is based on the [Management API Docs](https://auth0.com/docs/api/management/v2). The Management API is Fern-generated and uses `ManagementApi` as the entry point.
-
-Create a `ManagementApi` instance with a static token:
+> The default audience is `https://{domain}/my-org/`. To specify a custom audience, use `.audience()`:
 
 ```java
-ManagementApi mgmt = ManagementApi.builder()
-        .domain("{YOUR_DOMAIN}")
-        .token("{YOUR_API_TOKEN}")
-        .build();
+MyOrganizationClient client = MyOrganizationClient.builder()
+    .domain("acme.auth0.com")
+    .clientCredentials("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET")
+    .audience("https://custom-api.example.com/")
+    .build();
 ```
 
-Or use client credentials for automatic token management (recommended for server-to-server applications):
+#### Private Key JWT
+
+Use `.privateKeyJwt()` for authentication using a signed JWT assertion instead of a client secret. The SDK creates a JWT signed with your private key, then exchanges it for an access token via the `client_credentials` grant with `client_assertion`.
+
+Supported signing algorithms: RS256, RS384, RS512, ES256, ES384, ES512.
 
 ```java
-ManagementApi mgmt = ManagementApi.builder()
-        .domain("{YOUR_DOMAIN}")
-        .clientCredentials("{YOUR_CLIENT_ID}", "{YOUR_CLIENT_SECRET}")
-        .build();
+import com.auth0.client.myorganization.auth.MyOrganizationClient;
+
+String privateKeyPem = "-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----";
+
+MyOrganizationClient client = MyOrganizationClient.builder()
+    .domain("acme.auth0.com")
+    .privateKeyJwt("YOUR_CLIENT_ID", privateKeyPem, "RS256")
+    .organization("org_abc123")
+    .build();
 ```
 
-The Management API is organized into resource clients. Methods return typed response objects directly:
+> The default audience is `https://{domain}/my-org/`. To specify a custom audience, use `.audience()`:
 
 ```java
-GetUserResponseContent user = mgmt.users().get("user_id");
-GetRoleResponseContent role = mgmt.roles().get("role_id");
+MyOrganizationClient client = MyOrganizationClient.builder()
+    .domain("acme.auth0.com")
+    .privateKeyJwt("YOUR_CLIENT_ID", privateKeyPem, "RS256")
+    .audience("https://custom-api.example.com/")
+    .build();
 ```
 
-You can also obtain a token via the Authentication API and use it with the Management API client:
+#### Custom Token Provider
+
+Use `.tokenProvider()` to provide your own `TokenProvider` implementation. This gives you full control over how access tokens are obtained, cached, and refreshed.
 
 ```java
-AuthAPI authAPI = AuthAPI.newBuilder("{YOUR_DOMAIN}", "{YOUR_CLIENT_ID}", "{YOUR_CLIENT_SECRET}").build();
-TokenRequest tokenRequest = authAPI.requestToken("https://{YOUR_DOMAIN}/api/v2/");
-TokenHolder holder = tokenRequest.execute().getBody();
-String accessToken = holder.getAccessToken();
-ManagementApi mgmt = ManagementApi.builder()
-        .domain("{YOUR_DOMAIN}")
-        .token(accessToken)
-        .build();
+import com.auth0.client.myorganization.auth.MyOrganizationClient;
+import com.auth0.client.myorganization.auth.Token;
+
+MyOrganizationClient client = MyOrganizationClient.builder()
+    .domain("acme.auth0.com")
+    .tokenProvider(() -> Token.of(fetchTokenFromVault()))
+    .build();
 ```
 
-See the [Auth0 Management API documentation](https://auth0.com/docs/api/management/v2/tokens) for more information on how to obtain API Tokens.
+#### Static Token
 
-## API Reference
+Use `.staticToken()` when you already have a bearer token:
 
-- [AuthAPI](https://javadoc.io/doc/com.auth0/auth0/latest/com/auth0/client/auth/AuthAPI.html)
-- [ManagementApi](https://javadoc.io/doc/com.auth0/auth0/latest/com/auth0/client/mgmt/ManagementApi.html)
+```java
+import com.auth0.client.myorganization.auth.MyOrganizationClient;
+
+MyOrganizationClient client = MyOrganizationClient.builder()
+    .domain("acme.auth0.com")
+    .staticToken("YOUR_ACCESS_TOKEN")
+    .build();
+```
+
+### Request Options
+
+Options can be applied at the client level (affecting all requests) or per-request:
+
+```java
+import com.auth0.client.myorganization.auth.MyOrganizationClient;
+import com.auth0.client.myorganization.core.RequestOptions;
+
+// Client-level options (applied to every request).
+MyOrganizationClient client = MyOrganizationClient.builder()
+    .domain("acme.auth0.com")
+    .clientCredentials("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET")
+    .maxRetries(3)
+    .timeout(30)
+    .build();
+
+// Per-request overrides.
+client.organization().domains().create(
+    ...,
+    RequestOptions.builder()
+        .timeout(60)
+        .addHeader("X-Request-Id", "abc-123")
+        .build()
+);
+```
+
+Available builder options:
+
+| Option | Scope | Description |
+|---|---|---|
+| **Authentication** | | |
+| `.clientCredentials(id, secret)` | Client | OAuth2 client credentials (M2M) |
+| `.privateKeyJwt(id, pem, alg)` | Client | Private Key JWT assertion |
+| `.tokenProvider(provider)` | Client | Custom `TokenProvider` |
+| `.staticToken(token)` | Client | Static bearer token |
+| `.token(token)` | Client | Alias for `.staticToken()` |
+| **Configuration** | | |
+| `.domain(domain)` | Client | Auth0 tenant domain (required) |
+| `.tenantDomain(domain)` | Client | Alias for `.domain()` |
+| `.audience(audience)` | Client | Custom API audience |
+| `.organization(org)` | Client | Organization name or ID |
+| `.httpClient(client)` | Client | Provide a custom `OkHttpClient` |
+| `.maxRetries(n)` | Client | Set max retry attempts |
+| `.timeout(seconds)` | Both | Set request timeout |
+| `.addHeader(name, value)` | Both | Add custom HTTP headers |
+
+> **Scope**: *Client* = only when creating the client via builder. *Both* = client-level or per-request via `RequestOptions`.
+
+### Raw Responses
+
+The SDK provides access to raw response data, including headers, through the `withRawResponse()` method:
+
+```java
+MyOrganizationApiHttpResponse response = client.organization().domains().withRawResponse().create(...);
+
+System.out.println(response.body());
+System.out.println(response.headers().get("X-My-Header"));
+```
+
+### Error Handling
+
+When the API returns a non-success status code (4xx or 5xx response), a `MyOrganizationApiException` is thrown:
+
+```java
+import com.auth0.client.myorganization.core.MyOrganizationApiException;
+
+try {
+    client.organization().domains().create(...);
+} catch (MyOrganizationApiException e) {
+    System.out.println("Status: " + e.statusCode());
+    System.out.println("Body: " + e.body());
+}
+```
+
+### OptionalNullable for PATCH Requests
+
+For PATCH requests, the SDK uses `OptionalNullable<T>` to handle three-state nullable semantics:
+
+- **ABSENT**: Field not provided (omitted from JSON)
+- **NULL**: Field explicitly set to null (included as `null` in JSON)
+- **PRESENT**: Field has a non-null value
+
+```java
+import com.auth0.client.myorganization.core.OptionalNullable;
+
+UpdateRequest request = UpdateRequest.builder()
+    .fieldName(OptionalNullable.absent())    // Skip field
+    .anotherField(OptionalNullable.ofNull()) // Clear field
+    .yetAnotherField(OptionalNullable.of("value")) // Set value
+    .build();
+```
+
+> **Note:** For required fields, you cannot use `absent()`. Required fields must always be present with either a non-null value or explicitly set to null using `ofNull()`.
+
+### Retries
+
+The SDK automatically retries requests with exponential backoff on the following status codes:
+
+- `408` (Timeout)
+- `429` (Too Many Requests)
+- `5XX` (Internal Server Errors)
+
+The default retry limit is 2 attempts. The `Retry-After` and `X-RateLimit-Reset` headers are respected when present. Configure via `.maxRetries()`:
+
+```java
+MyOrganizationClient client = MyOrganizationClient.builder()
+    .domain("acme.auth0.com")
+    .clientCredentials("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET")
+    .maxRetries(5)
+    .build();
+```
+
+### Timeouts
+
+The SDK defaults to a 60 second timeout. Configure at the client or request level:
+
+```java
+import com.auth0.client.myorganization.auth.MyOrganizationClient;
+import com.auth0.client.myorganization.core.RequestOptions;
+
+// Client level
+MyOrganizationClient client = MyOrganizationClient.builder()
+    .domain("acme.auth0.com")
+    .clientCredentials("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET")
+    .timeout(30)
+    .build();
+
+// Request level
+client.organization().domains().create(
+    ...,
+    RequestOptions.builder()
+        .timeout(60)
+        .build()
+);
+```
+
+### Base URL
+
+The base URL defaults to `https://{domain}/my-org`. The client automatically derives the base URL from the domain:
+
+```java
+MyOrganizationClient client = MyOrganizationClient.builder()
+    .domain("acme.auth0.com")
+    .clientCredentials("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET")
+    .build();
+```
+
+### Custom HTTP Client
+
+The SDK is built to work with any instance of `OkHttpClient`. By default, if no client is provided, the SDK will construct one:
+
+```java
+import com.auth0.client.myorganization.auth.MyOrganizationClient;
+import okhttp3.OkHttpClient;
+
+OkHttpClient customClient = ...;
+
+MyOrganizationClient client = MyOrganizationClient.builder()
+    .domain("acme.auth0.com")
+    .clientCredentials("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET")
+    .httpClient(customClient)
+    .build();
+```
+
+### Organization
+
+Use `.organization()` to specify the organization name or ID. The value is sent as the `organization` parameter in OAuth2 token requests (client credentials and private key JWT flows).
+
+```java
+MyOrganizationClient client = MyOrganizationClient.builder()
+    .domain("acme.auth0.com")
+    .clientCredentials("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET")
+    .organization("org_abc123")
+    .build();
+```
+
+### Using the Fern Client Directly
+
+If you need to use the underlying Fern-generated client directly, you can instantiate `MyOrganizationApi`:
+
+```java
+import com.auth0.client.myorganization.MyOrganizationApi;
+
+MyOrganizationApi client = MyOrganizationApi.builder()
+    .token("<token>")
+    .tenantDomain("YOUR_TENANT_DOMAIN")
+    .build();
+```
+
+> **Note:** The Fern client (`MyOrganizationApi`) does **not** support automatic token management, token caching/refresh, Auth0 telemetry headers, or domain-based URL derivation. You are responsible for obtaining and refreshing access tokens yourself. For most use cases, prefer `MyOrganizationClient` as shown in the [Usage](#usage) section.
 
 ## Feedback
 
@@ -117,24 +326,29 @@ See the [Auth0 Management API documentation](https://auth0.com/docs/api/manageme
 
 We appreciate feedback and contribution to this repo! Before you get started, please see the following:
 
-- [Auth0's general contribution guidelines](https://github.com/auth0/open-source-template/blob/master/GENERAL-CONTRIBUTING.md)
-- [Auth0's code of conduct guidelines](https://github.com/auth0/open-source-template/blob/master/CODE-OF-CONDUCT.md)
+- [Auth0's General Contribution Guidelines](https://github.com/auth0/open-source-template/blob/master/GENERAL-CONTRIBUTING.md)
+- [Auth0's Code of Conduct Guidelines](https://github.com/auth0/open-source-template/blob/master/CODE-OF-CONDUCT.md)
 
-### Raise an issue
-To provide feedback or report a bug, [please raise an issue on our issue tracker](https://github.com/auth0/auth0-java/issues).
+While we value open-source contributions to this SDK, this library is generated programmatically. Additions made directly to this library would have to be moved over to our generation code, otherwise they would be overwritten upon the next generated release. Feel free to open a PR as a proof of concept, but know that we will not be able to merge it as-is. We suggest opening an issue first to discuss with us!
+
+### Raise an Issue
+
+To provide feedback or report a bug, please [raise an issue on our issue tracker](https://github.com/auth0/myorganization-java/issues).
 
 ### Vulnerability Reporting
-Please do not report security vulnerabilities on the public Github issue tracker. The [Responsible Disclosure Program](https://auth0.com/whitehat) details the procedure for disclosing security issues.
+
+Please do not report security vulnerabilities on the public GitHub issue tracker. The [Responsible Disclosure Program](https://auth0.com/responsible-disclosure-policy) details the procedure for disclosing security issues.
 
 ---
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: light)" srcset="https://cdn.auth0.com/website/sdks/logos/auth0_light_mode.png"   width="150">
+    <source media="(prefers-color-scheme: light)" srcset="https://cdn.auth0.com/website/sdks/logos/auth0_light_mode.png" width="150">
     <source media="(prefers-color-scheme: dark)" srcset="https://cdn.auth0.com/website/sdks/logos/auth0_dark_mode.png" width="150">
-    <img alt="Auth0 Logo" src="./auth0_light_mode.png" width="150">
+    <img alt="Auth0 Logo" src="https://cdn.auth0.com/website/sdks/logos/auth0_light_mode.png" width="150">
   </picture>
 </p>
-<p align="center">Auth0 is an easy to implement, adaptable authentication and authorization platform. To learn more checkout <a href="https://auth0.com/why-auth0">Why Auth0?</a></p>
-<p align="center">
-This project is licensed under the MIT license. See the <a href="./LICENSE"> LICENSE</a> file for more info.</p>
+
+<p align="center">Auth0 is an easy to implement, adaptable authentication and authorization platform.<br />To learn more check out <a href="https://auth0.com/why-auth0">Why Auth0?</a></p>
+
+<p align="center">This project is licensed under the Apache-2.0 license. See the <a href="./LICENSE"> LICENSE</a> file for more info.</p>

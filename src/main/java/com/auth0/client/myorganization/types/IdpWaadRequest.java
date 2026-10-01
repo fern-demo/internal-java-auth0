@@ -26,8 +26,6 @@ public final class IdpWaadRequest {
 
     private final IdpWaadOptionsRequest options;
 
-    private final Optional<String> id;
-
     private final String name;
 
     private final Optional<List<String>> domains;
@@ -40,8 +38,6 @@ public final class IdpWaadRequest {
 
     private final Optional<Boolean> isEnabled;
 
-    private final Optional<OrganizationAccessLevelEnum> accessLevel;
-
     private final Optional<Boolean> useForThirdPartyClientAccess;
 
     private final Optional<CrossAppAccessResourceApp> crossAppAccessResourceApp;
@@ -51,27 +47,23 @@ public final class IdpWaadRequest {
     private IdpWaadRequest(
             IdpWaadRequestStrategy strategy,
             IdpWaadOptionsRequest options,
-            Optional<String> id,
             String name,
             Optional<List<String>> domains,
             Optional<String> displayName,
             Optional<Boolean> showAsButton,
             Optional<Boolean> assignMembershipOnLogin,
             Optional<Boolean> isEnabled,
-            Optional<OrganizationAccessLevelEnum> accessLevel,
             Optional<Boolean> useForThirdPartyClientAccess,
             Optional<CrossAppAccessResourceApp> crossAppAccessResourceApp,
             Map<String, Object> additionalProperties) {
         this.strategy = strategy;
         this.options = options;
-        this.id = id;
         this.name = name;
         this.domains = domains;
         this.displayName = displayName;
         this.showAsButton = showAsButton;
         this.assignMembershipOnLogin = assignMembershipOnLogin;
         this.isEnabled = isEnabled;
-        this.accessLevel = accessLevel;
         this.useForThirdPartyClientAccess = useForThirdPartyClientAccess;
         this.crossAppAccessResourceApp = crossAppAccessResourceApp;
         this.additionalProperties = additionalProperties;
@@ -88,11 +80,6 @@ public final class IdpWaadRequest {
     @JsonProperty("options")
     public IdpWaadOptionsRequest getOptions() {
         return options;
-    }
-
-    @JsonProperty("id")
-    public Optional<String> getId() {
-        return id;
     }
 
     /**
@@ -143,11 +130,6 @@ public final class IdpWaadRequest {
         return isEnabled;
     }
 
-    @JsonProperty("access_level")
-    public Optional<OrganizationAccessLevelEnum> getAccessLevel() {
-        return accessLevel;
-    }
-
     /**
      * @return True if third-party applications can use it. If false, only first-party applications with the connection enabled can use it. Defaults to false.
      */
@@ -178,14 +160,12 @@ public final class IdpWaadRequest {
     private boolean equalTo(IdpWaadRequest other) {
         return strategy.equals(other.strategy)
                 && options.equals(other.options)
-                && id.equals(other.id)
                 && name.equals(other.name)
                 && domains.equals(other.domains)
                 && displayName.equals(other.displayName)
                 && showAsButton.equals(other.showAsButton)
                 && assignMembershipOnLogin.equals(other.assignMembershipOnLogin)
                 && isEnabled.equals(other.isEnabled)
-                && accessLevel.equals(other.accessLevel)
                 && useForThirdPartyClientAccess.equals(other.useForThirdPartyClientAccess)
                 && crossAppAccessResourceApp.equals(other.crossAppAccessResourceApp);
     }
@@ -195,14 +175,12 @@ public final class IdpWaadRequest {
         return Objects.hash(
                 this.strategy,
                 this.options,
-                this.id,
                 this.name,
                 this.domains,
                 this.displayName,
                 this.showAsButton,
                 this.assignMembershipOnLogin,
                 this.isEnabled,
-                this.accessLevel,
                 this.useForThirdPartyClientAccess,
                 this.crossAppAccessResourceApp);
     }
@@ -243,10 +221,6 @@ public final class IdpWaadRequest {
 
         _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
-        _FinalStage id(Optional<String> id);
-
-        _FinalStage id(String id);
-
         /**
          * <p>List of domains for Home Realm Discovery (HRD)</p>
          */
@@ -282,10 +256,6 @@ public final class IdpWaadRequest {
 
         _FinalStage isEnabled(Boolean isEnabled);
 
-        _FinalStage accessLevel(Optional<OrganizationAccessLevelEnum> accessLevel);
-
-        _FinalStage accessLevel(OrganizationAccessLevelEnum accessLevel);
-
         /**
          * <p>True if third-party applications can use it. If false, only first-party applications with the connection enabled can use it. Defaults to false.</p>
          */
@@ -313,8 +283,6 @@ public final class IdpWaadRequest {
 
         private Optional<Boolean> useForThirdPartyClientAccess = Optional.empty();
 
-        private Optional<OrganizationAccessLevelEnum> accessLevel = Optional.empty();
-
         private Optional<Boolean> isEnabled = Optional.empty();
 
         private Optional<Boolean> assignMembershipOnLogin = Optional.empty();
@@ -325,8 +293,6 @@ public final class IdpWaadRequest {
 
         private Optional<List<String>> domains = Optional.empty();
 
-        private Optional<String> id = Optional.empty();
-
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -336,14 +302,12 @@ public final class IdpWaadRequest {
         public Builder from(IdpWaadRequest other) {
             strategy(other.getStrategy());
             options(other.getOptions());
-            id(other.getId());
             name(other.getName());
             domains(other.getDomains());
             displayName(other.getDisplayName());
             showAsButton(other.getShowAsButton());
             assignMembershipOnLogin(other.getAssignMembershipOnLogin());
             isEnabled(other.getIsEnabled());
-            accessLevel(other.getAccessLevel());
             useForThirdPartyClientAccess(other.getUseForThirdPartyClientAccess());
             crossAppAccessResourceApp(other.getCrossAppAccessResourceApp());
             return this;
@@ -358,7 +322,6 @@ public final class IdpWaadRequest {
 
         /**
          * <p>Identity provider specific options.</p>
-         * <p>Identity provider specific options.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -369,7 +332,6 @@ public final class IdpWaadRequest {
         }
 
         /**
-         * <p>The name of the identity provider</p>
          * <p>The name of the identity provider</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -417,19 +379,6 @@ public final class IdpWaadRequest {
         @JsonSetter(value = "use_for_third_party_client_access", nulls = Nulls.SKIP)
         public _FinalStage useForThirdPartyClientAccess(Optional<Boolean> useForThirdPartyClientAccess) {
             this.useForThirdPartyClientAccess = useForThirdPartyClientAccess;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage accessLevel(OrganizationAccessLevelEnum accessLevel) {
-            this.accessLevel = Optional.ofNullable(accessLevel);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "access_level", nulls = Nulls.SKIP)
-        public _FinalStage accessLevel(Optional<OrganizationAccessLevelEnum> accessLevel) {
-            this.accessLevel = accessLevel;
             return this;
         }
 
@@ -534,31 +483,16 @@ public final class IdpWaadRequest {
         }
 
         @java.lang.Override
-        public _FinalStage id(String id) {
-            this.id = Optional.ofNullable(id);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "id", nulls = Nulls.SKIP)
-        public _FinalStage id(Optional<String> id) {
-            this.id = id;
-            return this;
-        }
-
-        @java.lang.Override
         public IdpWaadRequest build() {
             return new IdpWaadRequest(
                     strategy,
                     options,
-                    id,
                     name,
                     domains,
                     displayName,
                     showAsButton,
                     assignMembershipOnLogin,
                     isEnabled,
-                    accessLevel,
                     useForThirdPartyClientAccess,
                     crossAppAccessResourceApp,
                     additionalProperties);

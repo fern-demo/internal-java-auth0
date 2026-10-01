@@ -1,7 +1,7 @@
 {
-  "cliVersion": "5.92.1",
+  "cliVersion": "5.143.4",
   "generatorName": "fernapi/fern-java-sdk",
-  "generatorVersion": "4.1.1",
+  "generatorVersion": "4.23.2",
   "generatorConfig": {
     "client-class-name": "MyOrganizationApi",
     "base-api-exception-class-name": "MyOrganizationApiException",
